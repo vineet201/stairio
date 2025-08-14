@@ -241,37 +241,33 @@
             gap: 40px;
             margin: 40px 0;
         }
-        
-        .old-price {
-            font-size: 48px;
-            color: #86868b;
-            text-decoration: line-through;
-            font-weight: 300;
-        }
-        
-        .new-price {
-            font-size: 72px;
-            color: #8B5CF6;
-            font-weight: 700;
-            letter-spacing: -2px;
-        }
-        
-        .cta-section {
-            margin: 60px 0;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 16px 32px;
-            border-radius: 980px;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 17px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            margin: 0 12px;
-        }
+    .old-price { font-size: 48px; color: #86868b; text-decoration: line-through; font-weight: 300; }
+    .new-price { font-size: 72px; color: #8B5CF6; font-weight: 700; letter-spacing: -2px; }
+    .cta-section { margin: 60px 0; }
+
+    /* Revolution (Bento) Section */
+    .revolution { padding: 120px 0; background: #f5f5f7; position: relative; }
+    .revo-head { text-align:center; margin-bottom: 32px; }
+    .revo-badge { display:inline-block; font-size:12px; color:#6e6e73; background:#fff; border:1px solid #d2d2d7; padding:6px 10px; border-radius:999px; margin-bottom: 12px; }
+    .revo-title { font-size: 48px; letter-spacing:-1px; color:#1d1d1f; font-weight:700; }
+    .revo-sub { font-size: 20px; color:#6e6e73; margin-top: 10px; }
+    .bento { display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; margin-top: 36px; }
+    .tile { background:#fff; border:1px solid #d2d2d7; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06); padding:20px; display:flex; flex-direction:column; gap:10px; min-height: 160px; }
+    .tile .k { font-size: 12px; color:#6e6e73; text-transform: uppercase; letter-spacing: .5px; }
+    .tile h3 { font-size: 20px; color:#1d1d1f; letter-spacing:-.3px; }
+    .tile p { font-size:14px; color:#6e6e73; }
+    .span-6 { grid-column: span 6; }
+    .span-4 { grid-column: span 4; }
+    .span-8 { grid-column: span 8; }
+    .pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+    .pill { font-size:12px; color:#6e6e73; border:1px solid #e5e5ea; padding:6px 10px; border-radius:999px; background:#fff; }
+    .sys-steps { display:flex; gap:10px; align-items:center; margin-top:auto; }
+    .sys-steps .step { background:#f5f5f7; border:1px solid #e5e5ea; border-radius: 10px; padding:6px 10px; font-size:12px; color:#6e6e73; }
+    .sys-steps .arrow { color:#c7c7cc; }
+    @media (max-width: 900px) { .revo-title { font-size: 36px; } .bento { grid-template-columns: 1fr; } .span-6, .span-4, .span-8 { grid-column: auto; } }
+
+    /* Buttons */
+    .btn { padding: 12px 20px; border-radius: 999px; font-weight: 600; border: none; cursor: pointer; margin: 0 12px; transition: transform .2s ease, background .2s ease, color .2s ease; display: inline-block; }
         
         .btn-primary {
             background: #8B5CF6;
@@ -1412,13 +1408,66 @@
                 </div>
             </section>
 
+            <!-- Revolution Section -->
+            <section id="revolution" class="revolution" aria-labelledby="revo-title">
+                <div class="container">
+                    <div class="revo-head">
+                        <span class="revo-badge">A new operating model</span>
+                        <h2 id="revo-title" class="revo-title">Not just a website. A system that runs your business.</h2>
+                        <p class="revo-sub">From lead to launch to lifetime support — Stairio replaces fragmented tools with one predictable, scalable pipeline.</p>
+                    </div>
+                    <div class="bento" role="list">
+                        <article class="tile span-6" role="listitem">
+                            <span class="k">Speed</span>
+                            <h3>Launch in days, not months</h3>
+                            <p>Proven blocks, instant infrastructure, zero guesswork.</p>
+                            <div class="pill-row">
+                                <span class="pill">Pre‑wired hosting</span>
+                                <span class="pill">Optimized SEO</span>
+                                <span class="pill">Production CI</span>
+                            </div>
+                        </article>
+                        <article class="tile span-6" role="listitem">
+                            <span class="k">Transparency</span>
+                            <h3>Flat pricing. No surprises.</h3>
+                            <p>Pick a package, add only what you need. See the total instantly.</p>
+                            <div class="pill-row">
+                                <span class="pill">Clear scope</span>
+                                <span class="pill">No hourly drift</span>
+                                <span class="pill">Own your stack</span>
+                            </div>
+                        </article>
+                        <article class="tile span-8" role="listitem">
+                            <span class="k">Automation</span>
+                            <h3>Everything flows</h3>
+                            <p>Leads, content, and updates move through one seamless pipeline.</p>
+                            <div class="sys-steps" aria-label="system steps">
+                                <span class="step">Brief</span>
+                                <span class="arrow">→</span>
+                                <span class="step">Build</span>
+                                <span class="arrow">→</span>
+                                <span class="step">Launch</span>
+                                <span class="arrow">→</span>
+                                <span class="step">Grow</span>
+                            </div>
+                        </article>
+                        <article class="tile span-4" role="listitem">
+                            <span class="k">Support</span>
+                            <h3>We stay after launch</h3>
+                            <p>Updates, A/B tests, and uptime monitoring included.</p>
+                            <div class="pill-row">
+                                <span class="pill">1:1 support</span>
+                                <span class="pill">Monthly insights</span>
+                                <span class="pill">Security first</span>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </section>
+
             <!-- Packages Section -->
             <section class="packages" id="packages">
                 <div class="container">
-                    <div class="section-header">
-                        <h2>Build your perfect site.<br>On your terms.</h2>
-                        <p>Start with the essentials, then add features that matter to your business.</p>
-                    </div>
                     
                                         <!-- Customization Options -->
                                         <div class="customization-section website-theme">
@@ -2249,7 +2298,7 @@
             }, observerOptions);
 
             // Observe cards for entrance animations
-            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .feature-option').forEach(el => {
+            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .feature-option, .tile').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'all 0.6s ease-out';
