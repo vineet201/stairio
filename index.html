@@ -41,7 +41,7 @@
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -294,10 +294,11 @@
             color: white;
         }
         
-        /* Features Section - Minimal Grid */
+        /* Features Section - Enhanced */
         .features {
-            padding: 100px 0;
+            padding: 120px 0;
             background: #fff;
+            position: relative;
         }
         
         .section-header {
@@ -319,36 +320,42 @@
             font-weight: 400;
         }
         
+        .features .included-badge { display:inline-block; margin-bottom: 16px; font-size:12px; color:#6e6e73; background:#f5f5f7; border:1px solid #d2d2d7; padding:6px 10px; border-radius:999px; }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 60px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
-        
+        .features-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin:-40px auto 56px; max-width: 900px; }
+        .stat { background:#fff; border:1px solid #d2d2d7; border-radius:12px; padding:16px 18px; box-shadow:0 8px 24px rgba(0,0,0,0.06); display:flex; align-items:center; gap:12px; }
+        .stat .stat-icon { width:36px; height:36px; border-radius:8px; background: linear-gradient(135deg,#8B5CF6,#7C3AED); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; }
+        .stat .stat-num { font-weight:700; color:#1d1d1f; }
+        .stat .stat-label { color:#86868b; font-size:13px; }
         .feature-card {
-            text-align: center;
-            padding: 40px 20px;
+            text-align: left;
+            padding: 22px;
+            background:#fff;
+            border:1px solid #d2d2d7;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+            height: 100%;
         }
-        
-        .feature-icon {
-            font-size: 48px;
-            margin-bottom: 24px;
-            display: block;
-        }
-        
+        .feature-card:hover { transform: translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.1); border-color:#c9c9cf; }
+        .feature-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg,#8B5CF6,#7C3AED); color:#fff; font-size:26px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
         .feature-card h3 {
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: #1d1d1f;
-            margin-bottom: 16px;
-            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
         }
-        
-        .feature-card p {
-            font-size: 17px;
-            color: #86868b;
-            line-height: 1.5;
-        }
+        .feature-card p { font-size: 15px; color: #86868b; line-height: 1.5; margin-bottom: 12px; }
+        .feature-meta { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
+        .feature-meta li { font-size:14px; color:#1d1d1f; display:flex; align-items:center; gap:8px; }
+        .feature-meta li::before { content:'\2713'; color:#8B5CF6; font-weight:700; }
+        .features-cta { text-align:center; margin-top: 36px; }
+        @media (max-width: 768px) { .features { padding: 90px 0; } .section-header h2 { font-size: 36px; } .features-stats { margin: -20px auto 40px; } }
 
     /* Social Proof */
     .social-proof { padding: 40px 0 100px; background: #fff; }
@@ -542,10 +549,46 @@
         
     /* Customization Section */
     .customization-section {
-            max-width: 900px;
+            max-width: 100%;
             margin: 0 auto;
             position: relative;
         }
+    .customization-layout { display:grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items:start; }
+    .custom-left { min-width: 0; }
+    .custom-right { position: sticky; top: 80px; }
+    .addons-sidebar { background:#fff; border:1px solid #d2d2d7; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06); overflow:hidden; }
+    .addons-header { display:flex; align-items:baseline; justify-content:space-between; padding:16px 16px 8px; border-bottom:1px solid #eee; }
+    .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
+    .addons-note { color:#86868b; font-size:12px; }
+    .addons-list { padding: 8px 12px 12px; }
+    @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
+
+    /* Compact scaling for add-ons and calculator */
+    .addons-sidebar .feature-options { gap: 12px; margin-bottom: 16px; }
+    .addons-sidebar .option-header { padding: 16px 14px; gap: 14px; }
+    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 22px; height: 22px; }
+    .addons-sidebar .option-info h4 { font-size: 16px; }
+    .addons-sidebar .option-info p { font-size: 13px; }
+    .addons-sidebar .option-price { font-size: 16px; }
+
+    .addons-sidebar .price-calculator { padding: 24px; }
+    .addons-sidebar .calculator-content { gap: 20px; }
+    .addons-sidebar .calculator-left h4 { font-size: 18px; margin-bottom: 18px; }
+    .addons-sidebar .base-item, .addons-sidebar .selected-item { font-size: 15px; padding: 12px 0; }
+    .addons-sidebar .total-label { font-size: 14px; }
+    .addons-sidebar .total-amount { font-size: 40px; }
+
+    /* Slightly tighter left-side cards */
+    .custom-left .package-cards { gap: 16px; }
+    .custom-left .package-card { padding: 20px; }
+    .custom-left .package-title h4 { font-size: 18px; }
+    .custom-left .package-price { font-size: 32px; }
+    .custom-left .package-list li { font-size: 13px; }
+    .custom-left .package-actions .btn { padding: 8px 14px; font-size: 14px; }
+
+    .custom-left .compare-card { padding: 12px; }
+    .custom-left .compare-grid .head { font-size: 14px; }
+    .custom-left .compare-grid .cell { padding: 8px; }
         
     .customization-section h3 {
             font-size: 36px;
@@ -574,7 +617,7 @@
     .feature-option {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
-            border-radius: 20px;
+            border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.4s ease;
             cursor: pointer;
@@ -646,8 +689,8 @@
         .option-header {
             display: flex;
             align-items: center;
-            padding: 28px 32px;
-            gap: 24px;
+            padding: 22px 24px;
+            gap: 18px;
             position: relative;
             z-index: 1;
         }
@@ -658,8 +701,8 @@
         }
         
         .option-checkbox input[type="checkbox"] {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.1);
@@ -693,7 +736,7 @@
         }
         
     .option-info h4 {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 600;
             color: #ffffff;
             margin-bottom: 6px;
@@ -701,14 +744,14 @@
         }
         
     .option-info p {
-            font-size: 15px;
+            font-size: 14px;
             color: rgba(255, 255, 255, 0.7);
             margin: 0;
             line-height: 1.4;
         }
         
     .option-price {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #ffffff;
             flex-shrink: 0;
@@ -835,9 +878,9 @@
     .customization-section.website-theme .feature-option { background:#fff; border:1px solid #d2d2d7; backdrop-filter:none; }
     .customization-section.website-theme .feature-option:hover { background:#fafafa; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
     .customization-section.website-theme .feature-option.essential { background:#F3F0FF; border-color:#E5DEFF; }
-    .customization-section.website-theme .option-info h4 { color:#1d1d1f; text-shadow:none; }
-    .customization-section.website-theme .option-info p { color:#86868b; }
-    .customization-section.website-theme .option-price { color:#1d1d1f; text-shadow:none; }
+    .customization-section.website-theme .option-info h4 { color:#1d1d1f; text-shadow:none; font-size:16px; }
+    .customization-section.website-theme .option-info p { color:#86868b; font-size:13px; }
+    .customization-section.website-theme .option-price { color:#1d1d1f; text-shadow:none; font-size:16px; }
     .customization-section.website-theme .option-checkbox input[type="checkbox"] { border-color:#d2d2d7; background:#fff; }
     .customization-section.website-theme .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 4px 16px rgba(139,92,246,0.3); }
     .customization-section.website-theme .price-calculator { background:#fff; border:1px solid #d2d2d7; box-shadow: 0 8px 24px rgba(0,0,0,0.08); backdrop-filter:none; }
@@ -1271,46 +1314,100 @@
             <section class="features" id="features">
                 <div class="container">
                     <div class="section-header">
+                        <span class="included-badge">Included with every website</span>
                         <h2>Everything.<br>Included.</h2>
                         <p>No hidden costs. No surprises. Just everything you need.</p>
                     </div>
-                    
+
+                    <div class="features-stats" aria-label="Service highlights">
+                        <div class="stat">
+                            <div class="stat-icon">⚡</div>
+                            <div>
+                                <div class="stat-num">48‑hour kickoff</div>
+                                <div class="stat-label">We start fast—within 2 business days</div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-icon">🛡️</div>
+                            <div>
+                                <div class="stat-num">3‑year SSL</div>
+                                <div class="stat-label">Security locked in long‑term</div>
+                            </div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-icon">📞</div>
+                            <div>
+                                <div class="stat-num">3 months support</div>
+                                <div class="stat-label">Included post‑launch care</div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="features-grid">
                         <div class="feature-card">
                             <div class="feature-icon">🌐</div>
                             <h3>Domain & Hosting</h3>
                             <p>Free domain for 1 year. Hosting for 2 years. Because your website should just work.</p>
+                            <ul class="feature-meta">
+                                <li>Managed setup and DNS</li>
+                                <li>Free migrations if needed</li>
+                            </ul>
                         </div>
-                        
+
                         <div class="feature-card">
                             <div class="feature-icon">🔒</div>
                             <h3>Security First</h3>
                             <p>Premium SSL for 3 years. Your customers' trust is everything.</p>
+                            <ul class="feature-meta">
+                                <li>HTTPS everywhere</li>
+                                <li>Best‑practice hardening</li>
+                            </ul>
                         </div>
-                        
+
                         <div class="feature-card">
                             <div class="feature-icon">🎨</div>
                             <h3>Beautiful Design</h3>
                             <p>Custom UI that reflects your brand. Not templates. Your unique story.</p>
+                            <ul class="feature-meta">
+                                <li>Brand‑aligned typography</li>
+                                <li>Thoughtful motion & micro‑copy</li>
+                            </ul>
                         </div>
-                        
+
                         <div class="feature-card">
                             <div class="feature-icon">📱</div>
                             <h3>Works Everywhere</h3>
                             <p>Perfect on phones, tablets, desktops. Every screen, every time.</p>
+                            <ul class="feature-meta">
+                                <li>Responsive from day one</li>
+                                <li>Performance‑minded assets</li>
+                            </ul>
                         </div>
-                        
+
                         <div class="feature-card">
                             <div class="feature-icon">🔧</div>
                             <h3>We've Got You</h3>
                             <p>3 months of support included. Because launching is just the beginning.</p>
+                            <ul class="feature-meta">
+                                <li>Priority fixes & updates</li>
+                                <li>Content and minor edits</li>
+                            </ul>
                         </div>
-                        
+
                         <div class="feature-card">
                             <div class="feature-icon">📊</div>
                             <h3>Know Your Impact</h3>
                             <p>Analytics setup included. See who visits, what works, how you grow.</p>
+                            <ul class="feature-meta">
+                                <li>Goal tracking & funnels</li>
+                                <li>Privacy‑friendly by default</li>
+                            </ul>
                         </div>
+                    </div>
+
+                    <div class="features-cta">
+                        <a href="#packages" class="btn btn-primary">See packages</a>
+                        <a href="#contact" class="btn btn-secondary" style="margin-left:8px">Ask a question</a>
                     </div>
                 </div>
             </section>
@@ -1323,13 +1420,15 @@
                         <p>Start with the essentials, then add features that matter to your business.</p>
                     </div>
                     
-                    <!-- Customization Options -->
-                    <div class="customization-section website-theme">
-                        <h3>Make It Yours</h3>
-                        <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
+                                        <!-- Customization Options -->
+                                        <div class="customization-section website-theme">
+                                                <h3>Make It Yours</h3>
+                                                <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
 
-                        <!-- Pre-bundled Packages -->
-                        <div class="package-cards" aria-label="Pre-bundled website packages">
+                                                <div class="customization-layout">
+                                                    <div class="custom-left">
+                                                        <!-- Pre-bundled Packages -->
+                                                        <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
                             <div class="package-card">
                                 <div class="package-title">
@@ -1380,8 +1479,8 @@
                                     <a href="#contact" class="btn btn-primary">Plan a Build</a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="compare-card" aria-label="Compare packages">
+                            </div>
+                            <div class="compare-card" aria-label="Compare packages">
                             <div class="compare-grid">
                                 <div class="head">Feature</div>
                                 <div class="head">Starter</div>
@@ -1428,10 +1527,17 @@
                                 <div class="cell">—</div>
                                 <div class="cell"><span class="tick">✓</span></div>
                             </div>
-                        </div>
-                        <p style="text-align:center; color: #86868b; margin-top: 8px;">All packages are customizable. No hidden fees.</p>
-                        
-                        <div class="feature-options">
+                                                        </div>
+                                                        <p style="text-align:center; color: #86868b; margin: 8px 0 0;">All packages are customizable. No hidden fees.</p>
+                                                    </div>
+                                                    <aside class="custom-right" aria-label="Add-ons and summary">
+                                                        <div class="addons-sidebar">
+                                                            <div class="addons-header">
+                                                                <div class="addons-title">Add‑ons</div>
+                                                                <div class="addons-note">Toggle to customize</div>
+                                                            </div>
+                                                            <div class="addons-list">
+                                                <div class="feature-options">
                             <!-- Essential Features (Pre-selected) -->
                             <div class="feature-option selected essential" data-price="0">
                                 <div class="option-header">
@@ -1997,10 +2103,6 @@
     <!-- Sticky CTA (mobile) -->
     <div class="sticky-cta" aria-hidden="false">
         <div class="container">
-            <div>
-                <strong>Start at ₹16,000</strong>
-                <div style="font-size:12px; color:#86868b;">Domain, hosting, SSL included</div>
-            </div>
             <a href="#packages" class="btn btn-primary" style="padding:10px 16px;">Get Started</a>
         </div>
     </div>
