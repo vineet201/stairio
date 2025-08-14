@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stairio - Think Different About Websites</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1d1d1f;
+            overflow-x: hidden;
+            background: #fff;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header - Apple Style */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 12px 0;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2px;
+        }
+        
+        .logo-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            border-radius: 6px;
+            position: relative;
+        }
+        
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: white;
+            border-radius: 2px;
+            top: 6px;
+            left: 6px;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+            border-radius: 1px;
+            top: 4px;
+            left: 4px;
+        }
+        
+        .logo-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1d1d1f;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-tagline {
+            font-size: 9px;
+            font-weight: 400;
+            color: #86868b;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-left: 36px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: #1d1d1f;
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #8B5CF6;
+        }
+        
+        /* Page Management */
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* Hero Section - Jobs Style */
+        .hero {
+            background: #fff;
+            padding: 120px 0 100px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+            line-height: 1.1;
+        }
+        
+        .hero .subtitle {
+            font-size: 28px;
+            font-weight: 400;
+            color: #86868b;
+            margin-bottom: 40px;
+            letter-spacing: -0.5px;
+        }
+        
+        .hero .description {
+            font-size: 19px;
+            color: #1d1d1f;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .price-reveal {
+            margin: 80px 0;
+            padding: 60px 0;
+            background: #f5f5f7;
+            border-radius: 18px;
+        }
+        
+        .price-reveal .overline {
+            font-size: 17px;
+            color: #86868b;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+        
+        .price-comparison {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        .old-price {
+            font-size: 48px;
+            color: #86868b;
+            text-decoration: line-through;
+            font-weight: 300;
+        }
+        
+        .new-price {
+            font-size: 72px;
+            color: #8B5CF6;
+            font-weight: 700;
+            letter-spacing: -2px;
+        }
+        
+        .cta-section {
+            margin: 60px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            border-radius: 980px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 17px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 0 12px;
+        }
+        
+        .btn-primary {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #7C3AED;
+            transform: translateY(-1px);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: #8B5CF6;
+            border: 2px solid #8B5CF6;
+        }
+        
+        .btn-secondary:hover {
+            background: #8B5CF6;
+            color: white;
+        }
+        
+        /* Features Section - Minimal Grid */
+        .features {
+            padding: 100px 0;
+            background: #fff;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        
+        .section-header p {
+            font-size: 21px;
+            color: #86868b;
+            font-weight: 400;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        .feature-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+        
+        .feature-card p {
+            font-size: 17px;
+            color: #86868b;
+            line-height: 1.5;
+        }
+        
+        /* Packages - Apple Glassmorphism Style */
+        .packages {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .packages::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        /* Base Package */
+        .base-package {
+            max-width: 800px;
+            margin: 80px auto 60px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            position: relative;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .base-header h3 {
+            font-size: 21px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+        
+        .base-price {
+            font-size: 64px;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 16px 0;
+            letter-spacing: -2px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .base-header p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+        
+        .base-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            text-align: left;
+        }
+        
+        .base-feature {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        
+        .base-feature:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+        
+        .base-feature .feature-icon {
+            font-size: 24px;
+            margin-top: 4px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .base-feature strong {
+            display: block;
+            font-size: 17px;
+            color: #ffffff;
+            margin-bottom: 4px;
+            font-weight: 600;
+        }
+        
+        .base-feature p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+        }
+        
+        /* Customization Section */
+        .customization-section {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .customization-section h3 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .customization-subtitle {
+            font-size: 19px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        /* Feature Options */
+        .feature-options {
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-option {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .feature-option:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-option:hover::before {
+            left: 100%;
+        }
+        
+        /* Essential Features Styling */
+        .feature-option.essential {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            cursor: default;
+        }
+        
+        .feature-option.essential:hover {
+            background: rgba(139, 92, 246, 0.15);
+            transform: none;
+        }
+        
+        .feature-option.essential .option-checkbox input[type="checkbox"] {
+            background: rgba(139, 92, 246, 0.8);
+            border-color: rgba(139, 92, 246, 1);
+            cursor: default;
+        }
+        
+        .feature-option.essential .option-checkbox input[type="checkbox"]:checked::after {
+            content: '✓';
+            color: white;
+        }
+        
+        .feature-option.essential .option-price {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .feature-option.selected::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+            pointer-events: none;
+        }
+        
+        .option-header {
+            display: flex;
+            align-items: center;
+            padding: 28px 32px;
+            gap: 24px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .option-checkbox {
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .option-checkbox input[type="checkbox"] {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            appearance: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .option-checkbox input[type="checkbox"]:checked {
+            background: rgba(139, 92, 246, 0.8);
+            border-color: rgba(139, 92, 246, 1);
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+        }
+        
+        .option-checkbox input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        .option-info {
+            flex: 1;
+        }
+        
+        .option-info h4 {
+            font-size: 19px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .option-info p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .option-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+            flex-shrink: 0;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Price Calculator */
+        .price-calculator {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(25px);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 40px;
+            position: sticky;
+            top: 100px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        
+        .calculator-content {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+        
+        .calculator-left {
+            flex: 1;
+        }
+        
+        .calculator-left h4 {
+            font-size: 21px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 28px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .selected-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .base-item,
+        .selected-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 17px;
+        }
+        
+        .base-item {
+            font-weight: 500;
+            color: #ffffff;
+        }
+        
+        .selected-item {
+            color: rgba(255, 255, 255, 0.8);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .calculator-right {
+            text-align: right;
+            flex-shrink: 0;
+        }
+        
+        .total-price {
+            margin-bottom: 32px;
+        }
+        
+        .total-label {
+            display: block;
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 12px;
+        }
+        
+        .total-amount {
+            font-size: 48px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        #order-btn {
+            min-width: 220px;
+            background: rgba(139, 92, 246, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(139, 92, 246, 1);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+        }
+        
+        #order-btn:hover {
+            background: rgba(124, 58, 237, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(139, 92, 246, 0.4);
+        }
+        
+        /* Value Section - Simple Table */
+        .value-section {
+            padding: 100px 0;
+            background: #fff;
+        }
+        
+        .value-table {
+            max-width: 800px;
+            margin: 80px auto 0;
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 1px solid #d2d2d7;
+        }
+        
+        .value-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .value-table th {
+            background: #f5f5f7;
+            padding: 24px;
+            font-size: 17px;
+            font-weight: 600;
+            color: #1d1d1f;
+            text-align: left;
+            border-bottom: 1px solid #d2d2d7;
+        }
+        
+        .value-table td {
+            padding: 20px 24px;
+            font-size: 17px;
+            color: #1d1d1f;
+            border-bottom: 1px solid #f5f5f7;
+        }
+        
+        .value-table tr:last-child td {
+            border-bottom: none;
+            font-weight: 600;
+            font-size: 19px;
+        }
+        
+        .checkmark {
+            color: #8B5CF6;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        /* Agent Page */
+        .agent-hero {
+            background: #fff;
+            padding: 120px 0 100px;
+            text-align: center;
+        }
+        
+        .earning-spotlight {
+            margin: 80px 0;
+            padding: 80px 0;
+            background: #f5f5f7;
+            border-radius: 18px;
+        }
+        
+        .earning-spotlight h3 {
+            font-size: 21px;
+            color: #86868b;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+        
+        .earning-amount {
+            font-size: 96px;
+            font-weight: 700;
+            color: #8B5CF6;
+            margin: 24px 0;
+            letter-spacing: -3px;
+        }
+        
+        .earning-subtitle {
+            font-size: 19px;
+            color: #1d1d1f;
+            margin-bottom: 40px;
+        }
+        
+        .earning-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            margin-top: 40px;
+        }
+        
+        .earning-item {
+            text-align: center;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+        }
+        
+        .earning-item strong {
+            display: block;
+            font-size: 17px;
+            color: #1d1d1f;
+            margin-bottom: 8px;
+        }
+        
+        .earning-item span {
+            font-size: 15px;
+            color: #86868b;
+        }
+        
+        /* Benefits Grid */
+        .benefits {
+            padding: 100px 0;
+            background: #fff;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            margin-top: 80px;
+        }
+        
+        .benefit-card {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .benefit-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        /* Process Steps */
+        .process {
+            padding: 100px 0;
+            background: #f5f5f7;
+        }
+        
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+        
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #8B5CF6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .process-step h3 {
+            font-size: 21px;
+            font-weight: 600;
+            color: #1d1d1f;
+            margin-bottom: 12px;
+        }
+        
+        .process-step p {
+            font-size: 17px;
+            color: #86868b;
+            line-height: 1.5;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1d1d1f;
+            color: #f5f5f7;
+            padding: 80px 0 40px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+        
+        .footer-section h3 {
+            font-size: 19px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #f5f5f7;
+        }
+        
+        .footer-section p, .footer-section li {
+            color: #86868b;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            padding: 4px 0;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #424245;
+            color: #86868b;
+            font-size: 15px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero .subtitle {
+                font-size: 21px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .price-comparison {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .old-price {
+                font-size: 32px;
+            }
+            
+            .new-price {
+                font-size: 48px;
+            }
+            
+            .earning-amount {
+                font-size: 64px;
+            }
+            
+            .section-header h2 {
+                font-size: 32px;
+            }
+            
+            /* Glassmorphism mobile adjustments */
+            .base-package {
+                margin: 40px auto 40px;
+                padding: 32px 24px;
+            }
+            
+            .base-price {
+                font-size: 48px;
+            }
+            
+            .base-features {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .customization-section h3 {
+                font-size: 28px;
+            }
+            
+            .option-header {
+                padding: 20px 24px;
+                gap: 16px;
+            }
+            
+            .option-info h4 {
+                font-size: 17px;
+            }
+            
+            .option-price {
+                font-size: 18px;
+            }
+            
+            .price-calculator {
+                padding: 24px;
+                position: static;
+            }
+            
+            .calculator-content {
+                flex-direction: column;
+                gap: 24px;
+            }
+            
+            .calculator-right {
+                text-align: left;
+            }
+            
+            .total-amount {
+                font-size: 36px;
+            }
+            
+            #order-btn {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+        
+        /* Smooth Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <div class="logo-main">
+                    <div class="logo-icon"></div>
+                    <span class="logo-text">STAIRIO</span>
+                </div>
+                <div class="logo-tagline">Every Dream Needs a Step</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#agent">Become Agent</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="container">
+                    <div class="fade-in">
+                        <h1>Think Different<br>About Websites</h1>
+                        <p class="subtitle">Premium. Professional. Perfectly Priced.</p>
+                        <p class="description">We believe every small business deserves a website that looks like it cost ₹35,000. Now you can have one for just ₹16,000.</p>
+                        
+                        <div class="price-reveal">
+                            <div class="overline">What others charge vs what you pay</div>
+                            <div class="price-comparison">
+                                <div class="old-price">₹35,000</div>
+                                <div class="new-price">₹16,000</div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-section">
+                            <a href="#packages" class="btn btn-primary">Get Your Website</a>
+                            <a href="#agent" class="btn btn-secondary">Become an Agent</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features" id="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Everything.<br>Included.</h2>
+                        <p>No hidden costs. No surprises. Just everything you need.</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🌐</div>
+                            <h3>Domain & Hosting</h3>
+                            <p>Free domain for 1 year. Hosting for 2 years. Because your website should just work.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🔒</div>
+                            <h3>Security First</h3>
+                            <p>Premium SSL for 3 years. Your customers' trust is everything.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🎨</div>
+                            <h3>Beautiful Design</h3>
+                            <p>Custom UI that reflects your brand. Not templates. Your unique story.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h3>Works Everywhere</h3>
+                            <p>Perfect on phones, tablets, desktops. Every screen, every time.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🔧</div>
+                            <h3>We've Got You</h3>
+                            <p>3 months of support included. Because launching is just the beginning.</p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3>Know Your Impact</h3>
+                            <p>Analytics setup included. See who visits, what works, how you grow.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Packages Section -->
+            <section class="packages" id="packages">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Customize<br>Your Website.</h2>
+                        <p>Start with the essentials. Add what you need. Pay for what you choose.</p>
+                    </div>
+                    
+                    <!-- Customization Options -->
+                    <div class="customization-section">
+                        <h3>Make It Yours</h3>
+                        <p class="customization-subtitle">Essential features included, premium features available</p>
+                        
+                        <div class="feature-options">
+                            <!-- Essential Features (Pre-selected) -->
+                            <div class="feature-option selected essential" data-price="0">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="domain-hosting" checked disabled>
+                                        <label for="domain-hosting"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Domain & Hosting</h4>
+                                        <p>Free domain + 2 years hosting included</p>
+                                    </div>
+                                    <div class="option-price">Included</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option selected essential" data-price="0">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="ssl-security" checked disabled>
+                                        <label for="ssl-security"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>SSL Security</h4>
+                                        <p>Premium SSL certificate for 3 years</p>
+                                    </div>
+                                    <div class="option-price">Included</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option selected essential" data-price="0">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="responsive-design" checked disabled>
+                                        <label for="responsive-design"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Responsive Design</h4>
+                                        <p>Perfect on phones, tablets, and desktops</p>
+                                    </div>
+                                    <div class="option-price">Included</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option selected essential" data-price="0">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="basic-pages" checked disabled>
+                                        <label for="basic-pages"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Up to 5 Pages</h4>
+                                        <p>Home, About, Services, Contact + 1 custom page</p>
+                                    </div>
+                                    <div class="option-price">Included</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option selected essential" data-price="0">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="support" checked disabled>
+                                        <label for="support"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>3 Months Support</h4>
+                                        <p>Free maintenance and technical support</p>
+                                    </div>
+                                    <div class="option-price">Included</div>
+                                </div>
+                            </div>
+
+                            <!-- Premium Add-ons -->
+                            <div class="feature-option" data-price="2000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="contact-forms">
+                                        <label for="contact-forms"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Advanced Contact Forms</h4>
+                                        <p>Multi-step forms, file uploads, custom fields</p>
+                                    </div>
+                                    <div class="option-price">+₹2,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="3000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="team-profiles">
+                                        <label for="team-profiles"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Team & Profile Pages</h4>
+                                        <p>Showcase your team with beautiful profiles</p>
+                                    </div>
+                                    <div class="option-price">+₹3,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="4000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="gallery">
+                                        <label for="gallery"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Media Gallery</h4>
+                                        <p>Photo galleries, video integration, portfolio showcase</p>
+                                    </div>
+                                    <div class="option-price">+₹4,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="5000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="blog">
+                                        <label for="blog"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Blog Platform</h4>
+                                        <p>Full blogging system with categories and search</p>
+                                    </div>
+                                    <div class="option-price">+₹5,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="6000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="ecommerce">
+                                        <label for="ecommerce"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>E-commerce Ready</h4>
+                                        <p>Product catalog, shopping cart, payment gateway</p>
+                                    </div>
+                                    <div class="option-price">+₹6,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="3000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="whatsapp">
+                                        <label for="whatsapp"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>WhatsApp Integration</h4>
+                                        <p>Direct chat buttons, automated responses</p>
+                                    </div>
+                                    <div class="option-price">+₹3,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="4000">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="analytics">
+                                        <label for="analytics"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Advanced Analytics</h4>
+                                        <p>Detailed visitor tracking, conversion goals, reports</p>
+                                    </div>
+                                    <div class="option-price">+₹4,000</div>
+                                </div>
+                            </div>
+
+                            <div class="feature-option" data-price="2500">
+                                <div class="option-header">
+                                    <div class="option-checkbox">
+                                        <input type="checkbox" id="newsletter">
+                                        <label for="newsletter"></label>
+                                    </div>
+                                    <div class="option-info">
+                                        <h4>Newsletter System</h4>
+                                        <p>Email capture, automated campaigns, subscriber management</p>
+                                    </div>
+                                    <div class="option-price">+₹2,500</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Calculator -->
+                        <div class="price-calculator">
+                            <div class="calculator-content">
+                                <div class="calculator-left">
+                                    <h4>Your Website Package</h4>
+                                    <div class="selected-features">
+                                        <div class="base-item">
+                                            <span>Essential Features</span>
+                                            <span>₹16,000</span>
+                                        </div>
+                                        <div id="selected-list"></div>
+                                    </div>
+                                </div>
+                                <div class="calculator-right">
+                                    <div class="total-price">
+                                        <span class="total-label">Total</span>
+                                        <span class="total-amount" id="total-price">₹16,000</span>
+                                    </div>
+                                    <a href="#contact" class="btn btn-primary" id="order-btn">Order Your Website</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Value Section -->
+            <section class="value-section">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>The Value.<br>Transparent.</h2>
+                        <p>See exactly what you get. No fine print.</p>
+                    </div>
+                    
+                    <div class="value-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Market Rate</th>
+                                    <th>Stairio</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Domain Name</td>
+                                    <td>₹2,000/year</td>
+                                    <td><span class="checkmark">✓</span>1 year included</td>
+                                </tr>
+                                <tr>
+                                    <td>Web Hosting</td>
+                                    <td>₹3,000/year</td>
+                                    <td><span class="checkmark">✓</span>2 years included</td>
+                                </tr>
+                                <tr>
+                                    <td>SSL Certificate</td>
+                                    <td>₹1,000/year</td>
+                                    <td><span class="checkmark">✓</span>3 years included</td>
+                                </tr>
+                                <tr>
+                                    <td>UI/UX Design</td>
+                                    <td>₹6,000</td>
+                                    <td><span class="checkmark">✓</span>Included</td>
+                                </tr>
+                                <tr>
+                                    <td>Development</td>
+                                    <td>₹10,000</td>
+                                    <td><span class="checkmark">✓</span>Included</td>
+                                </tr>
+                                <tr>
+                                    <td>Support</td>
+                                    <td>₹500/month</td>
+                                    <td><span class="checkmark">✓</span>3 months free</td>
+                                </tr>
+                                <tr>
+                                    <td>Total Value</td>
+                                    <td>₹35,000+</td>
+                                    <td>Starting at ₹16,000</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Agent Page -->
+        <div id="agent" class="page">
+            <!-- Agent Hero -->
+            <section class="agent-hero">
+                <div class="container">
+                    <div class="fade-in">
+                        <h1>Be The Bridge<br>To Digital Dreams</h1>
+                        <p class="subtitle">Help businesses transform. Build your future.</p>
+                        <p class="description">Connect local businesses with premium websites. Earn substantial commissions. Be part of something meaningful.</p>
+                        
+                        <div class="earning-spotlight">
+                            <h3>Your earning potential</h3>
+                            <div class="earning-amount">₹40,000</div>
+                            <div class="earning-subtitle">per month</div>
+                            
+                            <div class="earning-breakdown">
+                                <div class="earning-item">
+                                    <strong>₹16,000 website</strong>
+                                    <span>You earn ₹4,000</span>
+                                </div>
+                                <div class="earning-item">
+                                    <strong>₹20,000 website</strong>
+                                    <span>You earn ₹5,000</span>
+                                </div>
+                                <div class="earning-item">
+                                    <strong>₹25,000+ website</strong>
+                                    <span>You earn ₹6,000+</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta-section">
+                            <a href="#contact" class="btn btn-primary">Become an Agent</a>
+                            <a href="#home" class="btn btn-secondary">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits -->
+            <section class="benefits">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Why Join<br>Stairio?</h2>
+                        <p>We've designed this for your success.</p>
+                    </div>
+                    
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-icon">💰</div>
+                            <h3>High Commissions</h3>
+                            <p>25% on every sale. The more you help, the more you earn.</p>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🎯</div>
+                            <h3>No Tech Required</h3>
+                            <p>Focus on people. We handle everything technical.</p>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">📚</div>
+                            <h3>Complete Kit</h3>
+                            <p>Brochures, samples, scripts. Everything to pitch confidently.</p>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">⚡</div>
+                            <h3>Quick Payments</h3>
+                            <p>48-hour payments via UPI or bank transfer.</p>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🏆</div>
+                            <h3>Your Territory</h3>
+                            <p>Work actively, get exclusive access. No competition.</p>
+                        </div>
+                        
+                        <div class="benefit-card">
+                            <div class="benefit-icon">🚀</div>
+                            <h3>Growing Market</h3>
+                            <p>Every business needs digital presence. The trend is unstoppable.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Process -->
+            <section class="process">
+                <div class="container">
+                    <div class="section-header">
+                        <h2>Simple.<br>Straightforward.</h2>
+                        <p>Five steps to start earning.</p>
+                    </div>
+                    
+                    <div class="process-grid">
+                        <div class="process-step">
+                            <div class="step-number">1</div>
+                            <h3>Sign Up</h3>
+                            <p>Simple digital agreement. No fees. No investment.</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-number">2</div>
+                            <h3>Get Your Kit</h3>
+                            <p>Stairio Token, materials, samples, guides.</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-number">3</div>
+                            <h3>Find Clients</h3>
+                            <p>Connect with local businesses who need websites.</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-number">4</div>
+                            <h3>Make Sales</h3>
+                            <p>Present packages, help them choose, close deals.</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <div class="step-number">5</div>
+                            <h3>Get Paid</h3>
+                            <p>Commission in 48 hours. Track earnings. Grow income.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo" style="margin-bottom: 24px;">
+                        <div class="logo-main">
+                            <div class="logo-icon"></div>
+                            <span class="logo-text" style="color: #f5f5f7;">STAIRIO</span>
+                        </div>
+                        <div class="logo-tagline">Every Dream Needs a Step</div>
+                    </div>
+                    <p>Revolutionizing digital presence for small and mid-scale businesses across India.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li>Website Development</li>
+                        <li>Domain & Hosting</li>
+                        <li>UI/UX Design</li>
+                        <li>Maintenance & Support</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Get Started</h3>
+                    <p>Ready to transform your business digitally?</p>
+                    <div style="margin-top: 24px;">
+                        <a href="mailto:hello@stairio.com" class="btn btn-primary">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Stairio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Steve Jobs-style SPA routing
+        function showPage(pageId) {
+            // Hide all pages with fade effect
+            document.querySelectorAll('.page').forEach(page => {
+                page.style.opacity = '0';
+                setTimeout(() => {
+                    page.classList.remove('active');
+                }, 150);
+            });
+            
+            // Show target page with fade effect
+            setTimeout(() => {
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                    targetPage.style.opacity = '1';
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 150);
+        }
+
+        // Handle navigation with smooth transitions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add fade-in class to initial elements
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+            }, 100);
+            
+            // Handle hash-based navigation
+            function handleNavigation() {
+                const hash = window.location.hash.substring(1);
+                const validPages = ['home', 'agent'];
+                
+                if (validPages.includes(hash)) {
+                    showPage(hash);
+                } else if (hash === 'packages' || hash === 'features' || hash === 'contact') {
+                    showPage('home');
+                    setTimeout(() => {
+                        const element = document.getElementById(hash);
+                        if (element) {
+                            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }, 300);
+                } else {
+                    showPage('home');
+                }
+            }
+            
+            handleNavigation();
+            window.addEventListener('hashchange', handleNavigation);
+        });
+
+        // Smooth navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const validPages = ['home', 'agent'];
+                
+                if (validPages.includes(targetId)) {
+                    window.location.hash = targetId;
+                } else {
+                    if (window.location.hash !== '#home') {
+                        window.location.hash = 'home';
+                        setTimeout(() => {
+                            const target = document.getElementById(targetId);
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 300);
+                    } else {
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    }
+                }
+            });
+        });
+
+        // Parallax-like effects on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            // Subtle header background change
+            const header = document.querySelector('header');
+            if (scrolled > 50) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Add subtle entrance animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for entrance animations
+        document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .feature-option').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // Apple-style pricing calculator
+        const basePrice = 16000;
+        let selectedFeatures = {};
+        const featureNames = {
+            'contact-forms': 'Advanced Contact Forms',
+            'team-profiles': 'Team & Profile Pages', 
+            'gallery': 'Media Gallery',
+            'blog': 'Blog Platform',
+            'ecommerce': 'E-commerce Ready',
+            'whatsapp': 'WhatsApp Integration',
+            'analytics': 'Advanced Analytics',
+            'newsletter': 'Newsletter System'
+        };
+
+        function updatePrice() {
+            const totalPrice = basePrice + Object.values(selectedFeatures).reduce((sum, price) => sum + price, 0);
+            document.getElementById('total-price').textContent = `₹${totalPrice.toLocaleString()}`;
+            
+            // Update selected features list
+            const selectedList = document.getElementById('selected-list');
+            selectedList.innerHTML = '';
+            
+            Object.entries(selectedFeatures).forEach(([featureId, price]) => {
+                const item = document.createElement('div');
+                item.className = 'selected-item';
+                item.innerHTML = `
+                    <span>${featureNames[featureId]}</span>
+                    <span>+₹${price.toLocaleString()}</span>
+                `;
+                selectedList.appendChild(item);
+            });
+            
+            // Update order button text
+            const orderBtn = document.getElementById('order-btn');
+            if (Object.keys(selectedFeatures).length > 0) {
+                orderBtn.textContent = `Order for ₹${totalPrice.toLocaleString()}`;
+            } else {
+                orderBtn.textContent = 'Order Your Website';
+            }
+        }
+
+        // Handle feature selection (excluding essential features)
+        document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
+            const checkbox = option.querySelector('input[type="checkbox"]');
+            const price = parseInt(option.dataset.price);
+            const featureId = checkbox.id;
+            
+            // Make entire option clickable
+            option.addEventListener('click', (e) => {
+                if (e.target.type !== 'checkbox') {
+                    checkbox.checked = !checkbox.checked;
+                }
+                
+                if (checkbox.checked) {
+                    selectedFeatures[featureId] = price;
+                    option.classList.add('selected');
+                } else {
+                    delete selectedFeatures[featureId];
+                    option.classList.remove('selected');
+                }
+                
+                updatePrice();
+            });
+            
+            // Handle direct checkbox clicks
+            checkbox.addEventListener('change', (e) => {
+                e.stopPropagation();
+                
+                if (checkbox.checked) {
+                    selectedFeatures[featureId] = price;
+                    option.classList.add('selected');
+                } else {
+                    delete selectedFeatures[featureId];
+                    option.classList.remove('selected');
+                }
+                
+                updatePrice();
+            });
+        });
+
+        // Prevent clicks on essential features
+        document.querySelectorAll('.feature-option.essential').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
+        // Initialize price display
+        updatePrice();
+    </script>
+</body>
+</html>
+                    
