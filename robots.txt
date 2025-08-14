@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://stairio.example/sitemap.xml
