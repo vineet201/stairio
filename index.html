@@ -15,6 +15,27 @@
         <link rel="canonical" href="https://stairio.example/">
     <!-- Inline SVG favicon to avoid external file dependency -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='8' width='64' height='64' fill='%238B5CF6'/%3E%3Crect x='16' y='16' width='20' height='20' rx='2' fill='%23fff'/%3E%3Crect x='12' y='12' width='12' height='12' rx='1.5' fill='%238B5CF6'/%3E%3C/svg%3E">
+        <!-- Tailwind CSS (CDN) -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            brand: { DEFAULT: '#8B5CF6', dark: '#7C3AED' },
+                            text: '#1d1d1f',
+                            muted: '#86868b',
+                            line: '#d2d2d7',
+                        },
+                        borderRadius: { brand: '14px' },
+                        boxShadow: {
+                            'sm-brand': '0 6px 18px rgba(0,0,0,0.06)',
+                            'md-brand': '0 12px 32px rgba(0,0,0,0.10)'
+                        }
+                    }
+                }
+            }
+        </script>
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -26,6 +47,18 @@
         }
         </script>
     <style>
+        :root {
+            --brand: #8B5CF6;
+            --brand-dark: #7C3AED;
+            --text: #1d1d1f;
+            --muted: #86868b;
+            --line: #d2d2d7;
+            --surface: #fff;
+            --surface-2: #f5f5f7;
+            --radius: 14px;
+            --shadow-sm: 0 6px 18px rgba(0,0,0,0.06);
+            --shadow-md: 0 12px 32px rgba(0,0,0,0.10);
+        }
         * {
             margin: 0;
             padding: 0;
@@ -131,16 +164,16 @@
         }
         
         .nav-links a {
-            color: #1d1d1f;
+            color: var(--text);
             text-decoration: none;
             font-weight: 400;
             font-size: 14px;
-            transition: color 0.3s;
+            position: relative;
+            transition: color .2s ease;
         }
-        
-        .nav-links a:hover {
-            color: #8B5CF6;
-        }
+        .nav-links a:hover { color: var(--brand); }
+        .nav-links a.active { color: var(--brand); }
+        .nav-links a.active::after { content:''; position:absolute; left:0; right:0; bottom:-8px; height:2px; background: var(--brand); border-radius:2px; }
 
         .nav-links a:focus-visible, .btn:focus-visible, .mobile-menu-btn:focus-visible {
             outline: 3px solid #8B5CF6;
@@ -269,26 +302,15 @@
     /* Buttons */
     .btn { padding: 12px 20px; border-radius: 999px; font-weight: 600; border: none; cursor: pointer; margin: 0 12px; transition: transform .2s ease, background .2s ease, color .2s ease; display: inline-block; }
         
-        .btn-primary {
-            background: #8B5CF6;
-            color: white;
-        }
+    .btn-primary { background: var(--brand); color: #fff; }
         
-        .btn-primary:hover {
-            background: #7C3AED;
-            transform: translateY(-1px);
-        }
+    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
         
-        .btn-secondary {
-            background: transparent;
-            color: #8B5CF6;
-            border: 2px solid #8B5CF6;
-        }
+    .btn-secondary { background: transparent; color: var(--brand); border: 2px solid var(--brand); }
         
-        .btn-secondary:hover {
-            background: #8B5CF6;
-            color: white;
-        }
+    .btn-secondary:hover { background: var(--brand); color: #fff; }
+    .btn-quiet { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn-quiet:hover { background: #fafafa; }
         
         /* Features Section - Enhanced */
         .features {
@@ -330,14 +352,14 @@
         .feature-card {
             text-align: left;
             padding: 22px;
-            background:#fff;
-            border:1px solid #d2d2d7;
-            border-radius: 14px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            background: var(--surface);
+            border:1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
             transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
             height: 100%;
         }
-        .feature-card:hover { transform: translateY(-3px); box-shadow:0 12px 32px rgba(0,0,0,0.1); border-color:#c9c9cf; }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color:#c9c9cf; }
         .feature-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg,#8B5CF6,#7C3AED); color:#fff; font-size:26px; margin-bottom: 16px; box-shadow: 0 6px 20px rgba(139,92,246,0.35); }
         .feature-card h3 {
             font-size: 20px;
@@ -353,27 +375,74 @@
         .features-cta { text-align:center; margin-top: 36px; }
         @media (max-width: 768px) { .features { padding: 90px 0; } .section-header h2 { font-size: 36px; } .features-stats { margin: -20px auto 40px; } }
 
+    /* Pricing Enhancements */
+    .billing-toggle { display:flex; align-items:center; justify-content:center; gap:12px; margin: 8px 0 20px; }
+    .billing-toggle .label { font-size: 13px; color: var(--muted); }
+    .segmented { display:inline-flex; background:#fff; border:1px solid var(--line); border-radius: 999px; padding:4px; box-shadow: var(--shadow-sm); }
+    .segmented button { border:none; background:transparent; padding:8px 14px; font-size:13px; color: var(--text); border-radius:999px; cursor:pointer; }
+    .segmented button[aria-pressed="true"] { background: var(--surface-2); color: var(--brand); box-shadow: inset 0 0 0 1px var(--brand); }
+    .pkg-sub { font-size: 12px; color: var(--muted); margin-top: -2px; }
+    .guarantee { margin: 14px 0 0; background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow-sm); display:flex; align-items:center; gap:12px; }
+    .guarantee .badge { width:28px; height:28px; border-radius:50%; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; }
+    .guarantee p { margin:0; font-size:14px; color: var(--text); }
+    .mini-testimonials { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:12px; margin-top: 12px; }
+    .mini-t { background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding:12px; color:var(--text); box-shadow: var(--shadow-sm); font-size:13px; }
+
+    /* Included with every plan strip */
+    .included-strip { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin: 8px 0 16px; }
+    .included-strip .title { font-size:12px; color: var(--muted); margin-right: 4px; }
+    .included-pill { font-size:12px; color: var(--text); border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 10px; }
+
+    /* Urgency badge */
+    .urgency-badge { display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#6e6e73; background:#fff; border:1px dashed #d2d2d7; border-radius:999px; padding:6px 10px; box-shadow: var(--shadow-sm); }
+    .urgency-badge .dot { width:6px; height:6px; border-radius:999px; background:#F59E0B; display:inline-block; }
+    .urgency-low { color:#b91c1c; border-color:#fecaca; }
+
+    /* ROI Calculator */
+    .roi-card { margin-top: 16px; background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow-sm); }
+    .roi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; }
+    .roi-field { display:flex; flex-direction:column; gap:6px; }
+    .roi-field label { font-size:12px; color:var(--muted); }
+    .roi-field input { padding:10px 12px; border:1px solid var(--line); border-radius:10px; }
+    .roi-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-top:12px; }
+    .roi-stat { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; box-shadow: var(--shadow-sm); font-size:13px; }
+    .roi-stat strong { display:block; font-size:16px; color:var(--text); }
+    /* Client logos and success counters */
+    .client-logos { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:16px; align-items:center; }
+    .client-logo { height:48px; border:1px solid var(--line); border-radius: var(--radius); background:#fff; display:flex; align-items:center; justify-content:center; padding:8px; box-shadow: var(--shadow-sm); }
+    .client-logo img { max-height: 28px; max-width: 100%; opacity:.9; }
+    .success-band { margin-top: 18px; display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:12px; }
+    .kpi { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; text-align:center; box-shadow: var(--shadow-sm); }
+    .kpi .num { font-size:22px; font-weight:800; color: var(--text); letter-spacing:-.3px; }
+    .kpi .label { font-size:12px; color: var(--muted); margin-top:4px; }
+
+    /* Risk reversal card */
+    .risk-card { margin-top: 10px; background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding:14px; box-shadow: var(--shadow-sm); display:flex; align-items:center; gap:12px; }
+    .risk-card .risk-icon { width:32px; height:32px; border-radius:50%; background: linear-gradient(135deg, var(--brand), var(--brand-dark)); color:#fff; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .risk-card .risk-copy { flex:1; font-size:13px; color:var(--text); }
+    .risk-card .risk-copy strong { display:block; font-size:14px; }
+
     /* Social Proof */
     .social-proof { padding: 40px 0 100px; background: #fff; }
     .logo-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 24px; align-items: center; opacity: 0.9; }
-    .logo-pill { height: 48px; border-radius: 12px; border: 1px solid #d2d2d7; background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,245,247,0.9)); display:flex; align-items:center; justify-content:center; color: #86868b; font-size: 13px; letter-spacing: .2px; }
+    .logo-pill { height: 48px; border-radius: var(--radius); border: 1px solid var(--line); background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,245,247,0.9)); display:flex; align-items:center; justify-content:center; color: var(--muted); font-size: 13px; letter-spacing: .2px; }
 
     /* Testimonials */
     .testimonials { padding: 100px 0; background: #f5f5f7; }
     .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; }
-    .testimonial { background: #fff; border:1px solid #d2d2d7; border-radius: 16px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.06); }
+    .testimonial { background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); }
     .testimonial .name { margin-top: 12px; font-weight: 600; color: #1d1d1f; }
     .testimonial .role { color: #86868b; font-size: 14px; }
 
     /* Portfolio */
     .portfolio { padding: 100px 0; background: #fff; }
     .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 24px; }
-    .shot { border-radius: 16px; border:1px solid #d2d2d7; overflow: hidden; background: linear-gradient(135deg, #ececff, #f7f5ff); box-shadow: 0 8px 32px rgba(0,0,0,0.06); height: 200px; position: relative; }
+    .shot { border-radius: var(--radius); border:1px solid var(--line); overflow: hidden; background: linear-gradient(135deg, #ececff, #f7f5ff); box-shadow: var(--shadow-sm); height: 200px; position: relative; }
     .shot::after { content: 'Preview'; position: absolute; bottom: 8px; right: 12px; font-size: 12px; color: #86868b; }
 
     /* FAQ */
     .faq { padding: 100px 0; background: #f5f5f7; }
-    .faq-item { background: #fff; border:1px solid #d2d2d7; border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+    .faq-item { background: var(--surface); border:1px solid var(--line); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
     .faq-q { display:flex; justify-content:space-between; align-items:center; padding: 16px 20px; cursor:pointer; }
     .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; padding: 0 20px; }
     .faq-item.open .faq-a { max-height: 400px; padding-bottom: 16px; }
@@ -389,7 +458,7 @@
     @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
 
     /* Sticky CTA (mobile) */
-    .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.9); backdrop-filter: blur(10px); border-top: 1px solid #d2d2d7; padding: 10px 16px; display: none; z-index: 1000; }
+    .sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,.9); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 10px 16px; display: none; z-index: 1000; }
     .sticky-cta .container { display:flex; align-items:center; justify-content: space-between; }
     @media (max-width: 768px) { .sticky-cta { display: block; } body { padding-bottom: 68px; } }
         
@@ -399,7 +468,7 @@
             background: #fff; /* switched from purple gradient to light theme */
             position: relative;
             overflow: hidden;
-            border-top: 1px solid #d2d2d7; /* subtle separation */
+            border-top: 1px solid var(--line); /* subtle separation */
         }
         
         .packages::before {
@@ -503,17 +572,17 @@
             margin: 12px 0 28px;
         }
         .package-card {
-            background: #fff;
-            border: 1px solid #d2d2d7;
-            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
             padding: 24px;
             backdrop-filter: none;
-            color: #1d1d1f;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
         }
-        .package-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.12); background: #fafafa; }
-    .package-card.featured { border-color: #8B5CF6; box-shadow: 0 16px 40px rgba(139,92,246,0.12); position: relative; }
+        .package-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: #fafafa; }
+    .package-card.featured { border-color: var(--brand); box-shadow: 0 16px 40px rgba(139,92,246,0.12); position: relative; }
     .package-card.featured::after { content: 'Most Popular'; position: absolute; top: 12px; right: 12px; font-size: 12px; background: #8B5CF6; border:1px solid #7C3AED; color:#fff; padding: 4px 8px; border-radius: 999px; }
         .package-title { display:flex; align-items:center; justify-content:space-between; margin-bottom: 8px; }
         .package-title h4 { font-size: 20px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.3px; }
@@ -529,19 +598,26 @@
         /* Compare table inside gradient section */
         .compare-card {
             margin-top: 8px;
-            background: #fff;
-            border: 1px solid #d2d2d7;
-            border-radius: 20px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
             padding: 16px;
             backdrop-filter: none;
-            color: #1d1d1f;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
         }
         .compare-grid { display:grid; grid-template-columns: 1.6fr repeat(3, 1fr); gap: 8px; align-items:center; }
         .compare-grid .head { font-weight: 700; padding: 10px; }
         .compare-grid .cell { padding: 10px; border-top: 1px solid #f0f0f0; }
         .compare-grid .feat { opacity: .95; }
         .tick { font-weight: 800; }
+        /* Compare grid stripes and sticky first column */
+        .compare-grid .cell:nth-child(8n+5),
+        .compare-grid .cell:nth-child(8n+6),
+        .compare-grid .cell:nth-child(8n+7),
+        .compare-grid .cell:nth-child(8n+8) { background: #fafafa; }
+        .compare-grid .head:first-child,
+        .compare-grid .cell:nth-child(4n+1) { position: sticky; left: 0; background: #fff; z-index: 1; box-shadow: 8px 0 12px -12px rgba(0,0,0,0.12); }
         
     /* Customization Section */
     .customization-section {
@@ -552,12 +628,18 @@
     .customization-layout { display:grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items:start; }
     .custom-left { min-width: 0; }
     .custom-right { position: sticky; top: 80px; }
-    .addons-sidebar { background:#fff; border:1px solid #d2d2d7; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.06); overflow:hidden; }
+    .addons-sidebar { background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; }
     .addons-header { display:flex; align-items:baseline; justify-content:space-between; padding:16px 16px 8px; border-bottom:1px solid #eee; }
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
     @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
+    /* Mobile accordion for add-ons */
+    @media (max-width: 768px) {
+        .addons-header { cursor: pointer; }
+        .addons-sidebar:not(.open) .addons-list { display: none; }
+        .addons-sidebar .addons-header::after { content: attr(aria-expanded); display:none; }
+    }
 
     /* Compact scaling for add-ons and calculator */
     .addons-sidebar .feature-options { gap: 12px; margin-bottom: 16px; }
@@ -900,7 +982,7 @@
             background: white;
             border-radius: 18px;
             overflow: hidden;
-            border: 1px solid #d2d2d7;
+            border: 1px solid var(--line);
         }
         
         .value-table table {
@@ -1110,7 +1192,10 @@
             font-size: 15px;
         }
         
-        /* Responsive */
+    /* Performance: delay offscreen rendering */
+    .features, .revolution, .packages, .value-section, .testimonials, .portfolio, .faq, .contact { content-visibility: auto; contain-intrinsic-size: 600px; }
+
+    /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 36px;
@@ -1215,6 +1300,9 @@
                 min-width: auto;
             }
         }
+
+    /* Focus styles for interactive cards */
+    .tile:focus-visible, .package-card:focus-visible, .feature-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
         
         /* Smooth Animations */
         @keyframes fadeInUp {
@@ -1293,15 +1381,21 @@
                 </div>
             </section>
 
-            <!-- Social Proof -->
-            <section class="social-proof" aria-label="Featured clients and partners">
+            <!-- Social Proof: Real Client Logos & Success Counter -->
+            <section class="social-proof" aria-label="Trusted by clients">
                 <div class="container">
-                    <div class="logo-row" aria-hidden="true">
-                        <div class="logo-pill">Retail • Clinic • Agency</div>
-                        <div class="logo-pill">Restaurant • Startup</div>
-                        <div class="logo-pill">Salon • Coaching</div>
-                        <div class="logo-pill">Real Estate • NGO</div>
-                        <div class="logo-pill">Manufacturing • Services</div>
+                    <div class="client-logos">
+                        <div class="client-logo"><img src="assets/images/logos/aster.svg" alt="Aster Clinic" loading="lazy"></div>
+                        <div class="client-logo"><img src="assets/images/logos/urban.svg" alt="Urban Realty" loading="lazy"></div>
+                        <div class="client-logo"><img src="assets/images/logos/tasty.svg" alt="Tasty Bites" loading="lazy"></div>
+                        <div class="client-logo"><img src="assets/images/logos/nextgen.svg" alt="NextGen Services" loading="lazy"></div>
+                        <div class="client-logo"><img src="assets/images/logos/bloom.svg" alt="Bloom Boutique" loading="lazy"></div>
+                    </div>
+                    <div class="success-band" aria-label="Success counters">
+                        <div class="kpi"><div class="num" data-count-to="120" id="kpi-sites">0</div><div class="label">Websites launched</div></div>
+                        <div class="kpi"><div class="num" data-count-to="98" id="kpi-satisfaction">0%</div><div class="label">Client satisfaction</div></div>
+                        <div class="kpi"><div class="num" data-count-to="14" id="kpi-days">0</div><div class="label">Avg days to launch</div></div>
+                        <div class="kpi"><div class="num" data-count-to="3" id="kpi-years">0 yrs</div><div class="label">SSL coverage</div></div>
                     </div>
                 </div>
             </section>
@@ -1473,17 +1567,36 @@
                                         <div class="customization-section website-theme">
                                                 <h3>Make It Yours</h3>
                                                 <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
+                                                <div class="billing-toggle" role="group" aria-label="Billing period">
+                                                    <span class="label">Billing:</span>
+                                                    <div class="segmented" aria-live="polite">
+                                                        <button type="button" class="bill-btn" data-mode="onetime" aria-pressed="true">One‑time</button>
+                                                        <button type="button" class="bill-btn" data-mode="monthly" aria-pressed="false">Monthly (12×)</button>
+                                                    </div>
+                                                </div>
+                                                <div class="included-strip" aria-label="Included with every plan">
+                                                    <span class="title">Included:</span>
+                                                    <span class="included-pill">Domain (1 yr)</span>
+                                                    <span class="included-pill">Hosting (2 yrs)</span>
+                                                    <span class="included-pill">SSL (3 yrs)</span>
+                                                    <span class="included-pill">Responsive design</span>
+                                                    <span class="included-pill">3 months support</span>
+                                                </div>
+                                                <!-- Urgency badge -->
+                                                <div class="urgency-badge" id="slots-badge" aria-live="polite"><span class="dot"></span>⏳ 3 slots remaining this month</div>
+
 
                                                 <div class="customization-layout">
                                                     <div class="custom-left">
                                                         <!-- Pre-bundled Packages -->
                                                         <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
-                            <div class="package-card">
+                            <div class="package-card" tabindex="0">
                                 <div class="package-title">
                                     <h4>Starter</h4>
                                 </div>
                                 <div class="package-price"><span id="pkg-price-starter">₹16,000</span> <small>All essentials</small></div>
+                                <div class="pkg-sub" id="pkg-sub-starter">or ₹1,333 / mo for 12 months</div>
                                 <ul class="package-list">
                                     <li>Domain (1 yr), Hosting (2 yrs), SSL (3 yrs)</li>
                                     <li>Responsive design up to 5 pages</li>
@@ -1491,16 +1604,17 @@
                                 </ul>
                                 <div class="package-actions">
                                     <button class="btn btn-secondary choose-package" data-features="" data-name="Starter">Choose Starter</button>
-                                    <a href="#contact" class="btn btn-primary">Get Started</a>
+                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Get Started</a>
                                 </div>
                             </div>
 
                             <!-- Plus -->
-                            <div class="package-card featured">
+                            <div class="package-card featured" tabindex="0">
                                 <div class="package-title">
                                     <h4>Plus</h4>
                                 </div>
                                 <div class="package-price"><span id="pkg-price-plus">₹25,000</span> <small>Base + key add‑ons</small></div>
+                                <div class="pkg-sub" id="pkg-sub-plus">or ₹2,083 / mo for 12 months</div>
                                 <ul class="package-list">
                                     <li>Advanced contact forms</li>
                                     <li>Team pages</li>
@@ -1508,16 +1622,17 @@
                                 </ul>
                                 <div class="package-actions">
                                     <button class="btn btn-secondary choose-package" data-features="contact-forms,team-profiles,gallery" data-name="Plus">Choose Plus</button>
-                                    <a href="#contact" class="btn btn-primary">Talk to Us</a>
+                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Talk to Us</a>
                                 </div>
                             </div>
 
                             <!-- Pro -->
-                            <div class="package-card">
+                            <div class="package-card" tabindex="0">
                                 <div class="package-title">
                                     <h4>Pro</h4>
                                 </div>
                                 <div class="package-price"><span id="pkg-price-pro">₹36,500</span> <small>For growth</small></div>
+                                <div class="pkg-sub" id="pkg-sub-pro">or ₹3,042 / mo for 12 months</div>
                                 <ul class="package-list">
                                     <li>Blog platform</li>
                                     <li>E‑commerce ready</li>
@@ -1525,9 +1640,27 @@
                                 </ul>
                                 <div class="package-actions">
                                     <button class="btn btn-secondary choose-package" data-features="blog,ecommerce,analytics,whatsapp,newsletter" data-name="Pro">Choose Pro</button>
-                                    <a href="#contact" class="btn btn-primary">Plan a Build</a>
+                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Plan a Build</a>
                                 </div>
                             </div>
+                            </div>
+                            <div class="guarantee" aria-label="guarantee">
+                                <div class="badge">✓</div>
+                                <p>30‑day Launch Guarantee — if we miss the plan by more than 7 days, you get 10% back. No questions.</p>
+                            </div>
+                            <div class="mini-testimonials" aria-label="customer quotes">
+                                <div class="mini-t">“Clear, fixed pricing made it easy to say yes.” — Ananya, Retail</div>
+                                <div class="mini-t">“Site looks premium and loads fast on phones.” — Deepak, Services</div>
+                                <div class="mini-t">“From brief to live in under two weeks.” — Nisha, Clinic</div>
+                            </div>
+                            <!-- Risk-reversal card -->
+                            <div class="risk-card" aria-label="Risk-free start">
+                                <div class="risk-icon">🛡️</div>
+                                <div class="risk-copy">
+                                    <strong>Risk‑Free Start — ₹9</strong>
+                                    Get a business consultation and plan. Pay the rest only if you approve.
+                                </div>
+                                <a href="#contact" class="btn btn-quiet" id="start-9-btn" data-slot-decrement="true" title="Start for ₹9 trial">Start for ₹9</a>
                             </div>
                             <div class="compare-card" aria-label="Compare packages">
                             <div class="compare-grid">
@@ -1582,7 +1715,7 @@
                                                     <aside class="custom-right" aria-label="Add-ons and summary">
                                                         <div class="addons-sidebar">
                                                             <div class="addons-header">
-                                                                <div class="addons-title">Add‑ons</div>
+                                                                <div class="addons-title">Add‑ons <span id="addons-count" style="color:var(--muted); font-weight:500; font-size:12px;"></span></div>
                                                                 <div class="addons-note">Toggle to customize</div>
                                                             </div>
                                                             <div class="addons-list">
@@ -1790,10 +1923,72 @@
                                         <span class="total-label">Total</span>
                                         <span class="total-amount" id="total-price">₹16,000</span>
                                     </div>
-                                    <a href="#contact" class="btn btn-primary" id="order-btn">Order Your Website</a>
+                                    <a href="#contact" class="btn btn-primary" id="order-btn" data-slot-decrement="true" title="Or start for ₹9 and pay rest on approval">Order Your Website</a>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <!-- ROI Calculator -->
+                    <div class="roi-card" id="roi" aria-label="ROI calculator">
+                        <h4 style="font-size:18px; margin:0 0 8px; color:var(--text);">ROI Calculator</h4>
+                        <p style="margin:0 0 8px; color:var(--muted); font-size:13px;">Estimate payback and profit using traffic, conversions, repeat purchases, referrals, and savings.</p>
+                        <div class="roi-grid" id="roi-form">
+                            <div class="roi-field">
+                                <label for="roi-visitors">Monthly visitors</label>
+                                <input id="roi-visitors" type="number" min="0" value="1200" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-conv">Conversion rate (%)</label>
+                                <input id="roi-conv" type="number" min="0" max="100" value="2.5" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-close">Close rate (%)</label>
+                                <input id="roi-close" type="number" min="0" max="100" value="35" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-aov">Avg order value (₹)</label>
+                                <input id="roi-aov" type="number" min="0" value="9000" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-uplift">Expected uplift (%)</label>
+                                <input id="roi-uplift" type="number" min="0" max="500" value="40" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-repeat">Repeat purchases per customer (per year)</label>
+                                <input id="roi-repeat" type="number" min="0" step="0.1" value="1.2" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-referral">Referral rate (%)</label>
+                                <input id="roi-referral" type="number" min="0" max="100" value="10" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-savings">Monthly cost savings (₹)</label>
+                                <input id="roi-savings" type="number" min="0" value="2000" />
+                            </div>
+                            <div class="roi-field">
+                                <label for="roi-margin">Gross margin (%)</label>
+                                <input id="roi-margin" type="number" min="0" max="100" value="60" />
+                            </div>
+                        </div>
+                        <div class="roi-stats" style="margin-top:8px;">
+                            <div class="roi-stat">
+                                <div>Incremental monthly value</div>
+                                <strong id="roi-inc-rev">₹—</strong>
+                            </div>
+                            <div class="roi-stat">
+                                <div>Projected 12‑month profit</div>
+                                <strong id="roi-profit">₹—</strong>
+                            </div>
+                            <div class="roi-stat">
+                                <div>12‑month ROI</div>
+                                <strong id="roi-annual">—</strong>
+                            </div>
+                            <div class="roi-stat">
+                                <div>Payback period</div>
+                                <strong id="roi-payback">— months</strong>
+                            </div>
+                        </div>
+                        <div style="font-size:12px; color:var(--muted); margin-top:6px;">Assumptions are illustrative and can be adjusted. Uses your configured total.</div>
                     </div>
                 </div>
             </section>
@@ -1867,16 +2062,19 @@
                     <div class="testimonials-grid">
                         <div class="testimonial">
                             <p>“We launched in 10 days. Customers now say our website ‘looks expensive’. Best ROI we’ve had this year.”</p>
+                            <img src="assets/images/avatars/priya.svg" alt="Priya S." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Priya S.</div>
                             <div class="role">Clinic Owner</div>
                         </div>
                         <div class="testimonial">
                             <p>“Leads doubled within a month. The site loads fast, works on every phone, and feels premium.”</p>
+                            <img src="assets/images/avatars/rahul.svg" alt="Rahul K." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Rahul K.</div>
                             <div class="role">Real Estate Consultant</div>
                         </div>
                         <div class="testimonial">
                             <p>“Clear pricing, zero hassle. They handled domain, hosting, SSL—everything. I just sent content.”</p>
+                            <img src="assets/images/avatars/meera.svg" alt="Meera T." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Meera T.</div>
                             <div class="role">Boutique Owner</div>
                         </div>
@@ -1892,10 +2090,10 @@
                         <p>A peek at the styles we can craft for your brand.</p>
                     </div>
                     <div class="portfolio-grid" aria-label="Design previews">
-                        <div class="shot" role="img" aria-label="Clean minimal service website preview"></div>
-                        <div class="shot" role="img" aria-label="Bold product landing page preview"></div>
-                        <div class="shot" role="img" aria-label="Elegant boutique brand website preview"></div>
-                        <div class="shot" role="img" aria-label="Modern clinic website preview"></div>
+                        <div class="shot"><img src="assets/images/portfolio/clean-service.svg" alt="Clean minimal service website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot"><img src="assets/images/portfolio/product-landing.svg" alt="Bold product landing page preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot"><img src="assets/images/portfolio/boutique-brand.svg" alt="Elegant boutique brand website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot"><img src="assets/images/portfolio/modern-clinic.svg" alt="Modern clinic website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
                     </div>
                 </div>
             </section>
@@ -2204,6 +2402,21 @@
                 menuBtn.addEventListener('click', () => {
                     const isOpen = navLinks.classList.toggle('open');
                     menuBtn.setAttribute('aria-expanded', String(isOpen));
+                    if (isOpen) {
+                        // trap focus inside menu
+                        const focusable = navLinks.querySelectorAll('a');
+                        const first = focusable[0];
+                        const last = focusable[focusable.length - 1];
+                        function handleTab(e){
+                            if (e.key !== 'Tab') return;
+                            if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+                            else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+                        }
+                        navLinks.addEventListener('keydown', handleTab);
+                        first && first.focus();
+                    } else {
+                        menuBtn.focus();
+                    }
                 });
 
                 // Close menu on link click
@@ -2235,6 +2448,105 @@
             
             handleNavigation();
             window.addEventListener('hashchange', handleNavigation);
+
+            // Active nav state based on hash
+            function updateActiveNav() {
+                const current = (location.hash || '#home').replace('#','');
+                document.querySelectorAll('.nav-links a').forEach(a => {
+                    const target = a.getAttribute('href').replace('#','');
+                    a.classList.toggle('active', target === current);
+                });
+            }
+            updateActiveNav();
+            window.addEventListener('hashchange', updateActiveNav);
+
+            // Observe sections to update active nav when scrolling inside Home
+            const sections = ['features','revolution','packages','contact'];
+            if ('IntersectionObserver' in window) {
+                const secObserver = new IntersectionObserver((entries)=>{
+                    const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio);
+                    if (visible[0]) {
+                        const id = visible[0].target.id;
+                        document.querySelectorAll('.nav-links a').forEach(a => {
+                            const target = a.getAttribute('href').replace('#','');
+                            a.classList.toggle('active', target === id || (target==='home' && sections.indexOf(id)===-1));
+                        });
+                    }
+                },{ threshold:[0.5] });
+                sections.forEach(id=>{ const el=document.getElementById(id); if (el) secObserver.observe(el); });
+            }
+
+            // Mobile add-ons accordion toggle
+            const addonsSidebar = document.querySelector('.addons-sidebar');
+            const addonsHeader = document.querySelector('.addons-header');
+            if (addonsSidebar && addonsHeader) {
+        addonsHeader.addEventListener('click', () => {
+                    if (window.matchMedia('(max-width: 768px)').matches) {
+            addonsSidebar.classList.toggle('open');
+            // reflect ARIA state for screen readers
+            addonsHeader.setAttribute('aria-expanded', String(addonsSidebar.classList.contains('open')));
+                    }
+                });
+            }
+
+            // Billing toggle
+            const billBtns = document.querySelectorAll('.bill-btn');
+            billBtns.forEach(btn => btn.addEventListener('click', ()=>{
+                billBtns.forEach(b=>b.setAttribute('aria-pressed', String(b===btn)));
+                const mode = btn.dataset.mode; // 'onetime' or 'monthly'
+                updateBillingMode(mode);
+                // persist preference
+                try { localStorage.setItem('stairio_billing', mode); } catch {}
+                // reflect in URL without reload
+                try {
+                    const p = new URLSearchParams(location.search);
+                    p.set('billing', mode);
+                    const newUrl = `${location.pathname}?${p.toString()}${location.hash}`;
+                    history.replaceState(null, '', newUrl);
+                } catch {}
+            }));
+            // initialize billing mode from URL or localStorage
+            (function(){
+                let initMode = 'onetime';
+                try {
+                    const params = new URLSearchParams(location.search);
+                    const fromUrl = (params.get('billing')||'').toLowerCase();
+                    const fromStore = (localStorage.getItem('stairio_billing')||'').toLowerCase();
+                    if (fromUrl === 'monthly' || fromUrl === 'onetime') initMode = fromUrl;
+                    else if (fromStore === 'monthly' || fromStore === 'onetime') initMode = fromStore;
+                } catch {}
+                billBtns.forEach(b=>{
+                    const pressed = b.dataset.mode === initMode;
+                    b.setAttribute('aria-pressed', String(pressed));
+                });
+                updateBillingMode(initMode);
+            })();
+
+            // Slots urgency: persist per month, decrement on key CTAs
+            (function(){
+                const badge = document.getElementById('slots-badge');
+                if (!badge) return;
+                const ym = (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; })();
+                const key = `stairio_slots_${ym}`;
+                let slots = 3;
+                try {
+                    const saved = parseInt(localStorage.getItem(key)||'');
+                    if (Number.isFinite(saved) && saved >= 0) slots = saved;
+                } catch {}
+                function render(){
+                    badge.textContent = `⏳ ${slots} slot${slots!==1?'s':''} remaining this month`;
+                    if (slots <= 1) badge.classList.add('urgency-low'); else badge.classList.remove('urgency-low');
+                }
+                function persist(){ try { localStorage.setItem(key, String(slots)); } catch {} }
+                render();
+
+                function maybeDecrement(){
+                    if (slots > 0) { slots -= 1; persist(); render(); }
+                }
+                document.querySelectorAll('[data-slot-decrement="true"]').forEach(el=>{
+                    el.addEventListener('click', ()=>{ maybeDecrement(); });
+                });
+            })();
         });
 
         // Smooth navigation
@@ -2366,8 +2678,24 @@
                 orderBtn.textContent = 'Order Your Website';
             }
 
+            // Update mobile sticky CTA with live total
+            const mobileCtaBtn = document.querySelector('.sticky-cta .btn');
+            if (mobileCtaBtn) {
+                mobileCtaBtn.textContent = `Get Started — ₹${totalPrice.toLocaleString()}`;
+            }
+
+            // Update add-ons count badge
+            const countEl = document.getElementById('addons-count');
+            if (countEl) {
+                const n = Object.keys(selectedFeatures).length;
+                countEl.textContent = n ? `(${n})` : '';
+            }
+
             // Persist selection
             try { localStorage.setItem('stairio_selected', JSON.stringify(selectedFeatures)); } catch {}
+
+            // Recompute ROI with new total
+            try { computeROI(totalPrice); } catch {}
         }
 
         // Apply package presets
@@ -2500,13 +2828,183 @@
             if (elS) elS.textContent = `₹${starter.toLocaleString()}`;
             if (elP) elP.textContent = `₹${plus.toLocaleString()}`;
             if (elR) elR.textContent = `₹${pro.toLocaleString()}`;
+            // Update monthly subs
+            updatePkgSubs({starter, plus, pro});
         }
         updatePackageLabels();
+
+        function updatePkgSubs({starter, plus, pro}){
+            const subS = document.getElementById('pkg-sub-starter');
+            const subP = document.getElementById('pkg-sub-plus');
+            const subR = document.getElementById('pkg-sub-pro');
+            if (subS) subS.dataset.base = starter;
+            if (subP) subP.dataset.base = plus;
+            if (subR) subR.dataset.base = pro;
+        }
+
+        function updateBillingMode(mode){
+            const subs = [
+                { el: document.getElementById('pkg-sub-starter') },
+                { el: document.getElementById('pkg-sub-plus') },
+                { el: document.getElementById('pkg-sub-pro') }
+            ];
+            subs.forEach(({el})=>{
+                if (!el) return;
+                const base = parseInt(el.dataset.base || '0', 10);
+                if (mode === 'monthly') {
+                    const monthly = Math.max(1, Math.round(base / 12));
+                    el.style.display = 'block';
+                    el.textContent = `or ₹${monthly.toLocaleString()} / mo for 12 months`;
+                } else {
+                    el.style.display = 'block';
+                    el.textContent = `One‑time payment`;
+                }
+            });
+            // Reflect in calculator order button's data-monthly too
+            const orderBtn = document.getElementById('order-btn');
+            if (orderBtn) {
+                orderBtn.setAttribute('data-billing', mode);
+                // expose monthly estimate via tooltip when monthly selected
+                const monthlyTxt = orderBtn.getAttribute('data-monthly') || '';
+                if (mode === 'monthly' && monthlyTxt) {
+                    orderBtn.setAttribute('title', `Monthly estimate: ${monthlyTxt}`);
+                } else {
+                    orderBtn.removeAttribute('title');
+                }
+            }
+        }
+
+        // Success counters animation
+        (function(){
+            const nums = document.querySelectorAll('.kpi .num');
+            if (!nums.length) return;
+            function animate(el){
+                const targetAttr = el.getAttribute('data-count-to');
+                if (!targetAttr) return;
+                const target = parseInt(targetAttr,10);
+                const isPercent = el.textContent.includes('%');
+                const isYears = el.textContent.includes('yrs');
+                let start = 0;
+                const steps = 32;
+                const stepVal = Math.max(1, Math.round(target/steps));
+                const timer = setInterval(()=>{
+                    start += stepVal;
+                    if (start >= target) { start = target; clearInterval(timer); }
+                    el.textContent = isPercent ? `${start}%` : isYears ? `${start} yrs` : `${start}`;
+                }, 30);
+            }
+            // Run when section visible
+            const section = document.querySelector('.social-proof');
+            let started = false;
+            if (section && 'IntersectionObserver' in window){
+                const io = new IntersectionObserver((entries)=>{
+                    if (entries.some(e=>e.isIntersecting) && !started){
+                        started = true;
+                        nums.forEach(animate);
+                        io.disconnect();
+                    }
+                },{threshold:.2});
+                io.observe(section);
+            } else {
+                nums.forEach(animate);
+            }
+        })();
+
+        // ROI Calculator JS
+        function computeROI(total){
+            const getNum = (id, div=1)=>{
+                const el = document.getElementById(id); if (!el) return 0; const v = Number(el.value); return Number.isFinite(v)? v/div : 0;
+            };
+            const visitors = Math.max(0, getNum('roi-visitors'));
+            const conv = Math.max(0, getNum('roi-conv',100)); // site conversion
+            const close = Math.max(0, getNum('roi-close',100)); // lead close rate
+            const aov = Math.max(0, getNum('roi-aov'));
+            const uplift = Math.max(0, getNum('roi-uplift',100)); // expected improvement
+            const repeatPerYear = Math.max(0, getNum('roi-repeat'));
+            const referralRate = Math.max(0, getNum('roi-referral',100));
+            const monthlySavings = Math.max(0, getNum('roi-savings'));
+            const margin = Math.max(0, getNum('roi-margin',100));
+
+            // Core funnel
+            const baselineLeads = visitors * conv;
+            const baselineSales = baselineLeads * close;
+            const baselineRevenue = baselineSales * aov;
+
+            // Incremental lift from conversion improvement
+            const incRevenue = baselineRevenue * uplift;
+
+            // Referrals contribute extra leads; approximate incremental revenue from referrals
+            const referralLeads = baselineLeads * referralRate;
+            const referralSales = referralLeads * close;
+            const referralRevenue = referralSales * aov;
+
+            // Repeat purchases per customer over a year (smoothed monthly)
+            const repeatMonthlyRevenue = (baselineSales * aov * (repeatPerYear/12));
+
+            // Sum all incremental value streams and add operational savings
+            const incrementalMonthlyValue = incRevenue + (referralRevenue) + repeatMonthlyRevenue + monthlySavings;
+
+            // Profit estimates use gross margin
+            const monthlyProfit = incrementalMonthlyValue * margin;
+            const annualProfit = monthlyProfit * 12 - total; // after project cost
+
+            const incNode = document.getElementById('roi-inc-rev');
+            const payNode = document.getElementById('roi-payback');
+            const annNode = document.getElementById('roi-annual');
+            const profNode = document.getElementById('roi-profit');
+            if (incNode) incNode.textContent = `₹${Math.round(incrementalMonthlyValue).toLocaleString()}`;
+            if (profNode) profNode.textContent = `₹${Math.round(Math.max(0, annualProfit)).toLocaleString()}`;
+            if (annNode){
+                const annualValue = incrementalMonthlyValue * 12;
+                if (total > 0){
+                    const roi = ((annualValue - total) / total) * 100; // %
+                    annNode.textContent = `${Math.round(roi)}%`;
+                } else {
+                    annNode.textContent = '—';
+                }
+            }
+            if (payNode) {
+                if (incrementalMonthlyValue > 0 && total > 0){
+                    const months = Math.max(1, Math.ceil(total / incrementalMonthlyValue));
+                    payNode.textContent = `${months} month${months>1?'s':''}`;
+                } else {
+                    payNode.textContent = '— months';
+                }
+            }
+        }
+        (function(){
+            const form = document.getElementById('roi-form');
+            if (!form) return;
+            const inputs = form.querySelectorAll('input');
+            const getTotal = ()=>{
+                const text = (document.getElementById('total-price')||{}).textContent||'₹0';
+                const n = Number(text.replace(/[^0-9]/g,'')) || 0;
+                return n;
+            };
+            inputs.forEach(inp=>{
+                inp.addEventListener('input', ()=>computeROI(getTotal()));
+            });
+            // initial compute
+            computeROI(getTotal());
+        })();
 
         // FAQ toggle
         document.querySelectorAll('.faq-item').forEach(item => {
             const q = item.querySelector('.faq-q');
-            if (q) { q.addEventListener('click', () => item.classList.toggle('open')); }
+            if (q) {
+                q.setAttribute('role','button');
+                q.setAttribute('tabindex','0');
+                q.setAttribute('aria-expanded','false');
+                const ans = item.querySelector('.faq-a');
+                q.addEventListener('click', () => {
+                    const open = item.classList.toggle('open');
+                    q.setAttribute('aria-expanded', String(open));
+                    q.querySelector('span:last-child').textContent = open ? '−' : '+';
+                });
+                q.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); q.click(); }
+                });
+            }
         });
 
         // Agent earnings calculator
