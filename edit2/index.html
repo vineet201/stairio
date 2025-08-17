@@ -707,6 +707,14 @@
     .choose-plan:hover { background:#f7f7f8; }
     .package-card.featured .choose-plan { background:#111; color:#fff; border-color:#111; }
     .package-card.featured .choose-plan:hover { background:#000; }
+    /* Selected base visual state */
+    .package-card.selected { border-color:#8B5CF6; box-shadow: 0 20px 50px rgba(139,92,246,.22), 0 2px 10px rgba(0,0,0,.06); background: linear-gradient(180deg, #ffffff, #faf8ff); }
+    .package-card.selected::after { content:'Selected'; position:absolute; top:10px; left:12px; font-size:11px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:#3b1c96; background: rgba(139,92,246,.12); border:1px solid rgba(124,58,237,.25); padding:4px 8px; border-radius:999px; }
+    .package-card.selected .choose-plan { background:#8B5CF6; color:#fff; border-color:#7C3AED; }
+    .package-card.selected .choose-plan:hover { background:#7C3AED; }
+    /* Gentle pulse to draw attention when prompting */
+    @keyframes pkgPulse { 0% { box-shadow: 0 0 0 0 rgba(139,92,246,.28);} 100% { box-shadow: 0 0 0 14px rgba(139,92,246,0);} }
+    .package-card.pulse { animation: pkgPulse .9s ease-out 2; }
     /* Discount badge */
     .discount-badge { position:absolute; top:8px; right:12px; left:auto; background:#FEF08A; color:#111827; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #FACC15; box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index: 3; }
     /* Avoid overlap with ribbon on featured card */
@@ -1788,7 +1796,7 @@
                                                         <!-- Pre-bundled Packages -->
                                                         <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="starter" tabindex="0">
                                 <span class="discount-badge">78% off</span>
                                 <div class="package-title">
                                     <h4>Starter Website Builder</h4>
@@ -1817,7 +1825,7 @@
                             </div>
 
                             <!-- Plus -->
-                            <div class="package-card featured" tabindex="0">
+                            <div class="package-card featured" data-base="plus" tabindex="0">
                                 <div class="plan-ribbon">Most popular</div>
                                 <span class="discount-badge">77% off</span>
                                 <div class="package-title">
@@ -1847,7 +1855,7 @@
                             </div>
 
                             <!-- Pro -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="pro" tabindex="0">
                                 <span class="discount-badge">67% off</span>
                                 <div class="package-title">
                                     <h4>Business Website Builder</h4>
@@ -2820,6 +2828,9 @@
                 localStorage.setItem('stairio_selected', JSON.stringify({ base: baseSelection, addons: selectedFeatures }));
             } catch {}
 
+            // Keep selected base card visually marked
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('selected', card.dataset.base===baseSelection));
+
             // Recompute ROI with new total
             try { computeROI(totalPrice); } catch {}
         }
@@ -2829,26 +2840,36 @@
             if (baseKey && BASES[baseKey]) {
                 baseSelection = baseKey;
             }
+            // Reflect selected base visually
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+            if (baseSelection) {
+                const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                card && card.classList.add('selected');
+            }
             // Clear current selections
             document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
                 const cb = option.querySelector('input[type="checkbox"]');
                 if (cb) { cb.checked = false; }
-                option.classList.remove('selected');
+                option.classList.remove('selected','outgoing','hidden');
+                option.removeAttribute('aria-hidden');
             });
             selectedFeatures = {};
 
-            const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
-            ids.forEach(id => {
-                const cb = document.getElementById(id);
-                if (!cb) return;
-                cb.checked = true;
-                const option = cb.closest('.feature-option');
-                if (option) {
-                    const price = parseInt(option.dataset.price);
-                    selectedFeatures[id] = price;
-                    option.classList.add('selected');
-                }
-            });
+            // Only auto-apply add-ons when no baseKey is passed (explicit ?addons= preset)
+            if (!baseKey) {
+                const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
+                ids.forEach(id => {
+                    const cb = document.getElementById(id);
+                    if (!cb) return;
+                    cb.checked = true;
+                    const option = cb.closest('.feature-option');
+                    if (option) {
+                        const price = parseInt(option.dataset.price);
+                        selectedFeatures[id] = price;
+                        option.classList.add('selected');
+                    }
+                });
+            }
 
             updatePrice();
             // Scroll to calculator for clarity
@@ -2884,6 +2905,16 @@
             
             // Make entire option clickable
             option.addEventListener('click', (e) => {
+                // If no base selected, prompt to choose a plan first
+                if (!baseSelection) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // pulse package cards and scroll into view
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 if (e.target.type !== 'checkbox') {
                     checkbox.checked = !checkbox.checked;
                 }
@@ -2913,6 +2944,15 @@
             // Handle direct checkbox clicks
             checkbox.addEventListener('change', (e) => {
                 e.stopPropagation();
+                if (!baseSelection) {
+                    e.preventDefault();
+                    // Reset checkbox to unchecked if toggled via keyboard
+                    checkbox.checked = false;
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 
                 if (checkbox.checked) {
                     selectedFeatures[featureId] = price;
@@ -2985,6 +3025,12 @@
             const saved = JSON.parse(localStorage.getItem('stairio_selected') || '{}');
             if (saved && typeof saved === 'object') {
                 if (saved.base && BASES[saved.base]) baseSelection = saved.base;
+                // reflect base selection visually on restore
+                document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+                if (baseSelection) {
+                    const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                    card && card.classList.add('selected');
+                }
                 const addons = saved.addons || {};
                 const ids = Object.keys(addons);
                 if (ids.length) {

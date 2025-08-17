@@ -707,6 +707,14 @@
     .choose-plan:hover { background:#f7f7f8; }
     .package-card.featured .choose-plan { background:#111; color:#fff; border-color:#111; }
     .package-card.featured .choose-plan:hover { background:#000; }
+    /* Selected base visual state */
+    .package-card.selected { border-color:#8B5CF6; box-shadow: 0 20px 50px rgba(139,92,246,.22), 0 2px 10px rgba(0,0,0,.06); background: linear-gradient(180deg, #ffffff, #faf8ff); }
+    .package-card.selected::after { content:'Selected'; position:absolute; top:10px; left:12px; font-size:11px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:#3b1c96; background: rgba(139,92,246,.12); border:1px solid rgba(124,58,237,.25); padding:4px 8px; border-radius:999px; }
+    .package-card.selected .choose-plan { background:#8B5CF6; color:#fff; border-color:#7C3AED; }
+    .package-card.selected .choose-plan:hover { background:#7C3AED; }
+    /* Gentle pulse to draw attention when prompting */
+    @keyframes pkgPulse { 0% { box-shadow: 0 0 0 0 rgba(139,92,246,.28);} 100% { box-shadow: 0 0 0 14px rgba(139,92,246,0);} }
+    .package-card.pulse { animation: pkgPulse .9s ease-out 2; }
     /* Discount badge */
     .discount-badge { position:absolute; top:8px; right:12px; left:auto; background:#FEF08A; color:#111827; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #FACC15; box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index: 3; }
     /* Avoid overlap with ribbon on featured card */
@@ -750,13 +758,40 @@
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
+    /* Stylish + compact add-on tiles (glassmorphism) */
+    .addons-sidebar .feature-options { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .addons-sidebar .feature-option { cursor:pointer; background: rgba(255,255,255,0.38); border:1px solid rgba(255,255,255,0.55); border-radius: 16px; overflow:hidden; position:relative; transition: transform .18s ease, box-shadow .24s ease, border-color .18s ease, background .2s ease; backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
+    /* Ambient glow */
+    .addons-sidebar .feature-option::before { content:""; position:absolute; inset:-40% -40% auto auto; height:160%; width:160%; background: radial-gradient(60% 60% at 70% 20%, rgba(139,92,246,.16), rgba(124,58,237,.08) 40%, transparent 70%); opacity:.55; transform: translate3d(-14px,-12px,0); transition: transform .35s ease, opacity .3s ease; pointer-events:none; }
+    /* Gradient border ring using mask */
+    .addons-sidebar .feature-option::after { content:""; position:absolute; inset:0; border-radius: 16px; padding:1px; background: linear-gradient(135deg, rgba(139,92,246,.45), rgba(124,58,237,.28), rgba(255,255,255,.65)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity:.35; pointer-events:none; transition: opacity .25s ease; }
+    .addons-sidebar .feature-option:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(17,24,39,.12), 0 2px 8px rgba(17,24,39,.06); }
+    .addons-sidebar .feature-option:hover::before { transform: translate3d(0,0,0); opacity:.8; }
+    .addons-sidebar .feature-option:hover::after { opacity:.7; }
+    .addons-sidebar .feature-option.selected { background: rgba(255,255,255,0.5); border-color: rgba(139,92,246,.6); box-shadow: 0 18px 46px rgba(139,92,246,0.22); }
+    .addons-sidebar .feature-option.selected::after { opacity: .95; background: linear-gradient(135deg, rgba(139,92,246,.75), rgba(124,58,237,.45), rgba(255,255,255,.75)); }
+    .addons-sidebar .feature-option:focus-visible { outline: 3px solid #8B5CF6; outline-offset: 2px; }
+    .addons-sidebar .option-header { padding: 12px 14px; gap: 12px; display:grid; grid-template-columns: auto 1fr auto; align-items:center; }
+    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height:18px; border-radius: 8px; border:1.5px solid rgba(0,0,0,.08); background: rgba(255,255,255,.65); backdrop-filter: blur(6px); box-shadow:none; }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 8px 22px rgba(139,92,246,.35); }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:focus-visible { outline:2px solid #8B5CF6; outline-offset:2px; }
+    .addons-sidebar .option-info h4 { font-size: 15px; margin:0 0 2px; color:#0f1115; letter-spacing:-.2px; }
+    .addons-sidebar .option-info p { font-size: 12.5px; color:#6e6e73; margin:0; display:-webkit-box; -webkit-line-clamp:2; line-clamp: 2; -webkit-box-orient:vertical; overflow:hidden; }
+    .addons-sidebar .option-price { font-size: 12px; font-weight:800; color:#3b1c96; background: rgba(139,92,246,0.10); border:1px solid rgba(124,58,237,0.25); padding:4px 10px; border-radius:999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(91,33,182,.10); }
+    /* Compact spacing for rows */
+    .addons-sidebar .feature-option + .feature-option { margin-top:0; }
+    @media (max-width: 768px) { .addons-sidebar .feature-options { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
     
     @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
     /* Mobile accordion for add-ons */
     @media (max-width: 768px) {
         .addons-header { cursor: pointer; }
+        /* Keep visible when .open is present; JS ensures .open by default on portrait */
         .addons-sidebar:not(.open) .addons-list { display: none; }
         .addons-sidebar .addons-header::after { content: attr(aria-expanded); display:none; }
+        /* Avoid clipping and allow scroll inside when content is tall */
+        .addons-sidebar { position: relative; max-width: 100%; }
+        .addons-sidebar .addons-list { max-height: 70vh; overflow: auto; -webkit-overflow-scrolling: touch; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
     }
 
     /* Compact scaling for add-ons and calculator */
@@ -1761,7 +1796,7 @@
                                                         <!-- Pre-bundled Packages -->
                                                         <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="starter" tabindex="0">
                                 <span class="discount-badge">78% off</span>
                                 <div class="package-title">
                                     <h4>Starter Website Builder</h4>
@@ -1790,7 +1825,7 @@
                             </div>
 
                             <!-- Plus -->
-                            <div class="package-card featured" tabindex="0">
+                            <div class="package-card featured" data-base="plus" tabindex="0">
                                 <div class="plan-ribbon">Most popular</div>
                                 <span class="discount-badge">77% off</span>
                                 <div class="package-title">
@@ -1820,7 +1855,7 @@
                             </div>
 
                             <!-- Pro -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="pro" tabindex="0">
                                 <span class="discount-badge">67% off</span>
                                 <div class="package-title">
                                     <h4>Business Website Builder</h4>
@@ -2540,6 +2575,22 @@
             addonsHeader.setAttribute('aria-expanded', String(addonsSidebar.classList.contains('open')));
                     }
                 });
+
+                // Ensure add-ons are visible by default in portrait (<=768px)
+                const mql = window.matchMedia('(max-width: 768px)');
+                const syncAddonsOpen = () => {
+                    if (mql.matches) {
+                        addonsSidebar.classList.add('open');
+                        addonsHeader.setAttribute('aria-expanded', 'true');
+                    } else {
+                        // Desktop doesn't rely on accordion; clear explicit state
+                        addonsSidebar.classList.remove('open');
+                        addonsHeader.removeAttribute('aria-expanded');
+                    }
+                };
+                // run once and on viewport changes (orientation/resize)
+                try { mql.addEventListener('change', syncAddonsOpen); } catch { mql.addListener(syncAddonsOpen); }
+                syncAddonsOpen();
             }
 
             // Billing toggle
@@ -2777,6 +2828,9 @@
                 localStorage.setItem('stairio_selected', JSON.stringify({ base: baseSelection, addons: selectedFeatures }));
             } catch {}
 
+            // Keep selected base card visually marked
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('selected', card.dataset.base===baseSelection));
+
             // Recompute ROI with new total
             try { computeROI(totalPrice); } catch {}
         }
@@ -2786,26 +2840,36 @@
             if (baseKey && BASES[baseKey]) {
                 baseSelection = baseKey;
             }
+            // Reflect selected base visually
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+            if (baseSelection) {
+                const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                card && card.classList.add('selected');
+            }
             // Clear current selections
             document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
                 const cb = option.querySelector('input[type="checkbox"]');
                 if (cb) { cb.checked = false; }
-                option.classList.remove('selected');
+                option.classList.remove('selected','outgoing','hidden');
+                option.removeAttribute('aria-hidden');
             });
             selectedFeatures = {};
 
-            const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
-            ids.forEach(id => {
-                const cb = document.getElementById(id);
-                if (!cb) return;
-                cb.checked = true;
-                const option = cb.closest('.feature-option');
-                if (option) {
-                    const price = parseInt(option.dataset.price);
-                    selectedFeatures[id] = price;
-                    option.classList.add('selected');
-                }
-            });
+            // Only auto-apply add-ons when no baseKey is passed (explicit ?addons= preset)
+            if (!baseKey) {
+                const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
+                ids.forEach(id => {
+                    const cb = document.getElementById(id);
+                    if (!cb) return;
+                    cb.checked = true;
+                    const option = cb.closest('.feature-option');
+                    if (option) {
+                        const price = parseInt(option.dataset.price);
+                        selectedFeatures[id] = price;
+                        option.classList.add('selected');
+                    }
+                });
+            }
 
             updatePrice();
             // Scroll to calculator for clarity
@@ -2841,6 +2905,16 @@
             
             // Make entire option clickable
             option.addEventListener('click', (e) => {
+                // If no base selected, prompt to choose a plan first
+                if (!baseSelection) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // pulse package cards and scroll into view
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 if (e.target.type !== 'checkbox') {
                     checkbox.checked = !checkbox.checked;
                 }
@@ -2870,6 +2944,15 @@
             // Handle direct checkbox clicks
             checkbox.addEventListener('change', (e) => {
                 e.stopPropagation();
+                if (!baseSelection) {
+                    e.preventDefault();
+                    // Reset checkbox to unchecked if toggled via keyboard
+                    checkbox.checked = false;
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 
                 if (checkbox.checked) {
                     selectedFeatures[featureId] = price;
@@ -2942,6 +3025,12 @@
             const saved = JSON.parse(localStorage.getItem('stairio_selected') || '{}');
             if (saved && typeof saved === 'object') {
                 if (saved.base && BASES[saved.base]) baseSelection = saved.base;
+                // reflect base selection visually on restore
+                document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+                if (baseSelection) {
+                    const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                    card && card.classList.add('selected');
+                }
                 const addons = saved.addons || {};
                 const ids = Object.keys(addons);
                 if (ids.length) {
@@ -3086,6 +3175,8 @@
             updateEarn();
         }
     </script>
+    <!-- Splash Cursor effect -->
+    <script src="assets/splash-cursor.js"></script>
 </body>
 </html>
                     
