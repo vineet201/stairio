@@ -398,15 +398,7 @@
     .urgency-badge .dot { width:6px; height:6px; border-radius:999px; background:#F59E0B; display:inline-block; }
     .urgency-low { color:#b91c1c; border-color:#fecaca; }
 
-    /* ROI Calculator */
-    .roi-card { margin-top: 16px; background:#fff; border:1px solid var(--line); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow-sm); }
-    .roi-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; }
-    .roi-field { display:flex; flex-direction:column; gap:6px; }
-    .roi-field label { font-size:12px; color:var(--muted); }
-    .roi-field input { padding:10px 12px; border:1px solid var(--line); border-radius:10px; }
-    .roi-stats { display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:12px; margin-top:12px; }
-    .roi-stat { background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px; box-shadow: var(--shadow-sm); font-size:13px; }
-    .roi-stat strong { display:block; font-size:16px; color:var(--text); }
+    
     /* Client logos and success counters */
     .client-logos { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:16px; align-items:center; }
     .client-logo { height:48px; border:1px solid var(--line); border-radius: var(--radius); background:#fff; display:flex; align-items:center; justify-content:center; padding:8px; box-shadow: var(--shadow-sm); }
@@ -580,20 +572,33 @@
             color: var(--text);
             box-shadow: var(--shadow-sm);
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+            position: relative;
         }
         .package-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); background: #fafafa; }
-    .package-card.featured { border-color: var(--brand); box-shadow: 0 16px 40px rgba(139,92,246,0.12); position: relative; }
-    .package-card.featured::after { content: 'Most Popular'; position: absolute; top: 12px; right: 12px; font-size: 12px; background: #8B5CF6; border:1px solid #7C3AED; color:#fff; padding: 4px 8px; border-radius: 999px; }
+    .package-card.featured { border-color: var(--brand); box-shadow: 0 16px 40px rgba(139,92,246,0.12); position: relative; padding-top: 52px; }
+    /* New full-width ribbon for featured (Plus) */
+    .plan-ribbon { position:absolute; left:-1px; right:-1px; top:-14px; height:34px; background:#8B5CF6; border:1px solid #7C3AED; color:#fff; display:flex; align-items:center; justify-content:center; border-top-left-radius:14px; border-top-right-radius:14px; font-size:12px; font-weight:800; letter-spacing:.6px; text-transform:uppercase; z-index:2; }
         .package-title { display:flex; align-items:center; justify-content:space-between; margin-bottom: 8px; }
         .package-title h4 { font-size: 20px; font-weight: 700; color: #1d1d1f; letter-spacing: -0.3px; }
         .package-badge { font-size: 12px; color:#fff; background: #8B5CF6; border:1px solid #7C3AED; padding: 4px 8px; border-radius: 999px; }
-        .package-price { font-size: 36px; font-weight: 800; letter-spacing: -1px; margin: 8px 0 6px; text-shadow: none; color:#1d1d1f; }
-        .package-price small { font-size: 14px; font-weight: 500; opacity: 0.9; margin-left: 6px; }
+    .package-price { margin: 8px 0 6px; color:#1d1d1f; }
+    .price-monthly { display:block; font-size: 36px; font-weight: 800; letter-spacing: -1px; }
+    .price-monthly small { font-size: 16px; font-weight: 600; opacity: .9; margin-left: 6px; }
+    .price-yearly { margin-top: 4px; }
+    .price-yearly small { font-size: 13px; color: var(--muted); }
         .package-list { list-style: none; margin: 12px 0 16px; padding: 0; }
         .package-list li { font-size: 14px; color: #1d1d1f; margin: 6px 0; display:flex; align-items:center; gap:8px; }
         .package-list li:before { content: '✓'; color:#8B5CF6; opacity: .9; font-weight:700; }
-        .package-actions { display:flex; gap: 8px; flex-wrap: wrap; }
-        .package-actions .btn { padding: 10px 16px; font-size: 15px; }
+    .package-actions { display:flex; gap: 8px; flex-wrap: wrap; }
+    /* Choose plan button style */
+    .choose-plan { width:100%; padding:12px 16px; font-size:15px; border-radius:12px; border:1px solid var(--line); background:#fff; color:#1d1d1f; font-weight:600; }
+    .choose-plan:hover { background:#f7f7f8; }
+    .package-card.featured .choose-plan { background:#111; color:#fff; border-color:#111; }
+    .package-card.featured .choose-plan:hover { background:#000; }
+    /* Discount badge */
+    .discount-badge { position:absolute; top:8px; right:12px; left:auto; background:#FEF08A; color:#111827; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #FACC15; box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index: 3; }
+    /* Avoid overlap with ribbon on featured card */
+    .package-card.featured .discount-badge { top: 12px; right: 14px; left: auto; }
 
         /* Compare table inside gradient section */
         .compare-card {
@@ -625,9 +630,9 @@
             margin: 0 auto;
             position: relative;
         }
-    .customization-layout { display:grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items:start; }
+    .customization-layout { display:grid; grid-template-columns: 1fr; gap: 24px; align-items:start; }
     .custom-left { min-width: 0; }
-    .custom-right { position: sticky; top: 80px; }
+    .custom-right { position: static; top: auto; }
     .addons-sidebar { background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow-sm); overflow:hidden; }
     .addons-header { display:flex; align-items:baseline; justify-content:space-between; padding:16px 16px 8px; border-bottom:1px solid #eee; }
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
@@ -648,6 +653,11 @@
     .addons-sidebar .option-info h4 { font-size: 16px; }
     .addons-sidebar .option-info p { font-size: 13px; }
     .addons-sidebar .option-price { font-size: 16px; }
+
+    /* Included-in-plan state for add-ons */
+    .feature-option.included .option-price { color: var(--muted); }
+    .feature-option.included .option-checkbox input[type="checkbox"] { cursor: not-allowed; opacity: .7; }
+    .selected-group-title { font-size:12px; color: var(--muted); margin: 10px 0 6px; text-transform: uppercase; letter-spacing: .4px; }
 
     .addons-sidebar .price-calculator { padding: 24px; }
     .addons-sidebar .calculator-content { gap: 20px; }
@@ -1375,7 +1385,6 @@
                         
                         <div class="cta-section">
                             <a href="#packages" class="btn btn-primary">Get Your Website</a>
-                            <a href="#agent" class="btn btn-secondary">Become an Agent</a>
                         </div>
                     </div>
                 </div>
@@ -1592,58 +1601,298 @@
                                                         <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
                             <div class="package-card" tabindex="0">
+                                <span class="discount-badge">78% off</span>
                                 <div class="package-title">
-                                    <h4>Starter</h4>
+                                    <h4>Starter Website Builder</h4>
                                 </div>
-                                <div class="package-price"><span id="pkg-price-starter">₹16,000</span> <small>All essentials</small></div>
-                                <div class="pkg-sub" id="pkg-sub-starter">or ₹1,333 / mo for 12 months</div>
-                                <ul class="package-list">
-                                    <li>Domain (1 yr), Hosting (2 yrs), SSL (3 yrs)</li>
-                                    <li>Responsive design up to 5 pages</li>
-                                    <li>3 months support</li>
-                                </ul>
+                                <div class="package-price">
+                                    <div class="price-monthly"><b id="pkg-m-starter">₹1,333</b><small>/mo</small></div>
+                                    <div class="price-yearly"><small id="pkg-y-starter">₹16,000 one‑time</small></div>
+                                </div>
+                                <div class="pkg-sub">A great solution for beginners</div>
                                 <div class="package-actions">
-                                    <button class="btn btn-secondary choose-package" data-features="" data-name="Starter">Choose Starter</button>
-                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Get Started</a>
+                                    <button class="choose-plan choose-package" data-features="" data-name="Starter">Choose plan</button>
                                 </div>
+                                <ul class="package-list">
+                                    <li>1 website</li>
+                                    <li>1 mailbox per website — free for 1 year</li>
+                                    <li>AI website builder</li>
+                                    <li>150 templates</li>
+                                    <li>Mobile editing</li>
+                                    <li>Email marketing</li>
+                                </ul>
                             </div>
 
                             <!-- Plus -->
                             <div class="package-card featured" tabindex="0">
+                                <div class="plan-ribbon">Most popular</div>
+                                <span class="discount-badge">77% off</span>
                                 <div class="package-title">
-                                    <h4>Plus</h4>
+                                    <h4>Premium Website Builder</h4>
                                 </div>
-                                <div class="package-price"><span id="pkg-price-plus">₹25,000</span> <small>Base + key add‑ons</small></div>
-                                <div class="pkg-sub" id="pkg-sub-plus">or ₹2,083 / mo for 12 months</div>
-                                <ul class="package-list">
-                                    <li>Advanced contact forms</li>
-                                    <li>Team pages</li>
-                                    <li>Media gallery</li>
-                                </ul>
+                                <div class="package-price">
+                                    <div class="price-monthly"><b id="pkg-m-plus">₹2,083</b><small>/mo</small></div>
+                                    <div class="price-yearly"><small id="pkg-y-plus">₹25,000 one‑time</small></div>
+                                </div>
+                                <div class="pkg-sub">Get the essentials to create a website</div>
                                 <div class="package-actions">
-                                    <button class="btn btn-secondary choose-package" data-features="contact-forms,team-profiles,gallery" data-name="Plus">Choose Plus</button>
-                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Talk to Us</a>
+                                    <button class="choose-plan choose-package" data-features="contact-forms,team-profiles,gallery" data-name="Plus">Choose plan</button>
                                 </div>
+                                <ul class="package-list">
+                                    <li>25 websites</li>
+                                    <li>2 mailboxes per website — free for 1 year</li>
+                                    <li>Everything in Starter, plus:</li>
+                                    <li>Free domain for 1 year</li>
+                                    <li>Marketing integrations</li>
+                                    <li>Built‑in analytics</li>
+                                </ul>
                             </div>
 
                             <!-- Pro -->
                             <div class="package-card" tabindex="0">
+                                <span class="discount-badge">67% off</span>
                                 <div class="package-title">
-                                    <h4>Pro</h4>
+                                    <h4>Business Website Builder</h4>
                                 </div>
-                                <div class="package-price"><span id="pkg-price-pro">₹36,500</span> <small>For growth</small></div>
-                                <div class="pkg-sub" id="pkg-sub-pro">or ₹3,042 / mo for 12 months</div>
-                                <ul class="package-list">
-                                    <li>Blog platform</li>
-                                    <li>E‑commerce ready</li>
-                                    <li>Analytics + WhatsApp + Newsletter</li>
-                                </ul>
+                                <div class="package-price">
+                                    <div class="price-monthly"><b id="pkg-m-pro">₹3,042</b><small>/mo</small></div>
+                                    <div class="price-yearly"><small id="pkg-y-pro">₹36,500 one‑time</small></div>
+                                </div>
+                                <div class="pkg-sub">Grow with AI tools and ecommerce features</div>
                                 <div class="package-actions">
-                                    <button class="btn btn-secondary choose-package" data-features="blog,ecommerce,analytics,whatsapp,newsletter" data-name="Pro">Choose Pro</button>
-                                    <a href="#contact" class="btn btn-primary" data-slot-decrement="true">Plan a Build</a>
+                                    <button class="choose-plan choose-package" data-features="blog,ecommerce,analytics,whatsapp,newsletter" data-name="Pro">Choose plan</button>
                                 </div>
+                                <ul class="package-list">
+                                    <li>50 websites</li>
+                                    <li>5 mailboxes per website — free for 1 year</li>
+                                    <li>Everything in Premium, plus:</li>
+                                    <li>Sell products and services</li>
+                                    <li>0% transaction fees</li>
+                                    <li>100+ payment methods</li>
+                                    <li>AI text editor</li>
+                                    <li>AI image generator</li>
+                                    <li>AI blog post generator</li>
+                                    <li>AI product generator</li>
+                                    <li>AI logo maker</li>
+                                    <li>AI SEO assistant</li>
+                                </ul>
                             </div>
                             </div>
+                            <!-- Add-ons now below the cards -->
+                            <aside class="custom-right" aria-label="Add-ons and summary">
+                                <div class="addons-sidebar">
+                                    <div class="addons-header">
+                                        <div class="addons-title">Advanced add‑ons <span id="addons-count" style="color:var(--muted); font-weight:500; font-size:12px;"></span></div>
+                                        <div class="addons-note">Optional — choose as needed</div>
+                                    </div>
+                                    <div class="addons-list">
+                                        <div class="feature-options">
+                                            <!-- Essential features are part of base plan; show as included and disabled -->
+                                            <div class="feature-option included" data-price="0">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="inc-domain-hosting" checked disabled>
+                                                        <label for="inc-domain-hosting"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Domain & Hosting</h4>
+                                                        <p>Included in every base plan</p>
+                                                    </div>
+                                                    <div class="option-price">Included</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option included" data-price="0">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="inc-ssl" checked disabled>
+                                                        <label for="inc-ssl"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>SSL Security</h4>
+                                                        <p>Included in every base plan</p>
+                                                    </div>
+                                                    <div class="option-price">Included</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option included" data-price="0">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="inc-responsive" checked disabled>
+                                                        <label for="inc-responsive"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Responsive Design</h4>
+                                                        <p>Included in every base plan</p>
+                                                    </div>
+                                                    <div class="option-price">Included</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option included" data-price="0">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="inc-pages" checked disabled>
+                                                        <label for="inc-pages"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Up to 5 Pages</h4>
+                                                        <p>Included in every base plan</p>
+                                                    </div>
+                                                    <div class="option-price">Included</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option included" data-price="0">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="inc-support" checked disabled>
+                                                        <label for="inc-support"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>3 Months Support</h4>
+                                                        <p>Included in every base plan</p>
+                                                    </div>
+                                                    <div class="option-price">Included</div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Premium Add-ons (selectable) -->
+                                            <div class="feature-option" data-price="2000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="contact-forms">
+                                                        <label for="contact-forms"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Advanced Contact Forms</h4>
+                                                        <p>Multi-step forms, file uploads, custom fields</p>
+                                                    </div>
+                                                    <div class="option-price">+₹2,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="3000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="team-profiles">
+                                                        <label for="team-profiles"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Team & Profile Pages</h4>
+                                                        <p>Showcase your team with beautiful profiles</p>
+                                                    </div>
+                                                    <div class="option-price">+₹3,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="4000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="gallery">
+                                                        <label for="gallery"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Media Gallery</h4>
+                                                        <p>Photo galleries, video integration, portfolio showcase</p>
+                                                    </div>
+                                                    <div class="option-price">+₹4,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="5000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="blog">
+                                                        <label for="blog"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Blog Platform</h4>
+                                                        <p>Full blogging system with categories and search</p>
+                                                    </div>
+                                                    <div class="option-price">+₹5,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="6000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="ecommerce">
+                                                        <label for="ecommerce"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>E-commerce Ready</h4>
+                                                        <p>Product catalog, shopping cart, payment gateway</p>
+                                                    </div>
+                                                    <div class="option-price">+₹6,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="3000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="whatsapp">
+                                                        <label for="whatsapp"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>WhatsApp Integration</h4>
+                                                        <p>Direct chat buttons, automated responses</p>
+                                                    </div>
+                                                    <div class="option-price">+₹3,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="4000">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="analytics">
+                                                        <label for="analytics"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Advanced Analytics</h4>
+                                                        <p>Detailed visitor tracking, conversion goals, reports</p>
+                                                    </div>
+                                                    <div class="option-price">+₹4,000</div>
+                                                </div>
+                                            </div>
+                                            <div class="feature-option" data-price="2500">
+                                                <div class="option-header">
+                                                    <div class="option-checkbox">
+                                                        <input type="checkbox" id="newsletter">
+                                                        <label for="newsletter"></label>
+                                                    </div>
+                                                    <div class="option-info">
+                                                        <h4>Newsletter System</h4>
+                                                        <p>Email capture, automated campaigns, subscriber management</p>
+                                                    </div>
+                                                    <div class="option-price">+₹2,500</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Final Summary -->
+                                <div class="price-calculator" id="final-summary">
+                                    <div class="calculator-content">
+                                        <div class="calculator-left">
+                                            <h4>Your Selection</h4>
+                                            <div class="selected-features">
+                                                <div class="selected-group">
+                                                    <div class="selected-group-title">Base plan</div>
+                                                    <div class="base-item">
+                                                        <span id="selected-base-name">None selected</span>
+                                                        <span id="selected-base-price">₹0</span>
+                                                    </div>
+                                                </div>
+                                                <div class="selected-group">
+                                                    <div class="selected-group-title">Advanced add‑ons</div>
+                                                    <div id="selected-list"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="calculator-right">
+                                            <div class="total-price">
+                                                <span class="total-label">Total</span>
+                                                <span class="total-amount" id="total-price">₹0</span>
+                                            </div>
+                                            <a href="#contact" class="btn btn-primary" id="order-btn" data-slot-decrement="true" title="Or start for ₹9 and pay rest on approval">Order Your Website</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </aside>
+
                             <div class="guarantee" aria-label="guarantee">
                                 <div class="badge">✓</div>
                                 <p>30‑day Launch Guarantee — if we miss the plan by more than 7 days, you get 10% back. No questions.</p>
@@ -1662,334 +1911,11 @@
                                 </div>
                                 <a href="#contact" class="btn btn-quiet" id="start-9-btn" data-slot-decrement="true" title="Start for ₹9 trial">Start for ₹9</a>
                             </div>
-                            <div class="compare-card" aria-label="Compare packages">
-                            <div class="compare-grid">
-                                <div class="head">Feature</div>
-                                <div class="head">Starter</div>
-                                <div class="head">Plus</div>
-                                <div class="head">Pro</div>
-
-                                <div class="cell feat">Advanced forms</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">Team pages</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">Media gallery</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">Blog</div>
-                                <div class="cell">—</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">E‑commerce</div>
-                                <div class="cell">—</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">Analytics</div>
-                                <div class="cell">—</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">WhatsApp</div>
-                                <div class="cell">—</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-
-                                <div class="cell feat">Newsletter</div>
-                                <div class="cell">—</div>
-                                <div class="cell">—</div>
-                                <div class="cell"><span class="tick">✓</span></div>
-                            </div>
-                                                        </div>
+                            
                                                         <p style="text-align:center; color: #86868b; margin: 8px 0 0;">All packages are customizable. No hidden fees.</p>
                                                     </div>
-                                                    <aside class="custom-right" aria-label="Add-ons and summary">
-                                                        <div class="addons-sidebar">
-                                                            <div class="addons-header">
-                                                                <div class="addons-title">Add‑ons <span id="addons-count" style="color:var(--muted); font-weight:500; font-size:12px;"></span></div>
-                                                                <div class="addons-note">Toggle to customize</div>
-                                                            </div>
-                                                            <div class="addons-list">
-                                                <div class="feature-options">
-                            <!-- Essential Features (Pre-selected) -->
-                            <div class="feature-option selected essential" data-price="0">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="domain-hosting" checked disabled>
-                                        <label for="domain-hosting"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Domain & Hosting</h4>
-                                        <p>Free domain + 2 years hosting included</p>
-                                    </div>
-                                    <div class="option-price">Included</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option selected essential" data-price="0">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="ssl-security" checked disabled>
-                                        <label for="ssl-security"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>SSL Security</h4>
-                                        <p>Premium SSL certificate for 3 years</p>
-                                    </div>
-                                    <div class="option-price">Included</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option selected essential" data-price="0">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="responsive-design" checked disabled>
-                                        <label for="responsive-design"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Responsive Design</h4>
-                                        <p>Perfect on phones, tablets, and desktops</p>
-                                    </div>
-                                    <div class="option-price">Included</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option selected essential" data-price="0">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="basic-pages" checked disabled>
-                                        <label for="basic-pages"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Up to 5 Pages</h4>
-                                        <p>Home, About, Services, Contact + 1 custom page</p>
-                                    </div>
-                                    <div class="option-price">Included</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option selected essential" data-price="0">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="support" checked disabled>
-                                        <label for="support"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>3 Months Support</h4>
-                                        <p>Free maintenance and technical support</p>
-                                    </div>
-                                    <div class="option-price">Included</div>
-                                </div>
-                            </div>
-
-                            <!-- Premium Add-ons -->
-                            <div class="feature-option" data-price="2000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="contact-forms">
-                                        <label for="contact-forms"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Advanced Contact Forms</h4>
-                                        <p>Multi-step forms, file uploads, custom fields</p>
-                                    </div>
-                                    <div class="option-price">+₹2,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="3000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="team-profiles">
-                                        <label for="team-profiles"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Team & Profile Pages</h4>
-                                        <p>Showcase your team with beautiful profiles</p>
-                                    </div>
-                                    <div class="option-price">+₹3,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="4000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="gallery">
-                                        <label for="gallery"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Media Gallery</h4>
-                                        <p>Photo galleries, video integration, portfolio showcase</p>
-                                    </div>
-                                    <div class="option-price">+₹4,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="5000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="blog">
-                                        <label for="blog"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Blog Platform</h4>
-                                        <p>Full blogging system with categories and search</p>
-                                    </div>
-                                    <div class="option-price">+₹5,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="6000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="ecommerce">
-                                        <label for="ecommerce"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>E-commerce Ready</h4>
-                                        <p>Product catalog, shopping cart, payment gateway</p>
-                                    </div>
-                                    <div class="option-price">+₹6,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="3000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="whatsapp">
-                                        <label for="whatsapp"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>WhatsApp Integration</h4>
-                                        <p>Direct chat buttons, automated responses</p>
-                                    </div>
-                                    <div class="option-price">+₹3,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="4000">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="analytics">
-                                        <label for="analytics"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Advanced Analytics</h4>
-                                        <p>Detailed visitor tracking, conversion goals, reports</p>
-                                    </div>
-                                    <div class="option-price">+₹4,000</div>
-                                </div>
-                            </div>
-
-                            <div class="feature-option" data-price="2500">
-                                <div class="option-header">
-                                    <div class="option-checkbox">
-                                        <input type="checkbox" id="newsletter">
-                                        <label for="newsletter"></label>
-                                    </div>
-                                    <div class="option-info">
-                                        <h4>Newsletter System</h4>
-                                        <p>Email capture, automated campaigns, subscriber management</p>
-                                    </div>
-                                    <div class="option-price">+₹2,500</div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Price Calculator -->
-                        <div class="price-calculator">
-                            <div class="calculator-content">
-                                <div class="calculator-left">
-                                    <h4>Your Website Package</h4>
-                                    <div class="selected-features">
-                                        <div class="base-item">
-                                            <span>Essential Features</span>
-                                            <span>₹16,000</span>
-                                        </div>
-                                        <div id="selected-list"></div>
-                                    </div>
-                                </div>
-                                <div class="calculator-right">
-                                    <div class="total-price">
-                                        <span class="total-label">Total</span>
-                                        <span class="total-amount" id="total-price">₹16,000</span>
-                                    </div>
-                                    <a href="#contact" class="btn btn-primary" id="order-btn" data-slot-decrement="true" title="Or start for ₹9 and pay rest on approval">Order Your Website</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- ROI Calculator -->
-                    <div class="roi-card" id="roi" aria-label="ROI calculator">
-                        <h4 style="font-size:18px; margin:0 0 8px; color:var(--text);">ROI Calculator</h4>
-                        <p style="margin:0 0 8px; color:var(--muted); font-size:13px;">Estimate payback and profit using traffic, conversions, repeat purchases, referrals, and savings.</p>
-                        <div class="roi-grid" id="roi-form">
-                            <div class="roi-field">
-                                <label for="roi-visitors">Monthly visitors</label>
-                                <input id="roi-visitors" type="number" min="0" value="1200" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-conv">Conversion rate (%)</label>
-                                <input id="roi-conv" type="number" min="0" max="100" value="2.5" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-close">Close rate (%)</label>
-                                <input id="roi-close" type="number" min="0" max="100" value="35" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-aov">Avg order value (₹)</label>
-                                <input id="roi-aov" type="number" min="0" value="9000" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-uplift">Expected uplift (%)</label>
-                                <input id="roi-uplift" type="number" min="0" max="500" value="40" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-repeat">Repeat purchases per customer (per year)</label>
-                                <input id="roi-repeat" type="number" min="0" step="0.1" value="1.2" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-referral">Referral rate (%)</label>
-                                <input id="roi-referral" type="number" min="0" max="100" value="10" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-savings">Monthly cost savings (₹)</label>
-                                <input id="roi-savings" type="number" min="0" value="2000" />
-                            </div>
-                            <div class="roi-field">
-                                <label for="roi-margin">Gross margin (%)</label>
-                                <input id="roi-margin" type="number" min="0" max="100" value="60" />
-                            </div>
-                        </div>
-                        <div class="roi-stats" style="margin-top:8px;">
-                            <div class="roi-stat">
-                                <div>Incremental monthly value</div>
-                                <strong id="roi-inc-rev">₹—</strong>
-                            </div>
-                            <div class="roi-stat">
-                                <div>Projected 12‑month profit</div>
-                                <strong id="roi-profit">₹—</strong>
-                            </div>
-                            <div class="roi-stat">
-                                <div>12‑month ROI</div>
-                                <strong id="roi-annual">—</strong>
-                            </div>
-                            <div class="roi-stat">
-                                <div>Payback period</div>
-                                <strong id="roi-payback">— months</strong>
-                            </div>
-                        </div>
-                        <div style="font-size:12px; color:var(--muted); margin-top:6px;">Assumptions are illustrative and can be adjusted. Uses your configured total.</div>
-                    </div>
+                                                </div>
+                    
                 </div>
             </section>
 
@@ -2624,8 +2550,13 @@
             });
         }
 
-        // Apple-style pricing calculator
-        const basePrice = 16000;
+        // Apple-style pricing calculator with base plan + add-ons
+        const BASES = {
+            starter: { name: 'Starter Website Builder', price: 16000, preset: [] },
+            plus: { name: 'Premium Website Builder', price: 25000, preset: ['contact-forms','team-profiles','gallery'] },
+            pro: { name: 'Business Website Builder', price: 36500, preset: ['blog','ecommerce','analytics','whatsapp','newsletter'] }
+        };
+        let baseSelection = null; // key of BASES
         let selectedFeatures = {};
         const featureNames = {
             'contact-forms': 'Advanced Contact Forms',
@@ -2649,16 +2580,20 @@
         };
 
         function updatePrice() {
-            const totalPrice = basePrice + Object.values(selectedFeatures).reduce((sum, price) => sum + price, 0);
-            document.getElementById('total-price').textContent = `₹${totalPrice.toLocaleString()}`;
+            const base = baseSelection ? BASES[baseSelection].price : 0;
+            const addOnTotal = Object.values(selectedFeatures).reduce((sum, price) => sum + price, 0);
+            const totalPrice = base + addOnTotal;
+            const totalEl = document.getElementById('total-price');
+            if (totalEl) totalEl.textContent = `₹${totalPrice.toLocaleString()}`;
             // Monthly split display (12-month)
             let monthly = Math.round(totalPrice / 12);
             if (!Number.isFinite(monthly)) monthly = 0;
-            document.getElementById('order-btn').setAttribute('data-monthly', `₹${monthly.toLocaleString()}/mo`);
+            const ob = document.getElementById('order-btn');
+            if (ob) ob.setAttribute('data-monthly', `₹${monthly.toLocaleString()}/mo`);
             
             // Update selected features list
             const selectedList = document.getElementById('selected-list');
-            selectedList.innerHTML = '';
+            if (selectedList) selectedList.innerHTML = '';
             
             Object.entries(selectedFeatures).forEach(([featureId, price]) => {
                 const item = document.createElement('div');
@@ -2667,20 +2602,35 @@
                     <span>${featureNames[featureId]}</span>
                     <span>+₹${price.toLocaleString()}</span>
                 `;
-                selectedList.appendChild(item);
+                if (selectedList) selectedList.appendChild(item);
             });
+
+            // Update base plan display
+            const baseNameEl = document.getElementById('selected-base-name');
+            const basePriceEl = document.getElementById('selected-base-price');
+            if (baseNameEl && basePriceEl) {
+                if (baseSelection) {
+                    baseNameEl.textContent = BASES[baseSelection].name;
+                    basePriceEl.textContent = `₹${BASES[baseSelection].price.toLocaleString()}`;
+                } else {
+                    baseNameEl.textContent = 'None selected';
+                    basePriceEl.textContent = '₹0';
+                }
+            }
             
             // Update order button text
             const orderBtn = document.getElementById('order-btn');
-            if (Object.keys(selectedFeatures).length > 0) {
-                orderBtn.textContent = `Order for ₹${totalPrice.toLocaleString()}`;
-            } else {
-                orderBtn.textContent = 'Order Your Website';
+            if (orderBtn) {
+                if (totalPrice > 0) {
+                    orderBtn.textContent = `Order for ₹${totalPrice.toLocaleString()}`;
+                } else {
+                    orderBtn.textContent = 'Order Your Website';
+                }
             }
 
             // Update mobile sticky CTA with live total
             const mobileCtaBtn = document.querySelector('.sticky-cta .btn');
-            if (mobileCtaBtn) {
+            if (mobileCtaBtn && totalPrice > 0) {
                 mobileCtaBtn.textContent = `Get Started — ₹${totalPrice.toLocaleString()}`;
             }
 
@@ -2692,14 +2642,19 @@
             }
 
             // Persist selection
-            try { localStorage.setItem('stairio_selected', JSON.stringify(selectedFeatures)); } catch {}
+            try {
+                localStorage.setItem('stairio_selected', JSON.stringify({ base: baseSelection, addons: selectedFeatures }));
+            } catch {}
 
             // Recompute ROI with new total
             try { computeROI(totalPrice); } catch {}
         }
 
-        // Apply package presets
-        function applyPackage(featuresCsv) {
+        // Apply package base and presets
+        function applyPackage(featuresCsv, baseKey) {
+            if (baseKey && BASES[baseKey]) {
+                baseSelection = baseKey;
+            }
             // Clear current selections
             document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
                 const cb = option.querySelector('input[type="checkbox"]');
@@ -2723,11 +2678,11 @@
 
             updatePrice();
             // Scroll to calculator for clarity
-            const calc = document.querySelector('.price-calculator');
+            const calc = document.getElementById('final-summary');
             if (calc) calc.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             // Analytics event (lightweight)
-            try { window.stairioAnalytics && window.stairioAnalytics('choose_package', { features: featuresCsv }); } catch {}
+            try { window.stairioAnalytics && window.stairioAnalytics('choose_package', { base: baseSelection, features: featuresCsv }); } catch {}
         }
 
         // Handle feature selection (excluding essential features)
@@ -2770,11 +2725,13 @@
         });
 
         // Wire package buttons
-        document.querySelectorAll('.choose-package').forEach(btn => {
+    document.querySelectorAll('.choose-package').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-                const features = btn.getAttribute('data-features') || '';
-                applyPackage(features);
+        const features = btn.getAttribute('data-features') || '';
+        const name = (btn.getAttribute('data-name') || '').toLowerCase();
+        const baseKey = name === 'starter' ? 'starter' : name === 'plus' ? 'plus' : name === 'pro' ? 'pro' : null;
+        applyPackage(features, baseKey);
             });
         });
 
@@ -2786,16 +2743,31 @@
             });
         });
 
-        // Initialize price display
-        updatePrice();
+    // Initialize price display
+    updatePrice();
 
         // Restore from localStorage
         try {
             const saved = JSON.parse(localStorage.getItem('stairio_selected') || '{}');
-            if (saved && typeof saved === 'object' && Object.keys(saved).length) {
-                // Build CSV and re-apply
-                const ids = Object.keys(saved);
-                applyPackage(ids.join(','));
+            if (saved && typeof saved === 'object') {
+                if (saved.base && BASES[saved.base]) baseSelection = saved.base;
+                const addons = saved.addons || {};
+                const ids = Object.keys(addons);
+                if (ids.length) {
+                    // mark checkboxes according to saved
+                    ids.forEach(id => {
+                        const cb = document.getElementById(id);
+                        if (cb) {
+                            cb.checked = true;
+                            const option = cb.closest('.feature-option');
+                            if (option) {
+                                option.classList.add('selected');
+                                selectedFeatures[id] = parseInt(option.dataset.price);
+                            }
+                        }
+                    });
+                }
+                updatePrice();
             }
         } catch {}
 
@@ -2805,35 +2777,42 @@
             const pkg = (params.get('pkg') || '').toLowerCase();
             const addons = params.get('addons');
             if (addons) {
-                applyPackage(addons);
+                applyPackage(addons, null);
             } else if (pkg) {
-                if (pkg === 'starter') applyPackage('');
-                if (pkg === 'plus') applyPackage('contact-forms,team-profiles,gallery');
-                if (pkg === 'pro') applyPackage('blog,ecommerce,analytics,whatsapp,newsletter');
+                if (pkg === 'starter') applyPackage('', 'starter');
+                if (pkg === 'plus') applyPackage('contact-forms,team-profiles,gallery', 'plus');
+                if (pkg === 'pro') applyPackage('blog,ecommerce,analytics,whatsapp,newsletter', 'pro');
             }
         })();
 
         // Compute and show dynamic package prices
-        function computePackagePrice(ids) {
+        function computePackagePrice(ids, base=16000) {
             const addOn = (ids || []).reduce((sum, id) => sum + (featurePrices[id] || 0), 0);
-            return basePrice + addOn;
+            return base + addOn;
         }
         function updatePackageLabels() {
-            const starter = computePackagePrice([]);
-            const plus = computePackagePrice(['contact-forms','team-profiles','gallery']);
-            const pro = computePackagePrice(['blog','ecommerce','analytics','whatsapp','newsletter']);
-            const elS = document.getElementById('pkg-price-starter');
-            const elP = document.getElementById('pkg-price-plus');
-            const elR = document.getElementById('pkg-price-pro');
-            if (elS) elS.textContent = `₹${starter.toLocaleString()}`;
-            if (elP) elP.textContent = `₹${plus.toLocaleString()}`;
-            if (elR) elR.textContent = `₹${pro.toLocaleString()}`;
-            // Update monthly subs
-            updatePkgSubs({starter, plus, pro});
+            const starter = computePackagePrice([], BASES.starter.price);
+            const plus = computePackagePrice(['contact-forms','team-profiles','gallery'], BASES.plus.price - (featurePrices['contact-forms']+featurePrices['team-profiles']+featurePrices['gallery']));
+            const pro = computePackagePrice(['blog','ecommerce','analytics','whatsapp','newsletter'], BASES.pro.price - (featurePrices['blog']+featurePrices['ecommerce']+featurePrices['analytics']+featurePrices['whatsapp']+featurePrices['newsletter']));
+            // Update monthly values (bold)
+            const mS = document.getElementById('pkg-m-starter');
+            const mP = document.getElementById('pkg-m-plus');
+            const mR = document.getElementById('pkg-m-pro');
+            if (mS) mS.textContent = `₹${Math.round(starter/12).toLocaleString()}`;
+            if (mP) mP.textContent = `₹${Math.round(plus/12).toLocaleString()}`;
+            if (mR) mR.textContent = `₹${Math.round(pro/12).toLocaleString()}`;
+            // Update yearly one-time (small)
+            const yS = document.getElementById('pkg-y-starter');
+            const yP = document.getElementById('pkg-y-plus');
+            const yR = document.getElementById('pkg-y-pro');
+            if (yS) yS.textContent = `₹${starter.toLocaleString()} one‑time`;
+            if (yP) yP.textContent = `₹${plus.toLocaleString()} one‑time`;
+            if (yR) yR.textContent = `₹${pro.toLocaleString()} one‑time`;
         }
         updatePackageLabels();
 
         function updatePkgSubs({starter, plus, pro}){
+            // keep base values available for other consumers if needed
             const subS = document.getElementById('pkg-sub-starter');
             const subP = document.getElementById('pkg-sub-plus');
             const subR = document.getElementById('pkg-sub-pro');
@@ -2851,13 +2830,16 @@
             subs.forEach(({el})=>{
                 if (!el) return;
                 const base = parseInt(el.dataset.base || '0', 10);
+                const id = el.id || '';
+                const targetM = document.getElementById(id.replace('pkg-sub','pkg-m'));
+                const targetY = document.getElementById(id.replace('pkg-sub','pkg-y'));
                 if (mode === 'monthly') {
                     const monthly = Math.max(1, Math.round(base / 12));
-                    el.style.display = 'block';
-                    el.textContent = `or ₹${monthly.toLocaleString()} / mo for 12 months`;
+                    if (targetM) targetM.textContent = `₹${monthly.toLocaleString()}`;
+                    if (targetY) targetY.textContent = `₹${base.toLocaleString()} one‑time`;
                 } else {
-                    el.style.display = 'block';
-                    el.textContent = `One‑time payment`;
+                    if (targetM) targetM.textContent = `₹${Math.round(base/12).toLocaleString()}`;
+                    if (targetY) targetY.textContent = `₹${base.toLocaleString()} one‑time`;
                 }
             });
             // Reflect in calculator order button's data-monthly too
@@ -2910,83 +2892,7 @@
             }
         })();
 
-        // ROI Calculator JS
-        function computeROI(total){
-            const getNum = (id, div=1)=>{
-                const el = document.getElementById(id); if (!el) return 0; const v = Number(el.value); return Number.isFinite(v)? v/div : 0;
-            };
-            const visitors = Math.max(0, getNum('roi-visitors'));
-            const conv = Math.max(0, getNum('roi-conv',100)); // site conversion
-            const close = Math.max(0, getNum('roi-close',100)); // lead close rate
-            const aov = Math.max(0, getNum('roi-aov'));
-            const uplift = Math.max(0, getNum('roi-uplift',100)); // expected improvement
-            const repeatPerYear = Math.max(0, getNum('roi-repeat'));
-            const referralRate = Math.max(0, getNum('roi-referral',100));
-            const monthlySavings = Math.max(0, getNum('roi-savings'));
-            const margin = Math.max(0, getNum('roi-margin',100));
-
-            // Core funnel
-            const baselineLeads = visitors * conv;
-            const baselineSales = baselineLeads * close;
-            const baselineRevenue = baselineSales * aov;
-
-            // Incremental lift from conversion improvement
-            const incRevenue = baselineRevenue * uplift;
-
-            // Referrals contribute extra leads; approximate incremental revenue from referrals
-            const referralLeads = baselineLeads * referralRate;
-            const referralSales = referralLeads * close;
-            const referralRevenue = referralSales * aov;
-
-            // Repeat purchases per customer over a year (smoothed monthly)
-            const repeatMonthlyRevenue = (baselineSales * aov * (repeatPerYear/12));
-
-            // Sum all incremental value streams and add operational savings
-            const incrementalMonthlyValue = incRevenue + (referralRevenue) + repeatMonthlyRevenue + monthlySavings;
-
-            // Profit estimates use gross margin
-            const monthlyProfit = incrementalMonthlyValue * margin;
-            const annualProfit = monthlyProfit * 12 - total; // after project cost
-
-            const incNode = document.getElementById('roi-inc-rev');
-            const payNode = document.getElementById('roi-payback');
-            const annNode = document.getElementById('roi-annual');
-            const profNode = document.getElementById('roi-profit');
-            if (incNode) incNode.textContent = `₹${Math.round(incrementalMonthlyValue).toLocaleString()}`;
-            if (profNode) profNode.textContent = `₹${Math.round(Math.max(0, annualProfit)).toLocaleString()}`;
-            if (annNode){
-                const annualValue = incrementalMonthlyValue * 12;
-                if (total > 0){
-                    const roi = ((annualValue - total) / total) * 100; // %
-                    annNode.textContent = `${Math.round(roi)}%`;
-                } else {
-                    annNode.textContent = '—';
-                }
-            }
-            if (payNode) {
-                if (incrementalMonthlyValue > 0 && total > 0){
-                    const months = Math.max(1, Math.ceil(total / incrementalMonthlyValue));
-                    payNode.textContent = `${months} month${months>1?'s':''}`;
-                } else {
-                    payNode.textContent = '— months';
-                }
-            }
-        }
-        (function(){
-            const form = document.getElementById('roi-form');
-            if (!form) return;
-            const inputs = form.querySelectorAll('input');
-            const getTotal = ()=>{
-                const text = (document.getElementById('total-price')||{}).textContent||'₹0';
-                const n = Number(text.replace(/[^0-9]/g,'')) || 0;
-                return n;
-            };
-            inputs.forEach(inp=>{
-                inp.addEventListener('input', ()=>computeROI(getTotal()));
-            });
-            // initial compute
-            computeROI(getTotal());
-        })();
+        
 
         // FAQ toggle
         document.querySelectorAll('.faq-item').forEach(item => {
