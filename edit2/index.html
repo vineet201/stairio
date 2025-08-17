@@ -750,13 +750,40 @@
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
+    /* Stylish + compact add-on tiles (glassmorphism) */
+    .addons-sidebar .feature-options { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .addons-sidebar .feature-option { cursor:pointer; background: rgba(255,255,255,0.38); border:1px solid rgba(255,255,255,0.55); border-radius: 16px; overflow:hidden; position:relative; transition: transform .18s ease, box-shadow .24s ease, border-color .18s ease, background .2s ease; backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
+    /* Ambient glow */
+    .addons-sidebar .feature-option::before { content:""; position:absolute; inset:-40% -40% auto auto; height:160%; width:160%; background: radial-gradient(60% 60% at 70% 20%, rgba(139,92,246,.16), rgba(124,58,237,.08) 40%, transparent 70%); opacity:.55; transform: translate3d(-14px,-12px,0); transition: transform .35s ease, opacity .3s ease; pointer-events:none; }
+    /* Gradient border ring using mask */
+    .addons-sidebar .feature-option::after { content:""; position:absolute; inset:0; border-radius: 16px; padding:1px; background: linear-gradient(135deg, rgba(139,92,246,.45), rgba(124,58,237,.28), rgba(255,255,255,.65)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity:.35; pointer-events:none; transition: opacity .25s ease; }
+    .addons-sidebar .feature-option:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(17,24,39,.12), 0 2px 8px rgba(17,24,39,.06); }
+    .addons-sidebar .feature-option:hover::before { transform: translate3d(0,0,0); opacity:.8; }
+    .addons-sidebar .feature-option:hover::after { opacity:.7; }
+    .addons-sidebar .feature-option.selected { background: rgba(255,255,255,0.5); border-color: rgba(139,92,246,.6); box-shadow: 0 18px 46px rgba(139,92,246,0.22); }
+    .addons-sidebar .feature-option.selected::after { opacity: .95; background: linear-gradient(135deg, rgba(139,92,246,.75), rgba(124,58,237,.45), rgba(255,255,255,.75)); }
+    .addons-sidebar .feature-option:focus-visible { outline: 3px solid #8B5CF6; outline-offset: 2px; }
+    .addons-sidebar .option-header { padding: 12px 14px; gap: 12px; display:grid; grid-template-columns: auto 1fr auto; align-items:center; }
+    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height:18px; border-radius: 8px; border:1.5px solid rgba(0,0,0,.08); background: rgba(255,255,255,.65); backdrop-filter: blur(6px); box-shadow:none; }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 8px 22px rgba(139,92,246,.35); }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:focus-visible { outline:2px solid #8B5CF6; outline-offset:2px; }
+    .addons-sidebar .option-info h4 { font-size: 15px; margin:0 0 2px; color:#0f1115; letter-spacing:-.2px; }
+    .addons-sidebar .option-info p { font-size: 12.5px; color:#6e6e73; margin:0; display:-webkit-box; -webkit-line-clamp:2; line-clamp: 2; -webkit-box-orient:vertical; overflow:hidden; }
+    .addons-sidebar .option-price { font-size: 12px; font-weight:800; color:#3b1c96; background: rgba(139,92,246,0.10); border:1px solid rgba(124,58,237,0.25); padding:4px 10px; border-radius:999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(91,33,182,.10); }
+    /* Compact spacing for rows */
+    .addons-sidebar .feature-option + .feature-option { margin-top:0; }
+    @media (max-width: 768px) { .addons-sidebar .feature-options { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
     
     @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
     /* Mobile accordion for add-ons */
     @media (max-width: 768px) {
         .addons-header { cursor: pointer; }
+        /* Keep visible when .open is present; JS ensures .open by default on portrait */
         .addons-sidebar:not(.open) .addons-list { display: none; }
         .addons-sidebar .addons-header::after { content: attr(aria-expanded); display:none; }
+        /* Avoid clipping and allow scroll inside when content is tall */
+        .addons-sidebar { position: relative; max-width: 100%; }
+        .addons-sidebar .addons-list { max-height: 70vh; overflow: auto; -webkit-overflow-scrolling: touch; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
     }
 
     /* Compact scaling for add-ons and calculator */
@@ -2540,6 +2567,22 @@
             addonsHeader.setAttribute('aria-expanded', String(addonsSidebar.classList.contains('open')));
                     }
                 });
+
+                // Ensure add-ons are visible by default in portrait (<=768px)
+                const mql = window.matchMedia('(max-width: 768px)');
+                const syncAddonsOpen = () => {
+                    if (mql.matches) {
+                        addonsSidebar.classList.add('open');
+                        addonsHeader.setAttribute('aria-expanded', 'true');
+                    } else {
+                        // Desktop doesn't rely on accordion; clear explicit state
+                        addonsSidebar.classList.remove('open');
+                        addonsHeader.removeAttribute('aria-expanded');
+                    }
+                };
+                // run once and on viewport changes (orientation/resize)
+                try { mql.addEventListener('change', syncAddonsOpen); } catch { mql.addListener(syncAddonsOpen); }
+                syncAddonsOpen();
             }
 
             // Billing toggle
@@ -3086,6 +3129,8 @@
             updateEarn();
         }
     </script>
+    <!-- Splash Cursor effect -->
+    <script src="assets/splash-cursor.js"></script>
 </body>
 </html>
                     
