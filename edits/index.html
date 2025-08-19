@@ -6,13 +6,22 @@
     <title>Stairio — World‑Class Websites at a Transparent Price</title>
     <meta name="description" content="Premium-looking business websites at a transparent price. Domain, hosting, SSL, responsive design, and support included. Start at ₹16,000.">
     <meta name="theme-color" content="#8B5CF6">
-    <meta property="og:title" content="Stairio — Think Different About Websites">
+    <meta name="keywords" content="business website design, affordable web development, professional website India, transparent pricing, custom web design">
+    <meta name="author" content="Stairio">
+    <meta property="og:title" content="Stairio — World‑Class Websites at a Transparent Price">
     <meta property="og:description" content="Get a professional website that looks ₹35,000+ for just ₹16,000. Domain, hosting, SSL, and support included.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://stairio.example/">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="robots" content="index,follow">
-        <link rel="canonical" href="https://stairio.example/">
+    <meta property="og:image" content="https://stairio.example/assets/images/stairio-social.jpg">
+    <meta property="og:image:alt" content="Stairio website design showcase">
+    <meta property="og:site_name" content="Stairio">
+    <meta property="og:locale" content="en_IN">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Stairio — World‑Class Websites at a Transparent Price">
+    <meta name="twitter:description" content="Get a professional website that looks ₹35,000+ for just ₹16,000. Domain, hosting, SSL, and support included.">
+    <meta name="twitter:image" content="https://stairio.example/assets/images/stairio-social.jpg">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://stairio.example/">
     <!-- Inline SVG favicon to avoid external file dependency -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='8' width='64' height='64' fill='%238B5CF6'/%3E%3Crect x='16' y='16' width='20' height='20' rx='2' fill='%23fff'/%3E%3Crect x='12' y='12' width='12' height='12' rx='1.5' fill='%238B5CF6'/%3E%3C/svg%3E">
         <!-- Tailwind CSS (CDN) -->
@@ -41,9 +50,51 @@
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Stairio",
+            "alternateName": "Stairio Web Services",
             "url": "https://stairio.example/",
-            "description": "World-class websites for small and mid-size businesses in India.",
-            "sameAs": []
+            "logo": "https://stairio.example/assets/images/logo/stairio-logo.svg",
+            "description": "World-class websites for small and mid-size businesses in India at transparent pricing.",
+            "foundingDate": "2024",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "IN",
+                "addressLocality": "India"
+            },
+            "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+91-XXX-XXX-XXXX",
+                "contactType": "Customer Service",
+                "email": "hello@stairio.com",
+                "availableLanguage": ["English", "Hindi"]
+            },
+            "areaServed": "IN",
+            "sameAs": [],
+            "offers": {
+                "@type": "Service",
+                "name": "Website Development Services",
+                "description": "Complete website development including domain, hosting, SSL, design and support",
+                "serviceType": "Website Development",
+                "areaServed": "IN",
+                "priceRange": "₹16000-₹36500",
+                "provider": {
+                    "@type": "Organization",
+                    "name": "Stairio"
+                }
+            }
+        }
+        </script>
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Stairio",
+            "url": "https://stairio.example/",
+            "description": "World-class websites at transparent pricing for growing businesses",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://stairio.example/search?q={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
         }
         </script>
     <style>
@@ -707,6 +758,14 @@
     .choose-plan:hover { background:#f7f7f8; }
     .package-card.featured .choose-plan { background:#111; color:#fff; border-color:#111; }
     .package-card.featured .choose-plan:hover { background:#000; }
+    /* Selected base visual state */
+    .package-card.selected { border-color:#8B5CF6; box-shadow: 0 20px 50px rgba(139,92,246,.22), 0 2px 10px rgba(0,0,0,.06); background: linear-gradient(180deg, #ffffff, #faf8ff); }
+    .package-card.selected::after { content:'Selected'; position:absolute; top:10px; left:12px; font-size:11px; font-weight:800; letter-spacing:.4px; text-transform:uppercase; color:#3b1c96; background: rgba(139,92,246,.12); border:1px solid rgba(124,58,237,.25); padding:4px 8px; border-radius:999px; }
+    .package-card.selected .choose-plan { background:#8B5CF6; color:#fff; border-color:#7C3AED; }
+    .package-card.selected .choose-plan:hover { background:#7C3AED; }
+    /* Gentle pulse to draw attention when prompting */
+    @keyframes pkgPulse { 0% { box-shadow: 0 0 0 0 rgba(139,92,246,.28);} 100% { box-shadow: 0 0 0 14px rgba(139,92,246,0);} }
+    .package-card.pulse { animation: pkgPulse .9s ease-out 2; }
     /* Discount badge */
     .discount-badge { position:absolute; top:8px; right:12px; left:auto; background:#FEF08A; color:#111827; font-weight:800; font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid #FACC15; box-shadow: 0 2px 6px rgba(0,0,0,0.06); z-index: 3; }
     /* Avoid overlap with ribbon on featured card */
@@ -750,13 +809,40 @@
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
+    /* Stylish + compact add-on tiles (glassmorphism) */
+    .addons-sidebar .feature-options { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .addons-sidebar .feature-option { cursor:pointer; background: rgba(255,255,255,0.38); border:1px solid rgba(255,255,255,0.55); border-radius: 16px; overflow:hidden; position:relative; transition: transform .18s ease, box-shadow .24s ease, border-color .18s ease, background .2s ease; backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
+    /* Ambient glow */
+    .addons-sidebar .feature-option::before { content:""; position:absolute; inset:-40% -40% auto auto; height:160%; width:160%; background: radial-gradient(60% 60% at 70% 20%, rgba(139,92,246,.16), rgba(124,58,237,.08) 40%, transparent 70%); opacity:.55; transform: translate3d(-14px,-12px,0); transition: transform .35s ease, opacity .3s ease; pointer-events:none; }
+    /* Gradient border ring using mask */
+    .addons-sidebar .feature-option::after { content:""; position:absolute; inset:0; border-radius: 16px; padding:1px; background: linear-gradient(135deg, rgba(139,92,246,.45), rgba(124,58,237,.28), rgba(255,255,255,.65)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity:.35; pointer-events:none; transition: opacity .25s ease; }
+    .addons-sidebar .feature-option:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(17,24,39,.12), 0 2px 8px rgba(17,24,39,.06); }
+    .addons-sidebar .feature-option:hover::before { transform: translate3d(0,0,0); opacity:.8; }
+    .addons-sidebar .feature-option:hover::after { opacity:.7; }
+    .addons-sidebar .feature-option.selected { background: rgba(255,255,255,0.5); border-color: rgba(139,92,246,.6); box-shadow: 0 18px 46px rgba(139,92,246,0.22); }
+    .addons-sidebar .feature-option.selected::after { opacity: .95; background: linear-gradient(135deg, rgba(139,92,246,.75), rgba(124,58,237,.45), rgba(255,255,255,.75)); }
+    .addons-sidebar .feature-option:focus-visible { outline: 3px solid #8B5CF6; outline-offset: 2px; }
+    .addons-sidebar .option-header { padding: 12px 14px; gap: 12px; display:grid; grid-template-columns: auto 1fr auto; align-items:center; }
+    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height:18px; border-radius: 8px; border:1.5px solid rgba(0,0,0,.08); background: rgba(255,255,255,.65); backdrop-filter: blur(6px); box-shadow:none; }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 8px 22px rgba(139,92,246,.35); }
+    .addons-sidebar .option-checkbox input[type="checkbox"]:focus-visible { outline:2px solid #8B5CF6; outline-offset:2px; }
+    .addons-sidebar .option-info h4 { font-size: 15px; margin:0 0 2px; color:#0f1115; letter-spacing:-.2px; }
+    .addons-sidebar .option-info p { font-size: 12.5px; color:#6e6e73; margin:0; display:-webkit-box; -webkit-line-clamp:2; line-clamp: 2; -webkit-box-orient:vertical; overflow:hidden; }
+    .addons-sidebar .option-price { font-size: 12px; font-weight:800; color:#3b1c96; background: rgba(139,92,246,0.10); border:1px solid rgba(124,58,237,0.25); padding:4px 10px; border-radius:999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(91,33,182,.10); }
+    /* Compact spacing for rows */
+    .addons-sidebar .feature-option + .feature-option { margin-top:0; }
+    @media (max-width: 768px) { .addons-sidebar .feature-options { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
     
     @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
     /* Mobile accordion for add-ons */
     @media (max-width: 768px) {
         .addons-header { cursor: pointer; }
+        /* Keep visible when .open is present; JS ensures .open by default on portrait */
         .addons-sidebar:not(.open) .addons-list { display: none; }
         .addons-sidebar .addons-header::after { content: attr(aria-expanded); display:none; }
+        /* Avoid clipping and allow scroll inside when content is tall */
+        .addons-sidebar { position: relative; max-width: 100%; }
+        .addons-sidebar .addons-list { max-height: 70vh; overflow: auto; -webkit-overflow-scrolling: touch; padding-bottom: max(12px, env(safe-area-inset-bottom)); }
     }
 
     /* Compact scaling for add-ons and calculator */
@@ -1453,7 +1539,7 @@
     /* Focus styles for interactive cards */
     .tile:focus-visible, .package-card:focus-visible, .feature-card:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
         
-        /* Smooth Animations */
+        /* Enhanced Scroll Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -1465,8 +1551,92 @@
             }
         }
         
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInScale {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes staggerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         .fade-in {
             animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .scroll-fade-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .scroll-fade-left {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+        
+        .scroll-fade-right {
+            animation: fadeInRight 0.8s ease-out;
+        }
+        
+        .scroll-scale {
+            animation: slideInScale 0.8s ease-out;
+        }
+        
+        .stagger-1 {
+            animation: staggerFadeIn 0.6s ease-out 0.1s both;
+        }
+        
+        .stagger-2 {
+            animation: staggerFadeIn 0.6s ease-out 0.2s both;
+        }
+        
+        .stagger-3 {
+            animation: staggerFadeIn 0.6s ease-out 0.3s both;
+        }
+        
+        .stagger-4 {
+            animation: staggerFadeIn 0.6s ease-out 0.4s both;
+        }
+        
+        .stagger-5 {
+            animation: staggerFadeIn 0.6s ease-out 0.5s both;
+        }
+        
+        .stagger-6 {
+            animation: staggerFadeIn 0.6s ease-out 0.6s both;
         }
 
         /* Respect reduced motion preferences */
@@ -1599,12 +1769,12 @@
             <section class="features" id="features">
                 <div class="container">
 
-                    <div class="revo-head">
+                    <div class="revo-head" data-scroll-class="scroll-fade-up">
                         <h2 class="revo-title">Everything included</h2>
                     </div>
 
                     <div class="features-grid">
-                        <div class="feature-card" style="--bg: url('assets/images/portfolio/clean-service.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/portfolio/clean-service.svg')" data-scroll-class="stagger-1">
                             <div class="feature-icon"><svg><use href="#i-globe"/></svg></div>
                             <h3>Domain & Hosting</h3>
                             <p>Free domain for 1 year. Hosting for 2 years. Because your website should just work.</p>
@@ -1614,7 +1784,7 @@
                             </ul>
                         </div>
 
-                        <div class="feature-card" style="--bg: url('assets/images/portfolio/modern-clinic.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/portfolio/modern-clinic.svg')" data-scroll-class="stagger-2">
                             <div class="feature-icon"><svg><use href="#i-lock"/></svg></div>
                             <h3>Security First</h3>
                             <p>Premium SSL for 3 years. Your customers' trust is everything.</p>
@@ -1624,7 +1794,7 @@
                             </ul>
                         </div>
 
-                        <div class="feature-card" style="--bg: url('assets/images/portfolio/boutique-brand.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/portfolio/boutique-brand.svg')" data-scroll-class="stagger-3">
                             <div class="feature-icon"><svg><use href="#i-palette"/></svg></div>
                             <h3>Beautiful Design</h3>
                             <p>Custom UI that reflects your brand. Not templates. Your unique story.</p>
@@ -1634,7 +1804,7 @@
                             </ul>
                         </div>
 
-                        <div class="feature-card" style="--bg: url('assets/images/portfolio/product-landing.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/portfolio/product-landing.svg')" data-scroll-class="stagger-4">
                             <div class="feature-icon"><svg><use href="#i-smartphone"/></svg></div>
                             <h3>Works Everywhere</h3>
                             <p>Perfect on phones, tablets, desktops. Every screen, every time.</p>
@@ -1644,7 +1814,7 @@
                             </ul>
                         </div>
 
-                        <div class="feature-card" style="--bg: url('assets/images/logos/urban.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/logos/urban.svg')" data-scroll-class="stagger-5">
                             <div class="feature-icon"><svg><use href="#i-tools"/></svg></div>
                             <h3>We've Got You</h3>
                             <p>3 months of support included. Because launching is just the beginning.</p>
@@ -1654,7 +1824,7 @@
                             </ul>
                         </div>
 
-                        <div class="feature-card" style="--bg: url('assets/images/logos/nextgen.svg')">
+                        <div class="feature-card" style="--bg: url('assets/images/logos/nextgen.svg')" data-scroll-class="stagger-6">
                             <div class="feature-icon"><svg><use href="#i-activity"/></svg></div>
                             <h3>Know Your Impact</h3>
                             <p>Analytics setup included. See who visits, what works, how you grow.</p>
@@ -1675,13 +1845,13 @@
             <!-- Revolution Section -->
             <section id="revolution" class="revolution" aria-labelledby="revo-title">
                 <div class="container">
-                    <div class="revo-head">
+                    <div class="revo-head" data-scroll-class="scroll-fade-up">
                         <span class="revo-badge">A new operating model</span>
                         <h2 id="revo-title" class="revo-title">Not just a website. A system that runs your business.</h2>
                         <p class="revo-sub">From lead to launch to lifetime support — Stairio replaces fragmented tools with one predictable, scalable pipeline.</p>
                     </div>
                     <div class="bento" role="list">
-                        <article class="tile span-6" role="listitem">
+                        <article class="tile span-6" role="listitem" data-scroll-class="scroll-fade-left">
                             <span class="k">Speed</span>
                             <h3>Launch in days, not months</h3>
                             <p>Proven blocks, instant infrastructure, zero guesswork.</p>
@@ -1691,7 +1861,7 @@
                                 <span class="pill">Production CI</span>
                             </div>
                         </article>
-                        <article class="tile span-6" role="listitem">
+                        <article class="tile span-6" role="listitem" data-scroll-class="scroll-fade-right">
                             <span class="k">Transparency</span>
                             <h3>Flat pricing. No surprises.</h3>
                             <p>Pick a package, add only what you need. See the total instantly.</p>
@@ -1701,7 +1871,7 @@
                                 <span class="pill">Own your stack</span>
                             </div>
                         </article>
-                        <article class="tile span-8" role="listitem">
+                        <article class="tile span-8" role="listitem" data-scroll-class="scroll-scale">
                             <span class="k">Automation</span>
                             <h3>Everything flows</h3>
                             <p>Leads, content, and updates move through one seamless pipeline.</p>
@@ -1715,7 +1885,7 @@
                                 <span class="step">Grow</span>
                             </div>
                         </article>
-                        <article class="tile span-4" role="listitem">
+                        <article class="tile span-4" role="listitem" data-scroll-class="scroll-fade-up">
                             <span class="k">Support</span>
                             <h3>We stay after launch</h3>
                             <p>Updates, A/B tests, and uptime monitoring included.</p>
@@ -1735,8 +1905,8 @@
                     
                                         <!-- Customization Options -->
                                         <div class="customization-section website-theme">
-                                                <h3>Make It Yours</h3>
-                                                <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
+                                                <h3 data-scroll-class="scroll-fade-up">Make It Yours</h3>
+                                                <p class="customization-subtitle" data-scroll-class="scroll-fade-up">Essentials included. Premium add‑ons optional — choose only what you need.</p>
                                                 <div class="billing-toggle" role="group" aria-label="Billing period">
                                                     <span class="label">Billing:</span>
                                                     <div class="segmented" aria-live="polite">
@@ -1753,7 +1923,7 @@
                                                     <span class="included-pill">3 months support</span>
                                                 </div>
                                                 <!-- Urgency badge -->
-                                                <div class="urgency-badge" id="slots-badge" aria-live="polite"><span class="dot"></span>⏳ 3 slots remaining this month</div>
+                                                <div class="urgency-badge" id="slots-badge" aria-live="polite"><span class="dot"></span>⏳ 13 slots remaining this month</div>
 
 
                                                 <div class="customization-layout">
@@ -1761,7 +1931,7 @@
                                                         <!-- Pre-bundled Packages -->
                                                         <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="starter" tabindex="0" data-scroll-class="stagger-1">
                                 <span class="discount-badge">78% off</span>
                                 <div class="package-title">
                                     <h4>Starter Website Builder</h4>
@@ -1790,7 +1960,7 @@
                             </div>
 
                             <!-- Plus -->
-                            <div class="package-card featured" tabindex="0">
+                            <div class="package-card featured" data-base="plus" tabindex="0" data-scroll-class="stagger-2">
                                 <div class="plan-ribbon">Most popular</div>
                                 <span class="discount-badge">77% off</span>
                                 <div class="package-title">
@@ -1820,7 +1990,7 @@
                             </div>
 
                             <!-- Pro -->
-                            <div class="package-card" tabindex="0">
+                            <div class="package-card" data-base="pro" tabindex="0" data-scroll-class="stagger-3">
                                 <span class="discount-badge">67% off</span>
                                 <div class="package-title">
                                     <h4>Business Website Builder</h4>
@@ -2031,12 +2201,12 @@
             <!-- Value Section -->
             <section class="value-section">
                 <div class="container">
-                    <div class="section-header">
+                    <div class="section-header" data-scroll-class="scroll-fade-up">
                         <h2>Exactly what you get.<br>Exactly what you save.</h2>
                         <p>Clear line‑by‑line value so you can compare and decide with confidence.</p>
                     </div>
                     
-                    <div class="value-table">
+                    <div class="value-table" data-scroll-class="scroll-scale">
                         <table>
                             <thead>
                                 <tr>
@@ -2090,25 +2260,25 @@
             <!-- Testimonials -->
             <section class="testimonials" id="testimonials">
                 <div class="container">
-                    <div class="section-header">
+                    <div class="section-header" data-scroll-class="scroll-fade-up">
                         <h2>Proof from people<br>who were once deciding like you.</h2>
                         <p>Real outcomes for small businesses.</p>
                     </div>
                     <div class="testimonials-grid">
-                        <div class="testimonial">
-                            <p>“We launched in 10 days. Customers now say our website ‘looks expensive’. Best ROI we’ve had this year.”</p>
+                        <div class="testimonial" data-scroll-class="stagger-1">
+                            <p>"We launched in 10 days. Customers now say our website 'looks expensive'. Best ROI we've had this year."</p>
                             <img src="assets/images/avatars/priya.svg" alt="Priya S." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Priya S.</div>
                             <div class="role">Clinic Owner</div>
                         </div>
-                        <div class="testimonial">
-                            <p>“Leads doubled within a month. The site loads fast, works on every phone, and feels premium.”</p>
+                        <div class="testimonial" data-scroll-class="stagger-2">
+                            <p>"Leads doubled within a month. The site loads fast, works on every phone, and feels premium."</p>
                             <img src="assets/images/avatars/rahul.svg" alt="Rahul K." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Rahul K.</div>
                             <div class="role">Real Estate Consultant</div>
                         </div>
-                        <div class="testimonial">
-                            <p>“Clear pricing, zero hassle. They handled domain, hosting, SSL—everything. I just sent content.”</p>
+                        <div class="testimonial" data-scroll-class="stagger-3">
+                            <p>"Clear pricing, zero hassle. They handled domain, hosting, SSL—everything. I just sent content."</p>
                             <img src="assets/images/avatars/meera.svg" alt="Meera T." loading="lazy" style="width:40px; height:40px; border-radius:50%; margin-top:10px;"/>
                             <div class="name">Meera T.</div>
                             <div class="role">Boutique Owner</div>
@@ -2120,15 +2290,15 @@
             <!-- Portfolio Previews -->
             <section class="portfolio" id="portfolio">
                 <div class="container">
-                    <div class="section-header">
+                    <div class="section-header" data-scroll-class="scroll-fade-up">
                         <h2>Designed to convert.<br>Built to last.</h2>
                         <p>A peek at the styles we can craft for your brand.</p>
                     </div>
                     <div class="portfolio-grid" aria-label="Design previews">
-                        <div class="shot"><img src="assets/images/portfolio/clean-service.svg" alt="Clean minimal service website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
-                        <div class="shot"><img src="assets/images/portfolio/product-landing.svg" alt="Bold product landing page preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
-                        <div class="shot"><img src="assets/images/portfolio/boutique-brand.svg" alt="Elegant boutique brand website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
-                        <div class="shot"><img src="assets/images/portfolio/modern-clinic.svg" alt="Modern clinic website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot" data-scroll-class="stagger-1"><img src="assets/images/portfolio/clean-service.svg" alt="Clean minimal service website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot" data-scroll-class="stagger-2"><img src="assets/images/portfolio/product-landing.svg" alt="Bold product landing page preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot" data-scroll-class="stagger-3"><img src="assets/images/portfolio/boutique-brand.svg" alt="Elegant boutique brand website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
+                        <div class="shot" data-scroll-class="stagger-4"><img src="assets/images/portfolio/modern-clinic.svg" alt="Modern clinic website preview" loading="lazy" style="width:100%; height:100%; object-fit:cover;"/></div>
                     </div>
                 </div>
             </section>
@@ -2136,23 +2306,23 @@
             <!-- FAQ -->
             <section class="faq" id="faq">
                 <div class="container">
-                    <div class="section-header">
+                    <div class="section-header" data-scroll-class="scroll-fade-up">
                         <h2>Questions, answered.</h2>
                         <p>Clarity before you decide.</p>
                     </div>
-                    <div class="faq-item">
+                    <div class="faq-item" data-scroll-class="stagger-1">
                         <div class="faq-q"><strong>How fast can we go live?</strong><span>+</span></div>
                         <div class="faq-a"><p>Typically 10–14 days for the base package. Add-ons may add a few days depending on scope.</p></div>
                     </div>
-                    <div class="faq-item">
+                    <div class="faq-item" data-scroll-class="stagger-2">
                         <div class="faq-q"><strong>What do you need from me?</strong><span>+</span></div>
                         <div class="faq-a"><p>Your logo, brand colors (if any), page content (we can guide you), and 3–5 reference sites you like.</p></div>
                     </div>
-                    <div class="faq-item">
+                    <div class="faq-item" data-scroll-class="stagger-3">
                         <div class="faq-q"><strong>Who owns the website?</strong><span>+</span></div>
                         <div class="faq-a"><p>You do. We hand over all credentials. Support is free for 3 months and extendable.</p></div>
                     </div>
-                    <div class="faq-item">
+                    <div class="faq-item" data-scroll-class="stagger-4">
                         <div class="faq-q"><strong>What are renewal costs?</strong><span>+</span></div>
                         <div class="faq-a"><p>After the included period, typical renewals are ~₹2,000 for domain (yearly) and ~₹3,000 for hosting (yearly).</p></div>
                     </div>
@@ -2513,6 +2683,28 @@
             updateActiveNav();
             window.addEventListener('hashchange', updateActiveNav);
 
+            // Enhanced scroll-based animations using a reusable IntersectionObserver
+            const scrollObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = entry.target;
+                        const animationClass = target.dataset.scrollClass;
+                        if (animationClass) {
+                            target.classList.add(animationClass);
+                        }
+                        observer.unobserve(target); // Animate only once
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.2
+            });
+
+            // Observe all elements with [data-scroll-class]
+            document.querySelectorAll('[data-scroll-class]').forEach(el => {
+                scrollObserver.observe(el);
+            });
+
             // Observe sections to update active nav when scrolling inside Home
             const sections = ['features','revolution','packages','contact'];
             if ('IntersectionObserver' in window) {
@@ -2540,6 +2732,22 @@
             addonsHeader.setAttribute('aria-expanded', String(addonsSidebar.classList.contains('open')));
                     }
                 });
+
+                // Ensure add-ons are visible by default in portrait (<=768px)
+                const mql = window.matchMedia('(max-width: 768px)');
+                const syncAddonsOpen = () => {
+                    if (mql.matches) {
+                        addonsSidebar.classList.add('open');
+                        addonsHeader.setAttribute('aria-expanded', 'true');
+                    } else {
+                        // Desktop doesn't rely on accordion; clear explicit state
+                        addonsSidebar.classList.remove('open');
+                        addonsHeader.removeAttribute('aria-expanded');
+                    }
+                };
+                // run once and on viewport changes (orientation/resize)
+                try { mql.addEventListener('change', syncAddonsOpen); } catch { mql.addListener(syncAddonsOpen); }
+                syncAddonsOpen();
             }
 
             // Billing toggle
@@ -2777,6 +2985,9 @@
                 localStorage.setItem('stairio_selected', JSON.stringify({ base: baseSelection, addons: selectedFeatures }));
             } catch {}
 
+            // Keep selected base card visually marked
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('selected', card.dataset.base===baseSelection));
+
             // Recompute ROI with new total
             try { computeROI(totalPrice); } catch {}
         }
@@ -2786,26 +2997,36 @@
             if (baseKey && BASES[baseKey]) {
                 baseSelection = baseKey;
             }
+            // Reflect selected base visually
+            document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+            if (baseSelection) {
+                const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                card && card.classList.add('selected');
+            }
             // Clear current selections
             document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
                 const cb = option.querySelector('input[type="checkbox"]');
                 if (cb) { cb.checked = false; }
-                option.classList.remove('selected');
+                option.classList.remove('selected','outgoing','hidden');
+                option.removeAttribute('aria-hidden');
             });
             selectedFeatures = {};
 
-            const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
-            ids.forEach(id => {
-                const cb = document.getElementById(id);
-                if (!cb) return;
-                cb.checked = true;
-                const option = cb.closest('.feature-option');
-                if (option) {
-                    const price = parseInt(option.dataset.price);
-                    selectedFeatures[id] = price;
-                    option.classList.add('selected');
-                }
-            });
+            // Only auto-apply add-ons when no baseKey is passed (explicit ?addons= preset)
+            if (!baseKey) {
+                const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
+                ids.forEach(id => {
+                    const cb = document.getElementById(id);
+                    if (!cb) return;
+                    cb.checked = true;
+                    const option = cb.closest('.feature-option');
+                    if (option) {
+                        const price = parseInt(option.dataset.price);
+                        selectedFeatures[id] = price;
+                        option.classList.add('selected');
+                    }
+                });
+            }
 
             updatePrice();
             // Scroll to calculator for clarity
@@ -2841,6 +3062,16 @@
             
             // Make entire option clickable
             option.addEventListener('click', (e) => {
+                // If no base selected, prompt to choose a plan first
+                if (!baseSelection) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // pulse package cards and scroll into view
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 if (e.target.type !== 'checkbox') {
                     checkbox.checked = !checkbox.checked;
                 }
@@ -2870,6 +3101,15 @@
             // Handle direct checkbox clicks
             checkbox.addEventListener('change', (e) => {
                 e.stopPropagation();
+                if (!baseSelection) {
+                    e.preventDefault();
+                    // Reset checkbox to unchecked if toggled via keyboard
+                    checkbox.checked = false;
+                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                    const pkg = document.getElementById('packages');
+                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                    return;
+                }
                 
                 if (checkbox.checked) {
                     selectedFeatures[featureId] = price;
@@ -2942,6 +3182,12 @@
             const saved = JSON.parse(localStorage.getItem('stairio_selected') || '{}');
             if (saved && typeof saved === 'object') {
                 if (saved.base && BASES[saved.base]) baseSelection = saved.base;
+                // reflect base selection visually on restore
+                document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
+                if (baseSelection) {
+                    const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
+                    card && card.classList.add('selected');
+                }
                 const addons = saved.addons || {};
                 const ids = Object.keys(addons);
                 if (ids.length) {
@@ -3086,6 +3332,8 @@
             updateEarn();
         }
     </script>
+    <!-- Splash Cursor effect -->
+    <script src="assets/splash-cursor.js"></script>
 </body>
 </html>
                     
