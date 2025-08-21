@@ -17,6 +17,8 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='8' width='64' height='64' fill='%238B5CF6'/%3E%3Crect x='16' y='16' width='20' height='20' rx='2' fill='%23fff'/%3E%3Crect x='12' y='12' width='12' height='12' rx='1.5' fill='%238B5CF6'/%3E%3C/svg%3E">
     <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -287,19 +289,20 @@
             color: #fff;
             overflow: hidden;
         }
-        .hero::before { /* background image */
-            content: '';
-            position: absolute; inset: 0;
-            background: var(--hero-bg, url('assets/images/hero/mountain-aurora.svg')) center top/cover no-repeat;
-            opacity: 1;
+        
+        /* Canvas for 3D background */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        .hero::after { /* non-dimming overlay: keep transparent to avoid darkening */
-            content: '';
-            position: absolute; inset: 0;
-            background: transparent;
-        }
+        
         .hero .glass {
             position: relative;
+            z-index: 1; /* Ensure content is above canvas */
             margin: 0;
             max-width: none;
             width: 100%;
@@ -1412,6 +1415,26 @@
                 scroll-behavior: auto !important;
             }
         }
+        
+        /* Splash cursor effect styles */
+        .splash-cursor {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            border: 2px solid var(--brand);
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+            z-index: 9999;
+        }
+        .splash-cursor.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="psy">
@@ -1506,21 +1529,15 @@
         <!-- Home Page -->
         <div id="home" class="page active">
             <!-- Hero Section -->
-            <!-- Use custom background for hero via CSS variable -->
-            <section class="hero" style="--hero-bg: url('assets/images/hero/hero.jpg');">
+            <section class="hero">
+                <canvas id="hero-canvas"></canvas>
                 <div class="container">
                     <div class="glass fade-in" aria-label="Hero content">
                         <h1>World‑Class Websites<br>For Growing Businesses</h1>
                         <p class="subtitle">Look premium without the premium price.</p>
                         <p class="description">Domain. Hosting. SSL. Design. Development. Support. Everything you need to launch a website that looks ₹35,000+ — for just ₹16,000.</p>
 
-                        <div class="price-reveal" style="background: rgba(255,255,255,.24); border:1px solid rgba(255,255,255,.35);">
-                            <div class="overline">What others charge vs what you pay</div>
-                            <div class="price-comparison">
-                                <div class="old-price">₹35,000</div>
-                                <div class="new-price"><span class="price-prefix">starting</span>₹16,000</div>
-                            </div>
-                        </div>
+                        <!-- price-reveal section removed as requested -->
                         
                         
                     </div>
@@ -2279,6 +2296,13 @@
             }, 150);
         }
 
+        // FIX: Define updateBillingMode function before it is called.
+        function updateBillingMode(mode) {
+            const isMonthly = mode === 'monthly';
+            document.querySelectorAll('.price-monthly').forEach(el => el.style.display = isMonthly ? 'block' : 'none');
+            document.querySelectorAll('.price-yearly').forEach(el => el.style.display = isMonthly ? 'none' : 'block');
+        }
+
         // Handle navigation with smooth transitions
         document.addEventListener('DOMContentLoaded', function() {
             // Add fade-in class to initial elements
@@ -2741,8 +2765,92 @@
             salesRange.addEventListener('input', updateEarn);
             updateEarn();
         }
+
+        // --- 3D Hero Background ---
+        const heroSection = document.querySelector('.hero');
+        if (heroSection && typeof THREE !== 'undefined') {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#hero-canvas'),
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Stars
+            const starGeometry = new THREE.BufferGeometry();
+            const starCount = 5000;
+            const posArray = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 100;
+            }
+            starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const starMaterial = new THREE.PointsMaterial({
+                size: 0.025,
+                color: 0xffffff
+            });
+            const stars = new THREE.Points(starGeometry, starMaterial);
+            scene.add(stars);
+
+            camera.position.z = 5;
+
+            // Mouse tracking
+            const mouse = new THREE.Vector2();
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // Animation loop
+            const clock = new THREE.Clock();
+            const animate = () => {
+                const elapsedTime = clock.getElapsedTime();
+                stars.rotation.y = elapsedTime * 0.05;
+                
+                // Animate camera to follow mouse
+                camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
+                camera.position.y += (mouse.y * 2 - camera.position.y) * 0.02;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+                window.requestAnimationFrame(animate);
+            };
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+        }
+        
+        // --- Splash Cursor for Features Section ---
+        const featuresSection = document.getElementById('features');
+        if (featuresSection) {
+            const cursor = document.createElement('div');
+            cursor.className = 'splash-cursor';
+            document.body.appendChild(cursor);
+            let timeout;
+
+            featuresSection.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                cursor.classList.add('active');
+                
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    cursor.classList.remove('active');
+                }, 200);
+            });
+            
+            featuresSection.addEventListener('mouseleave', () => {
+                 cursor.classList.remove('active');
+            });
+        }
+
     </script>
-    <!-- Splash Cursor effect -->
-    <script src="assets/splash-cursor.js"></script>
 </body>
 </html>

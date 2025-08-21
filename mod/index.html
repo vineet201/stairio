@@ -768,7 +768,7 @@
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
     /* Stylish + compact add-on tiles (glassmorphism) */
-    .addons-sidebar .feature-options { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .addons-sidebar .feature-options { display: flex; flex-direction: column; gap: 12px; }
     .addons-sidebar .feature-option { cursor:pointer; background: rgba(255,255,255,0.38); border:1px solid rgba(255,255,255,0.55); border-radius: 16px; overflow:hidden; position:relative; transition: transform .18s ease, box-shadow .24s ease, border-color .18s ease, background .2s ease; backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
     /* Ambient glow */
     .addons-sidebar .feature-option::before { content:""; position:absolute; inset:-40% -40% auto auto; height:160%; width:160%; background: radial-gradient(60% 60% at 70% 20%, rgba(139,92,246,.16), rgba(124,58,237,.08) 40%, transparent 70%); opacity:.55; transform: translate3d(-14px,-12px,0); transition: transform .35s ease, opacity .3s ease; pointer-events:none; }
@@ -804,7 +804,7 @@
     }
 
     /* Compact scaling for add-ons and calculator */
-    .addons-sidebar .feature-options { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-bottom: 10px; }
+    .addons-sidebar .feature-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
     .addons-sidebar .option-header { padding: 10px 10px; gap: 8px; }
     .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height: 18px; }
     .addons-sidebar .option-info h4 { font-size: 14px; }
@@ -854,10 +854,9 @@
         
         /* Feature Options */
         .feature-options {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
-                margin-bottom: 40px;
+            display: grid;
+            gap: 16px;
+            margin-bottom: 40px;
         }
         
     .feature-option {
@@ -3215,7 +3214,8 @@
         }
     </script>
     <!-- Splash Cursor effect -->
-    <script src="assets/splash-cursor.js"></script>
+    <!-- Splash cursor only on features section -->
+    <script src="assets/splash-cursor-local.js"></script>
 </body>
 </html>
                     
