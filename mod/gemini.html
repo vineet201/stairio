@@ -104,7 +104,6 @@
         .psy .choose-plan { border-radius: 14px; font-weight: 700; }
 
         /* Pricing visual hierarchy */
-        .psy .price-reveal { background: #fafafb; border: 1px solid var(--line); }
         .psy .old-price { opacity: .6; }
         .psy .new-price { text-shadow: none; }
         * {
@@ -307,22 +306,14 @@
             max-width: none;
             width: 100%;
             padding: 32px 28px;
-            background: rgba(255,255,255,0.03); /* minimal tint just to enable blur */
+            background: transparent; /* Removed blur and background color */
             border: none;
             border-radius: 0;
-            -webkit-backdrop-filter: blur(4px) saturate(110%);
-            backdrop-filter: blur(4px) saturate(110%);
             box-shadow: none;
         }
         /* Let hero container span full width so the glass covers the whole image */
         .hero > .container { max-width: 100%; padding: 0; }
-        /* Fallback for browsers without backdrop-filter */
-        @supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
-            .hero .glass {
-                background: rgba(255,255,255,0.72);
-                border-color: rgba(255,255,255,0.8);
-            }
-        }
+        
     .hero h1 { color: var(--text); }
     .hero .subtitle { color: var(--text); }
     .hero .description { color: var(--text); }
@@ -330,45 +321,47 @@
         .hero h1 {
             font-size: 56px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: #ffffff; /* Changed to white for better contrast */
             margin-bottom: 12px;
             letter-spacing: -2px;
             line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5); /* Added text shadow for readability */
         }
         
         .hero .subtitle {
             font-size: 28px;
             font-weight: 400;
-            color: #86868b;
+            color: rgba(255,255,255,0.8); /* Changed to light grey for better contrast */
             margin-bottom: 16px;
             letter-spacing: -0.5px;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5); /* Added text shadow */
         }
         
         .hero .description {
             font-size: 19px;
-            color: #1d1d1f;
+            color: rgba(255,255,255,0.9); /* Changed to off-white for better contrast */
             margin-bottom: 24px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5); /* Added text shadow */
         }
-    /* Ensure hero text uses dark color as requested */
-    .hero h1 { color: var(--text); }
-    .hero .subtitle { color: var(--text); }
-    .hero .description { color: var(--text); }
         
         .price-reveal {
             margin: 8px 0;
             padding: 16px 0;
-            background: #f5f5f7;
+            background: transparent;
             border-radius: 18px;
+            border: none;
+            backdrop-filter: none;
         }
         
         .price-reveal .overline {
             font-size: 17px;
-            color: var(--text);
+            color: #ffffff;
             margin-bottom: 16px;
             font-weight: 400;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
         
         .price-comparison {
@@ -378,9 +371,9 @@
             gap: 40px;
             margin: 40px 0;
         }
-    .old-price { font-size: 48px; color: var(--text); text-decoration: line-through; font-weight: 300; }
-    .new-price { font-size: 72px; color: #8B5CF6; font-weight: 700; letter-spacing: -2px; position: relative; display: inline-block; line-height: .9; }
-    .price-prefix { position:absolute; left:0; bottom:-8px; font-size:10px; color:#6e6e73; font-weight:600; letter-spacing:.2px; margin:0; }
+    .old-price { font-size: 48px; color: rgba(255,255,255,0.7); text-decoration: line-through; font-weight: 300; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .new-price { font-size: 72px; color: #ffffff; font-weight: 700; letter-spacing: -2px; position: relative; display: inline-block; line-height: .9; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .price-prefix { position:absolute; left:0; bottom:-8px; font-size:10px; color:rgba(255,255,255,0.8); font-weight:600; letter-spacing:.2px; margin:0; }
     .cta-section { margin: 60px 0; }
 
     /* Revolution (Bento) Section */
@@ -1537,7 +1530,13 @@
                         <p class="subtitle">Look premium without the premium price.</p>
                         <p class="description">Domain. Hosting. SSL. Design. Development. Support. Everything you need to launch a website that looks ₹35,000+ — for just ₹16,000.</p>
 
-                        <!-- price-reveal section removed as requested -->
+                        <div class="price-reveal">
+                            <div class="overline">What others charge vs what you pay</div>
+                            <div class="price-comparison">
+                                <div class="old-price">₹35,000</div>
+                                <div class="new-price"><span class="price-prefix">starting</span>₹16,000</div>
+                            </div>
+                        </div>
                         
                         
                     </div>
@@ -2777,22 +2776,6 @@
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            // Stars
-            const starGeometry = new THREE.BufferGeometry();
-            const starCount = 5000;
-            const posArray = new Float32Array(starCount * 3);
-            for (let i = 0; i < starCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 100;
-            }
-            starGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            const starMaterial = new THREE.PointsMaterial({
-                size: 0.025,
-                color: 0xffffff
-            });
-            const stars = new THREE.Points(starGeometry, starMaterial);
-            scene.add(stars);
-
             camera.position.z = 5;
 
             // Mouse tracking
@@ -2802,15 +2785,90 @@
                 mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             });
 
+            // Create particles function
+            const createParticles = (count, size, color, speedFactor) => {
+                const geometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(count * 3);
+                const randoms = new Float32Array(count);
+
+                for (let i = 0; i < count; i++) {
+                    positions[i * 3] = (Math.random() - 0.5) * 10;
+                    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+                    positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+                    randoms[i] = Math.random();
+                }
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 1));
+
+                const material = new THREE.ShaderMaterial({
+                    uniforms: {
+                        uTime: { value: 0 },
+                        uSize: { value: size * renderer.getPixelRatio() },
+                        uColor: { value: new THREE.Color(color) }
+                    },
+                    vertexShader: `
+                        uniform float uTime;
+                        uniform float uSize;
+                        attribute float aRandom;
+                        void main() {
+                            vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+                            modelPosition.y += sin(uTime * 0.2 * aRandom + position.x * 100.0) * 0.1;
+                            vec4 viewPosition = viewMatrix * modelPosition;
+                            gl_Position = projectionMatrix * viewPosition;
+                            gl_PointSize = uSize * aRandom * 2.0;
+                            gl_PointSize *= (1.0 / -viewPosition.z);
+                        }
+                    `,
+                    fragmentShader: `
+                        uniform float uTime;
+                        uniform vec3 uColor;
+                        void main() {
+                            float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
+                            float strength = 1.0 - (distanceToCenter * 2.0);
+                            
+                            float twinkle = sin(uTime * 2.0 + gl_FragCoord.x * 10.0) * 0.5 + 0.5;
+                            gl_FragColor = vec4(uColor, strength * twinkle);
+                        }
+                    `,
+                    transparent: true,
+                    blending: THREE.AdditiveBlending,
+                    depthWrite: false
+                });
+                
+                const particles = new THREE.Points(geometry, material);
+                particles.userData.speedFactor = speedFactor;
+                scene.add(particles);
+                return particles;
+            };
+
+            const stars = createParticles(5000, 2, 0xffffff, 0.05);
+            const dust = createParticles(1000, 5, 0x8B5CF6, 0.02);
+
+            // Cursor Light
+            const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+            pointLight.position.set(0, 0, 6);
+            scene.add(pointLight);
+
             // Animation loop
             const clock = new THREE.Clock();
             const animate = () => {
                 const elapsedTime = clock.getElapsedTime();
-                stars.rotation.y = elapsedTime * 0.05;
+
+                // Update materials
+                stars.material.uniforms.uTime.value = elapsedTime;
+                dust.material.uniforms.uTime.value = elapsedTime;
+
+                // Animate particles
+                stars.rotation.y = elapsedTime * stars.userData.speedFactor;
+                dust.rotation.y = elapsedTime * dust.userData.speedFactor;
+
+                // Update light position
+                pointLight.position.x = mouse.x * 5;
+                pointLight.position.y = mouse.y * 5;
                 
                 // Animate camera to follow mouse
-                camera.position.x += (mouse.x * 2 - camera.position.x) * 0.02;
-                camera.position.y += (mouse.y * 2 - camera.position.y) * 0.02;
+                camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.05;
+                camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
 
                 renderer.render(scene, camera);
@@ -2824,6 +2882,8 @@
                 camera.updateProjectionMatrix();
                 renderer.setSize(window.innerWidth, window.innerHeight);
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                stars.material.uniforms.uSize.value = 2 * renderer.getPixelRatio();
+                dust.material.uniforms.uSize.value = 5 * renderer.getPixelRatio();
             });
         }
         
