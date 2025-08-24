@@ -10,42 +10,44 @@
     <meta property="og:description" content="Get a professional website that looks ₹35,000+ for just ₹16,000. Domain, hosting, SSL, and support included.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://stairio.example/">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="robots" content="index,follow">
-        <link rel="canonical" href="https://stairio.example/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://stairio.example/">
     <!-- Inline SVG favicon to avoid external file dependency -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='8' width='64' height='64' fill='%238B5CF6'/%3E%3Crect x='16' y='16' width='20' height='20' rx='2' fill='%23fff'/%3E%3Crect x='12' y='12' width='12' height='12' rx='1.5' fill='%238B5CF6'/%3E%3C/svg%3E">
-        <!-- Tailwind CSS (CDN) -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                theme: {
-                    extend: {
-                        colors: {
-                            brand: { DEFAULT: '#8B5CF6', dark: '#7C3AED' },
-                            text: '#1d1d1f',
-                            muted: '#86868b',
-                            line: '#d2d2d7',
-                        },
-                        borderRadius: { brand: '14px' },
-                        boxShadow: {
-                            'sm-brand': '0 6px 18px rgba(0,0,0,0.06)',
-                            'md-brand': '0 12px 32px rgba(0,0,0,0.10)'
-                        }
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { DEFAULT: '#8B5CF6', dark: '#7C3AED' },
+                        text: '#1d1d1f',
+                        muted: '#86868b',
+                        line: '#d2d2d7',
+                    },
+                    borderRadius: { brand: '14px' },
+                    boxShadow: {
+                        'sm-brand': '0 6px 18px rgba(0,0,0,0.06)',
+                        'md-brand': '0 12px 32px rgba(0,0,0,0.10)'
                     }
                 }
             }
-        </script>
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            "name": "Stairio",
-            "url": "https://stairio.example/",
-            "description": "World-class websites for small and mid-size businesses in India.",
-            "sameAs": []
         }
-        </script>
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Stairio",
+        "url": "https://stairio.example/",
+        "description": "World-class websites for small and mid-size businesses in India.",
+        "sameAs": []
+    }
+    </script>
     <style>
         :root {
             --brand: #8B5CF6;
@@ -102,7 +104,6 @@
         .psy .choose-plan { border-radius: 14px; font-weight: 700; }
 
         /* Pricing visual hierarchy */
-        .psy .price-reveal { background: #fafafb; border: 1px solid var(--line); }
         .psy .old-price { opacity: .6; }
         .psy .new-price { text-shadow: none; }
         * {
@@ -127,14 +128,26 @@
         
         /* Header - Apple Style */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: transparent;
+            border-bottom: 1px solid transparent;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             padding: 12px 0;
+            transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        header.scrolled .logo-text,
+        header.scrolled .nav-links a,
+        header.scrolled .mobile-menu-btn {
+            color: var(--text);
         }
         
         nav {
@@ -191,8 +204,9 @@
         .logo-text {
             font-size: 20px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: #ffffff;
             letter-spacing: -0.5px;
+            transition: color 0.3s ease;
         }
         
         .logo-tagline {
@@ -211,7 +225,7 @@
         }
         
         .nav-links a {
-            color: var(--text);
+            color: #ffffff;
             text-decoration: none;
             font-weight: 400;
             font-size: 14px;
@@ -227,7 +241,7 @@
             padding: 8px 14px;
             border-radius: 999px;
             background: var(--brand);
-            color: #fff;
+            color: #fff !important;
             border: 1px solid var(--brand);
             font-weight: 700;
         }
@@ -246,10 +260,16 @@
             width: 40px;
             height: 40px;
             border-radius: 8px;
-            border: 1px solid rgba(0,0,0,0.1);
-            background: #fff;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: transparent;
+            color: #ffffff;
             cursor: pointer;
             font-size: 20px;
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+        header.scrolled .mobile-menu-btn {
+             border-color: rgba(0,0,0,0.1);
+             background: #fff;
         }
 
         /* Skip link */
@@ -287,39 +307,32 @@
             color: #fff;
             overflow: hidden;
         }
-        .hero::before { /* background image */
-            content: '';
-            position: absolute; inset: 0;
-            background: var(--hero-bg, url('assets/images/hero/mountain-aurora.svg')) center top/cover no-repeat;
-            opacity: 1;
+        
+        /* Canvas for 3D background */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
         }
-        .hero::after { /* non-dimming overlay: keep transparent to avoid darkening */
-            content: '';
-            position: absolute; inset: 0;
-            background: transparent;
-        }
+        
         .hero .glass {
             position: relative;
+            z-index: 1; /* Ensure content is above canvas */
             margin: 0;
             max-width: none;
             width: 100%;
             padding: 32px 28px;
-            background: rgba(255,255,255,0.03); /* minimal tint just to enable blur */
+            background: transparent; /* Removed blur and background color */
             border: none;
             border-radius: 0;
-            -webkit-backdrop-filter: blur(4px) saturate(110%);
-            backdrop-filter: blur(4px) saturate(110%);
             box-shadow: none;
         }
         /* Let hero container span full width so the glass covers the whole image */
         .hero > .container { max-width: 100%; padding: 0; }
-        /* Fallback for browsers without backdrop-filter */
-        @supports not ((-webkit-backdrop-filter: blur(0)) or (backdrop-filter: blur(0))) {
-            .hero .glass {
-                background: rgba(255,255,255,0.72);
-                border-color: rgba(255,255,255,0.8);
-            }
-        }
+        
     .hero h1 { color: var(--text); }
     .hero .subtitle { color: var(--text); }
     .hero .description { color: var(--text); }
@@ -327,45 +340,47 @@
         .hero h1 {
             font-size: 56px;
             font-weight: 600;
-            color: #1d1d1f;
+            color: #ffffff; /* Changed to white for better contrast */
             margin-bottom: 12px;
             letter-spacing: -2px;
             line-height: 1.1;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5); /* Added text shadow for readability */
         }
         
         .hero .subtitle {
             font-size: 28px;
             font-weight: 400;
-            color: #86868b;
+            color: rgba(255,255,255,0.8); /* Changed to light grey for better contrast */
             margin-bottom: 16px;
             letter-spacing: -0.5px;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5); /* Added text shadow */
         }
         
         .hero .description {
             font-size: 19px;
-            color: #1d1d1f;
+            color: rgba(255,255,255,0.9); /* Changed to off-white for better contrast */
             margin-bottom: 24px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5); /* Added text shadow */
         }
-    /* Ensure hero text uses dark color as requested */
-    .hero h1 { color: var(--text); }
-    .hero .subtitle { color: var(--text); }
-    .hero .description { color: var(--text); }
         
         .price-reveal {
             margin: 8px 0;
             padding: 16px 0;
-            background: #f5f5f7;
+            background: transparent;
             border-radius: 18px;
+            border: none;
+            backdrop-filter: none;
         }
         
         .price-reveal .overline {
             font-size: 17px;
-            color: var(--text);
+            color: #ffffff;
             margin-bottom: 16px;
             font-weight: 400;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
         }
         
         .price-comparison {
@@ -375,9 +390,9 @@
             gap: 40px;
             margin: 40px 0;
         }
-    .old-price { font-size: 48px; color: var(--text); text-decoration: line-through; font-weight: 300; }
-    .new-price { font-size: 72px; color: #8B5CF6; font-weight: 700; letter-spacing: -2px; position: relative; display: inline-block; line-height: .9; }
-    .price-prefix { position:absolute; left:0; bottom:-8px; font-size:10px; color:#6e6e73; font-weight:600; letter-spacing:.2px; margin:0; }
+    .old-price { font-size: 48px; color: rgba(255,255,255,0.7); text-decoration: line-through; font-weight: 300; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+    .new-price { font-size: 72px; color: #ffffff; font-weight: 700; letter-spacing: -2px; position: relative; display: inline-block; line-height: .9; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+    .price-prefix { position:absolute; left:0; bottom:-8px; font-size:10px; color:rgba(255,255,255,0.8); font-weight:600; letter-spacing:.2px; margin:0; }
     .cta-section { margin: 60px 0; }
 
     /* Revolution (Bento) Section */
@@ -519,7 +534,6 @@
     .urgency-badge { display:inline-flex; align-items:center; gap:8px; font-size:12px; color:#6e6e73; background:#fff; border:1px dashed #d2d2d7; border-radius:999px; padding:6px 10px; box-shadow: var(--shadow-sm); }
     .urgency-badge .dot { width:6px; height:6px; border-radius:999px; background:#F59E0B; display:inline-block; }
     .urgency-low { color:#b91c1c; border-color:#fecaca; }
-
     
     
 
@@ -767,29 +781,70 @@
     .addons-title { font-weight:700; color:#1d1d1f; font-size:14px; letter-spacing:-0.2px; }
     .addons-note { color:#86868b; font-size:12px; }
     .addons-list { padding: 8px 12px 12px; }
-    /* Stylish + compact add-on tiles (glassmorphism) */
-    .addons-sidebar .feature-options { display: flex; flex-direction: column; gap: 12px; }
-    .addons-sidebar .feature-option { cursor:pointer; background: rgba(255,255,255,0.38); border:1px solid rgba(255,255,255,0.55); border-radius: 16px; overflow:hidden; position:relative; transition: transform .18s ease, box-shadow .24s ease, border-color .18s ease, background .2s ease; backdrop-filter: blur(14px) saturate(140%); -webkit-backdrop-filter: blur(14px) saturate(140%); }
-    /* Ambient glow */
-    .addons-sidebar .feature-option::before { content:""; position:absolute; inset:-40% -40% auto auto; height:160%; width:160%; background: radial-gradient(60% 60% at 70% 20%, rgba(139,92,246,.16), rgba(124,58,237,.08) 40%, transparent 70%); opacity:.55; transform: translate3d(-14px,-12px,0); transition: transform .35s ease, opacity .3s ease; pointer-events:none; }
-    /* Gradient border ring using mask */
-    .addons-sidebar .feature-option::after { content:""; position:absolute; inset:0; border-radius: 16px; padding:1px; background: linear-gradient(135deg, rgba(139,92,246,.45), rgba(124,58,237,.28), rgba(255,255,255,.65)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity:.35; pointer-events:none; transition: opacity .25s ease; }
-    .addons-sidebar .feature-option:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(17,24,39,.12), 0 2px 8px rgba(17,24,39,.06); }
-    .addons-sidebar .feature-option:hover::before { transform: translate3d(0,0,0); opacity:.8; }
-    .addons-sidebar .feature-option:hover::after { opacity:.7; }
-    .addons-sidebar .feature-option.selected { background: rgba(255,255,255,0.5); border-color: rgba(139,92,246,.6); box-shadow: 0 18px 46px rgba(139,92,246,0.22); }
-    .addons-sidebar .feature-option.selected::after { opacity: .95; background: linear-gradient(135deg, rgba(139,92,246,.75), rgba(124,58,237,.45), rgba(255,255,255,.75)); }
-    .addons-sidebar .feature-option:focus-visible { outline: 3px solid #8B5CF6; outline-offset: 2px; }
-    .addons-sidebar .option-header { padding: 12px 14px; gap: 12px; display:grid; grid-template-columns: auto 1fr auto; align-items:center; }
-    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height:18px; border-radius: 8px; border:1.5px solid rgba(0,0,0,.08); background: rgba(255,255,255,.65); backdrop-filter: blur(6px); box-shadow:none; }
-    .addons-sidebar .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 8px 22px rgba(139,92,246,.35); }
-    .addons-sidebar .option-checkbox input[type="checkbox"]:focus-visible { outline:2px solid #8B5CF6; outline-offset:2px; }
-    .addons-sidebar .option-info h4 { font-size: 15px; margin:0 0 2px; color:#0f1115; letter-spacing:-.2px; }
-    .addons-sidebar .option-info p { font-size: 12.5px; color:#6e6e73; margin:0; display:-webkit-box; -webkit-line-clamp:2; line-clamp: 2; -webkit-box-orient:vertical; overflow:hidden; }
-    .addons-sidebar .option-price { font-size: 12px; font-weight:800; color:#3b1c96; background: rgba(139,92,246,0.10); border:1px solid rgba(124,58,237,0.25); padding:4px 10px; border-radius:999px; backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 4px 12px rgba(91,33,182,.10); }
-    /* Compact spacing for rows */
-    .addons-sidebar .feature-option + .feature-option { margin-top:0; }
-    @media (max-width: 768px) { .addons-sidebar .feature-options { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); } }
+    
+    /* NEW: Glassmorphism Add-on Styles */
+    .glass-addon-item {
+        cursor: pointer;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .glass-addon-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        background: rgba(255, 255, 255, 0.7);
+    }
+    .glass-addon-item.active {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: var(--brand);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08), inset 0 0 0 2px var(--brand);
+    }
+    .glass-addon-item.active .addon-price {
+        color: var(--brand);
+        font-weight: 700;
+    }
+    .glass-addon-item.active .checkbox-icon-inner {
+        transform: scale(1);
+        opacity: 1;
+    }
+    .glass-addon-item .checkbox-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 1rem;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.08);
+    }
+    .glass-addon-item .checkbox-icon-inner {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background-color: var(--brand);
+        transform: scale(0);
+        opacity: 0;
+        transition: all 0.2s ease;
+    }
+    /* END: New Styles */
+
+    .feature-options {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    @media (max-width: 768px) { .addons-sidebar .feature-options { grid-template-columns: 1fr; } }
     
     @media (max-width: 1024px) { .customization-layout { grid-template-columns: 1fr; } .custom-right { position: static; } }
     /* Mobile accordion for add-ons */
@@ -804,9 +859,6 @@
     }
 
     /* Compact scaling for add-ons and calculator */
-    .addons-sidebar .feature-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
-    .addons-sidebar .option-header { padding: 10px 10px; gap: 8px; }
-    .addons-sidebar .option-checkbox input[type="checkbox"] { width: 18px; height: 18px; }
     .addons-sidebar .option-info h4 { font-size: 14px; }
     .addons-sidebar .option-info p { font-size: 12px; }
     .addons-sidebar .option-price { font-size: 13px; font-weight: 600; }
@@ -852,84 +904,16 @@
             margin-bottom: 60px;
         }
         
-        /* Feature Options */
-        .feature-options {
-            display: grid;
-            gap: 16px;
-            margin-bottom: 40px;
-        }
-        
-    .feature-option {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: all 0.4s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.6s ease;
-        }
-        
-    .feature-option:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-        }
-        
-        .feature-option:hover::before {
-            left: 100%;
-        }
-        
-        /* Essential Features Styling */
-    .feature-option.essential {
-            background: rgba(139, 92, 246, 0.15);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            cursor: default;
-        }
-        
-        .feature-option.essential:hover {
-            background: rgba(139, 92, 246, 0.15);
-            transform: none;
-        }
-        
-        .feature-option.essential .option-checkbox input[type="checkbox"] {
-            background: rgba(139, 92, 246, 0.8);
-            border-color: rgba(139, 92, 246, 1);
-            cursor: default;
-        }
-        
-        .feature-option.essential .option-checkbox input[type="checkbox"]:checked::after {
-            content: '✓';
-            color: white;
-        }
-        
-        .feature-option.essential .option-price {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            font-size: 16px;
-        }
-        
-        .feature-option.selected::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
-            pointer-events: none;
-        }
+    .feature-option.selected::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+        pointer-events: none;
+    }
     /* Selected tile emphasis */
     .feature-option.selected { border-color: #8B5CF6; box-shadow: 0 10px 28px rgba(139,92,246,0.18); }
     .feature-option .option-header { cursor: pointer; }
@@ -946,79 +930,7 @@
     /* Fly animation helper */
     .fly-clone { position: fixed; z-index: 9999; margin:0; pointer-events: none; will-change: transform, opacity; box-shadow: 0 12px 32px rgba(0,0,0,0.18); border-radius: 12px; overflow:hidden; }
         
-        .option-header {
-            display: flex;
-            align-items: center;
-            padding: 22px 24px;
-            gap: 18px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .option-checkbox {
-            position: relative;
-            flex-shrink: 0;
-        }
-        
-        .option-checkbox input[type="checkbox"] {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            appearance: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-        
-        .option-checkbox input[type="checkbox"]:checked {
-            background: rgba(139, 92, 246, 0.8);
-            border-color: rgba(139, 92, 246, 1);
-            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
-        }
-        
-        .option-checkbox input[type="checkbox"]:checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-        
-        .option-info {
-            flex: 1;
-        }
-        
-    .option-info h4 {
-            font-size: 18px;
-            font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 6px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-    .option-info p {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
-            margin: 0;
-            line-height: 1.4;
-        }
-        
-    .option-price {
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            flex-shrink: 0;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-        
-        /* Price Calculator */
+    /* Price Calculator */
     .price-calculator {
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(25px);
@@ -1135,14 +1047,7 @@
     /* Website theme overrides for customization section */
     .customization-section.website-theme h3 { color: #1d1d1f; text-shadow: none; }
     .customization-section.website-theme .customization-subtitle { color: #86868b; }
-    .customization-section.website-theme .feature-option { background:#fff; border:1px solid #d2d2d7; backdrop-filter:none; }
-    .customization-section.website-theme .feature-option:hover { background:#fafafa; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-    .customization-section.website-theme .feature-option.essential { background:#F3F0FF; border-color:#E5DEFF; }
-    .customization-section.website-theme .option-info h4 { color:#1d1d1f; text-shadow:none; font-size:16px; }
-    .customization-section.website-theme .option-info p { color:#86868b; font-size:13px; }
-    .customization-section.website-theme .option-price { color:#1d1d1f; text-shadow:none; font-size:16px; }
-    .customization-section.website-theme .option-checkbox input[type="checkbox"] { border-color:#d2d2d7; background:#fff; }
-    .customization-section.website-theme .option-checkbox input[type="checkbox"]:checked { background:#8B5CF6; border-color:#7C3AED; box-shadow: 0 4px 16px rgba(139,92,246,0.3); }
+    
     .customization-section.website-theme .price-calculator { background:#fff; border:1px solid #d2d2d7; box-shadow: 0 8px 24px rgba(0,0,0,0.08); backdrop-filter:none; }
     .customization-section.website-theme .calculator-left h4 { color:#1d1d1f; text-shadow:none; }
     .customization-section.website-theme .base-item { color:#1d1d1f; border-bottom-color:#eee; }
@@ -1383,6 +1288,11 @@
 
     /* Responsive */
         @media (max-width: 768px) {
+            .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+            }
             .hero h1 {
                 font-size: 36px;
             }
@@ -1522,6 +1432,26 @@
                 scroll-behavior: auto !important;
             }
         }
+        
+        /* Splash cursor effect styles */
+        .splash-cursor {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 50%;
+            border: 2px solid var(--brand);
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 0;
+            z-index: 9999;
+        }
+        .splash-cursor.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="psy">
@@ -1616,15 +1546,15 @@
         <!-- Home Page -->
         <div id="home" class="page active">
             <!-- Hero Section -->
-            <!-- Use custom background for hero via CSS variable -->
-            <section class="hero" style="--hero-bg: url('assets/images/hero/hero.jpg');">
+            <section class="hero">
+                <canvas id="hero-canvas"></canvas>
                 <div class="container">
                     <div class="glass fade-in" aria-label="Hero content">
                         <h1>World‑Class Websites<br>For Growing Businesses</h1>
                         <p class="subtitle">Look premium without the premium price.</p>
                         <p class="description">Domain. Hosting. SSL. Design. Development. Support. Everything you need to launch a website that looks ₹35,000+ — for just ₹16,000.</p>
 
-                        <div class="price-reveal" style="background: rgba(255,255,255,.24); border:1px solid rgba(255,255,255,.35);">
+                        <div class="price-reveal">
                             <div class="overline">What others charge vs what you pay</div>
                             <div class="price-comparison">
                                 <div class="old-price">₹35,000</div>
@@ -1777,33 +1707,33 @@
             <section class="packages" id="packages">
                 <div class="container">
                     
-                                        <!-- Customization Options -->
-                                        <div class="customization-section website-theme">
-                                                <h3>Make It Yours</h3>
-                                                <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
-                                                <div class="billing-toggle" role="group" aria-label="Billing period">
-                                                    <span class="label">Billing:</span>
-                                                    <div class="segmented" aria-live="polite">
-                                                        <button type="button" class="bill-btn" data-mode="onetime" aria-pressed="true">One‑time</button>
-                                                        <button type="button" class="bill-btn" data-mode="monthly" aria-pressed="false">Monthly (12×)</button>
-                                                    </div>
-                                                </div>
-                                                <div class="included-strip" aria-label="Included with every plan">
-                                                    <span class="title">Included:</span>
-                                                    <span class="included-pill">Domain (1 yr)</span>
-                                                    <span class="included-pill">Hosting (2 yrs)</span>
-                                                    <span class="included-pill">SSL (3 yrs)</span>
-                                                    <span class="included-pill">Responsive design</span>
-                                                    <span class="included-pill">3 months support</span>
-                                                </div>
-                                                <!-- Urgency badge -->
-                                                <div class="urgency-badge" id="slots-badge" aria-live="polite"><span class="dot"></span>⏳ 13 slots remaining this month</div>
+                                <!-- Customization Options -->
+                                <div class="customization-section website-theme">
+                                        <h3>Make It Yours</h3>
+                                        <p class="customization-subtitle">Essentials included. Premium add‑ons optional — choose only what you need.</p>
+                                        <div class="billing-toggle" role="group" aria-label="Billing period">
+                                            <span class="label">Billing:</span>
+                                            <div class="segmented" aria-live="polite">
+                                                <button type="button" class="bill-btn" data-mode="onetime" aria-pressed="true">One‑time</button>
+                                                <button type="button" class="bill-btn" data-mode="monthly" aria-pressed="false">Monthly (12×)</button>
+                                            </div>
+                                        </div>
+                                        <div class="included-strip" aria-label="Included with every plan">
+                                            <span class="title">Included:</span>
+                                            <span class="included-pill">Domain (1 yr)</span>
+                                            <span class="included-pill">Hosting (2 yrs)</span>
+                                            <span class="included-pill">SSL (3 yrs)</span>
+                                            <span class="included-pill">Responsive design</span>
+                                            <span class="included-pill">3 months support</span>
+                                        </div>
+                                        <!-- Urgency badge -->
+                                        <div class="urgency-badge" id="slots-badge" aria-live="polite"><span class="dot"></span>⏳ 13 slots remaining this month</div>
 
 
-                                                <div class="customization-layout">
-                                                    <div class="custom-left">
-                                                        <!-- Pre-bundled Packages -->
-                                                        <div class="package-cards" aria-label="Pre-bundled website packages">
+                                        <div class="customization-layout">
+                                            <div class="custom-left">
+                                                <!-- Pre-bundled Packages -->
+                                                <div class="package-cards" aria-label="Pre-bundled website packages">
                             <!-- Starter -->
                             <div class="package-card" data-base="starter" tabindex="0">
                                 <span class="discount-badge">78% off</span>
@@ -1925,178 +1855,75 @@
                                     <li>Automated Booking System with Online Payments</li>
                                 </ul>
                             </div>
-                            </div>
-                            <!-- Add-ons now below the cards -->
-                            <aside class="custom-right" aria-label="Add-ons and summary">
-                                <div class="addons-sidebar">
-                                    <div class="addons-header">
-                                        <div class="addons-title">Advanced add‑ons <span id="addons-count" style="color:var(--muted); font-weight:500; font-size:12px;"></span></div>
-                                        <div class="addons-note">Optional — choose as needed</div>
-                                    </div>
-                                    <div class="addons-list">
-                                        <div class="feature-options">
-                                            <!-- Premium Add-ons (selectable) -->
-                                            <div class="feature-option" data-price="2000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="contact-forms">
-                                                        <label for="contact-forms"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>Advanced Contact Forms</h4>
-                                                        <p>Multi-step forms, file uploads, custom fields</p>
-                                                    </div>
-                                                    <div class="option-price">+₹2,000</div>
                                                 </div>
-                                            </div>
-                                            <div class="feature-option" data-price="3000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="team-profiles">
-                                                        <label for="team-profiles"></label>
+                                                <!-- Add-ons now below the cards -->
+                                                <aside class="custom-right" aria-label="Add-ons and summary">
+                                                    <div class="addons-sidebar">
+                                                        <div class="addons-header">
+                                                            <div class="addons-title">Advanced add‑ons <span id="addons-count" style="color:var(--muted); font-weight:500; font-size:12px;"></span></div>
+                                                            <div class="addons-note">Optional — choose as needed</div>
+                                                        </div>
+                                                        <div class="addons-list">
+                                                            <div class="feature-options" id="new-addon-list">
+                                                                <!-- NEW ADD-ONS WILL BE INJECTED HERE -->
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="option-info">
-                                                        <h4>Team & Profile Pages</h4>
-                                                        <p>Showcase your team with beautiful profiles</p>
-                                                    </div>
-                                                    <div class="option-price">+₹3,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="4000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="gallery">
-                                                        <label for="gallery"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>Media Gallery</h4>
-                                                        <p>Photo galleries, video integration, portfolio showcase</p>
-                                                    </div>
-                                                    <div class="option-price">+₹4,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="5000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="blog">
-                                                        <label for="blog"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>Blog Platform</h4>
-                                                        <p>Full blogging system with categories and search</p>
-                                                    </div>
-                                                    <div class="option-price">+₹5,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="6000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="ecommerce">
-                                                        <label for="ecommerce"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>E-commerce Ready</h4>
-                                                        <p>Product catalog, shopping cart, payment gateway</p>
-                                                    </div>
-                                                    <div class="option-price">+₹6,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="3000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="whatsapp">
-                                                        <label for="whatsapp"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>WhatsApp Integration</h4>
-                                                        <p>Direct chat buttons, automated responses</p>
-                                                    </div>
-                                                    <div class="option-price">+₹3,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="4000">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="analytics">
-                                                        <label for="analytics"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>Advanced Analytics</h4>
-                                                        <p>Detailed visitor tracking, conversion goals, reports</p>
-                                                    </div>
-                                                    <div class="option-price">+₹4,000</div>
-                                                </div>
-                                            </div>
-                                            <div class="feature-option" data-price="2500">
-                                                <div class="option-header">
-                                                    <div class="option-checkbox">
-                                                        <input type="checkbox" id="newsletter">
-                                                        <label for="newsletter"></label>
-                                                    </div>
-                                                    <div class="option-info">
-                                                        <h4>Newsletter System</h4>
-                                                        <p>Email capture, automated campaigns, subscriber management</p>
-                                                    </div>
-                                                    <div class="option-price">+₹2,500</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <!-- Final Summary -->
-                                <div class="price-calculator" id="final-summary">
-                                    <div class="calculator-content">
-                                        <div class="calculator-left">
-                                            <h4>Your Selection</h4>
-                                            <div class="selected-features">
-                                                <div class="selected-group">
-                                                    <div class="selected-group-title">Base plan</div>
-                                                    <div class="base-item">
-                                                        <span id="selected-base-name">None selected</span>
-                                                        <span id="selected-base-price">₹0</span>
+                                                <!-- Final Summary -->
+                                                <div class="price-calculator" id="final-summary">
+                                                    <div class="calculator-content">
+                                                        <div class="calculator-left">
+                                                            <h4>Your Selection</h4>
+                                                            <div class="selected-features">
+                                                                <div class="selected-group">
+                                                                    <div class="selected-group-title">Base plan</div>
+                                                                    <div class="base-item">
+                                                                        <span id="selected-base-name">None selected</span>
+                                                                        <span id="selected-base-price">₹0</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="selected-group">
+                                                                    <div class="selected-group-title">Advanced add‑ons</div>
+                                                                    <div id="selected-list"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="calculator-right">
+                                                            <div class="total-price">
+                                                                <span class="total-label">Total</span>
+                                                                <span class="total-amount" id="total-price">₹0</span>
+                                                            </div>
+                                                            <a href="#contact" class="btn btn-primary" id="order-btn" data-slot-decrement="true" title="Or start for ₹9 and pay rest on approval">Order Your Website</a>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="selected-group">
-                                                    <div class="selected-group-title">Advanced add‑ons</div>
-                                                    <div id="selected-list"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="calculator-right">
-                                            <div class="total-price">
-                                                <span class="total-label">Total</span>
-                                                <span class="total-amount" id="total-price">₹0</span>
-                                            </div>
-                                            <a href="#contact" class="btn btn-primary" id="order-btn" data-slot-decrement="true" title="Or start for ₹9 and pay rest on approval">Order Your Website</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </aside>
+                                            </aside>
 
-                            <div class="guarantee" aria-label="guarantee">
-                                <div class="badge">✓</div>
-                                <p>30‑day Launch Guarantee — if we miss the plan by more than 7 days, you get 10% back. No questions.</p>
-                            </div>
-                            <div class="mini-testimonials" aria-label="customer quotes">
-                                <div class="mini-t">“Clear, fixed pricing made it easy to say yes.” — Ananya, Retail</div>
-                                <div class="mini-t">“Site looks premium and loads fast on phones.” — Deepak, Services</div>
-                                <div class="mini-t">“From brief to live in under two weeks.” — Nisha, Clinic</div>
-                            </div>
-                            <!-- Risk-reversal card -->
-                            <div class="risk-card" aria-label="Risk-free start">
-                                <div class="risk-icon">🛡️</div>
-                                <div class="risk-copy">
-                                    <strong>Risk‑Free Start — ₹9</strong>
-                                    Get a business consultation and plan. Pay the rest only if you approve.
-                                </div>
-                                <a href="#contact" class="btn btn-quiet" id="start-9-btn" data-slot-decrement="true" title="Start for ₹9 trial">Start for ₹9</a>
-                            </div>
-                            
-                                                        <p style="text-align:center; color: #86868b; margin: 8px 0 0;">All packages are customizable. No hidden fees.</p>
-                                                    </div>
+                                            <div class="guarantee" aria-label="guarantee">
+                                                <div class="badge">✓</div>
+                                                <p>30‑day Launch Guarantee — if we miss the plan by more than 7 days, you get 10% back. No questions.</p>
+                                            </div>
+                                            <div class="mini-testimonials" aria-label="customer quotes">
+                                                <div class="mini-t">“Clear, fixed pricing made it easy to say yes.” — Ananya, Retail</div>
+                                                <div class="mini-t">“Site looks premium and loads fast on phones.” — Deepak, Services</div>
+                                                <div class="mini-t">“From brief to live in under two weeks.” — Nisha, Clinic</div>
+                                            </div>
+                                            <!-- Risk-reversal card -->
+                                            <div class="risk-card" aria-label="Risk-free start">
+                                                <div class="risk-icon">🛡️</div>
+                                                <div class="risk-copy">
+                                                    <strong>Risk‑Free Start — ₹9</strong>
+                                                    Get a business consultation and plan. Pay the rest only if you approve.
                                                 </div>
-                    
+                                                <a href="#contact" class="btn btn-quiet" id="start-9-btn" data-slot-decrement="true" title="Start for ₹9 trial">Start for ₹9</a>
+                                            </div>
+                                            
+                                                                <p style="text-align:center; color: #86868b; margin: 8px 0 0;">All packages are customizable. No hidden fees.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                
                 </div>
             </section>
 
@@ -2492,6 +2319,13 @@
             }, 150);
         }
 
+        // FIX: Define updateBillingMode function before it is called.
+        function updateBillingMode(mode) {
+            const isMonthly = mode === 'monthly';
+            document.querySelectorAll('.price-monthly').forEach(el => el.style.display = isMonthly ? 'block' : 'none');
+            document.querySelectorAll('.price-yearly').forEach(el => el.style.display = isMonthly ? 'none' : 'block');
+        }
+
         // Handle navigation with smooth transitions
         document.addEventListener('DOMContentLoaded', function() {
             // Add fade-in class to initial elements
@@ -2722,15 +2556,11 @@
         // Parallax-like effects on scroll
         function onScroll() {
             const scrolled = window.pageYOffset;
-            
-            // Subtle header background change
             const header = document.querySelector('header');
             if (scrolled > 50) {
-                header.style.background = 'rgba(255, 255, 255, 0.98)';
-                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.15)';
+                header.classList.add('scrolled');
             } else {
-                header.style.background = 'rgba(255, 255, 255, 0.95)';
-                header.style.borderBottom = '1px solid rgba(0, 0, 0, 0.1)';
+                header.classList.remove('scrolled');
             }
         }
         window.addEventListener('scroll', onScroll, { passive: true });
@@ -2752,7 +2582,7 @@
             }, observerOptions);
 
             // Observe cards for entrance animations
-            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .feature-option, .tile').forEach(el => {
+            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .tile, .glass-addon-item').forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(30px)';
                 el.style.transition = 'all 0.6s ease-out';
@@ -2760,7 +2590,7 @@
             });
         } else {
             // Fallback: show elements without animation
-            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .feature-option').forEach(el => {
+            document.querySelectorAll('.feature-card, .package-card, .benefit-card, .process-step, .glass-addon-item').forEach(el => {
                 el.style.opacity = '1';
                 el.style.transform = 'none';
             });
@@ -2768,59 +2598,51 @@
 
         // Apple-style pricing calculator with base plan + add-ons
         const BASES = {
-            starter: { name: 'Starter', price: 16000, preset: [] },
-            plus: { name: 'Premium', price: 25000, preset: ['contact-forms','team-profiles','gallery'] },
-            pro: { name: 'Business', price: 36500, preset: ['blog','ecommerce','analytics','whatsapp','newsletter'] }
+            starter: { name: 'Starter', price: 16000 },
+            plus: { name: 'Premium', price: 25000 },
+            pro: { name: 'Business', price: 36500 },
+            enterprise: { name: 'Enterprise', price: 95000 }
         };
         let baseSelection = null; // key of BASES
         let selectedFeatures = {};
-        const featureNames = {
-            'contact-forms': 'Advanced Contact Forms',
-            'team-profiles': 'Team & Profile Pages', 
-            'gallery': 'Media Gallery',
-            'blog': 'Blog Platform',
-            'ecommerce': 'E-commerce Ready',
-            'whatsapp': 'WhatsApp Integration',
-            'analytics': 'Advanced Analytics',
-            'newsletter': 'Newsletter System'
-        };
-        const featurePrices = {
-            'contact-forms': 2000,
-            'team-profiles': 3000,
-            'gallery': 4000,
-            'blog': 5000,
-            'ecommerce': 6000,
-            'whatsapp': 3000,
-            'analytics': 4000,
-            'newsletter': 2500
-        };
+        
+        const ADDONS_DATA = [
+            { id: 'contact-forms', name: 'Advanced Contact Forms', description: 'Multi-step forms, file uploads, custom fields', price: 2000 },
+            { id: 'team-profiles', name: 'Team & Profile Pages', description: 'Showcase your team with beautiful profiles', price: 3000 },
+            { id: 'gallery', name: 'Media Gallery', description: 'Photo galleries, video integration, portfolio', price: 4000 },
+            { id: 'blog', name: 'Blog Platform', description: 'Full blogging system with categories and search', price: 5000 },
+            { id: 'ecommerce', name: 'E-commerce Ready', description: 'Product catalog, shopping cart, payment gateway', price: 6000 },
+            { id: 'whatsapp', name: 'WhatsApp Integration', description: 'Direct chat buttons, automated responses', price: 3000 },
+            { id: 'analytics', name: 'Advanced Analytics', description: 'Visitor tracking, conversion goals, reports', price: 4000 },
+            { id: 'newsletter', name: 'Newsletter System', description: 'Email capture, automated campaigns', price: 2500 }
+        ];
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(amount);
+        }
 
         function updatePrice() {
-            const base = baseSelection ? BASES[baseSelection].price : 0;
+            const basePrice = baseSelection ? BASES[baseSelection].price : 0;
             const addOnTotal = Object.values(selectedFeatures).reduce((sum, price) => sum + price, 0);
-            const totalPrice = base + addOnTotal;
+            const totalPrice = basePrice + addOnTotal;
+            
             const totalEl = document.getElementById('total-price');
-            if (totalEl) totalEl.textContent = `₹${totalPrice.toLocaleString()}`;
-            // Monthly split display (12-month)
-            let monthly = Math.round(totalPrice / 12);
-            if (!Number.isFinite(monthly)) monthly = 0;
-            const ob = document.getElementById('order-btn');
-            if (ob) ob.setAttribute('data-monthly', `₹${monthly.toLocaleString()}/mo`);
+            if (totalEl) totalEl.textContent = formatCurrency(totalPrice);
             
             // Update selected features list
             const selectedList = document.getElementById('selected-list');
             if (selectedList) selectedList.innerHTML = '';
             
             Object.entries(selectedFeatures).forEach(([featureId, price]) => {
+                const addon = ADDONS_DATA.find(a => a.id === featureId);
                 const item = document.createElement('div');
                 item.className = 'selected-item';
                 item.dataset.id = featureId;
                 item.innerHTML = `
                     <div class="row">
-                        <span>${featureNames[featureId]}</span>
-                        <span>+₹${price.toLocaleString()}</span>
+                        <span>${addon.name}</span>
+                        <span>+${formatCurrency(price)}</span>
                     </div>
-                    <button class="remove-x" aria-label="Remove">×</button>
                 `;
                 if (selectedList) selectedList.appendChild(item);
             });
@@ -2831,10 +2653,10 @@
             if (baseNameEl && basePriceEl) {
                 if (baseSelection) {
                     baseNameEl.textContent = BASES[baseSelection].name;
-                    basePriceEl.textContent = `₹${BASES[baseSelection].price.toLocaleString()}`;
+                    basePriceEl.textContent = formatCurrency(BASES[baseSelection].price);
                 } else {
                     baseNameEl.textContent = 'None selected';
-                    basePriceEl.textContent = '₹0';
+                    basePriceEl.textContent = formatCurrency(0);
                 }
             }
             
@@ -2842,7 +2664,7 @@
             const orderBtn = document.getElementById('order-btn');
             if (orderBtn) {
                 if (totalPrice > 0) {
-                    orderBtn.textContent = `Order for ₹${totalPrice.toLocaleString()}`;
+                    orderBtn.textContent = `Order for ${formatCurrency(totalPrice)}`;
                 } else {
                     orderBtn.textContent = 'Order Your Website';
                 }
@@ -2851,7 +2673,7 @@
             // Update mobile sticky CTA with live total
             const mobileCtaBtn = document.querySelector('.sticky-cta .btn');
             if (mobileCtaBtn && totalPrice > 0) {
-                mobileCtaBtn.textContent = `Get Started — ₹${totalPrice.toLocaleString()}`;
+                mobileCtaBtn.textContent = `Get Started — ${formatCurrency(totalPrice)}`;
             }
 
             // Update add-ons count badge
@@ -2861,322 +2683,72 @@
                 countEl.textContent = n ? `(${n})` : '';
             }
 
-            // Persist selection
-            try {
-                localStorage.setItem('stairio_selected', JSON.stringify({ base: baseSelection, addons: selectedFeatures }));
-            } catch {}
-
             // Keep selected base card visually marked
             document.querySelectorAll('.package-card').forEach(card=>card.classList.toggle('selected', card.dataset.base===baseSelection));
-
-            // Recompute ROI with new total
-            try { computeROI(totalPrice); } catch {}
         }
 
-        // Apply package base and presets
-        function applyPackage(featuresCsv, baseKey) {
-            if (baseKey && BASES[baseKey]) {
-                baseSelection = baseKey;
-            }
-            // Reflect selected base visually
-            document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
-            if (baseSelection) {
-                const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
-                card && card.classList.add('selected');
-            }
-            // Clear current selections
-            document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
-                const cb = option.querySelector('input[type="checkbox"]');
-                if (cb) { cb.checked = false; }
-                option.classList.remove('selected','outgoing','hidden');
-                option.removeAttribute('aria-hidden');
-            });
-            selectedFeatures = {};
+        // Generate and wire up new add-on items
+        const addonListContainer = document.getElementById('new-addon-list');
+        if (addonListContainer) {
+            ADDONS_DATA.forEach(addon => {
+                const item = document.createElement('div');
+                item.className = 'glass-addon-item';
+                item.dataset.id = addon.id;
+                item.dataset.price = addon.price;
 
-            // Only auto-apply add-ons when no baseKey is passed (explicit ?addons= preset)
-            if (!baseKey) {
-                const ids = (featuresCsv || '').split(',').map(s => s.trim()).filter(Boolean);
-                ids.forEach(id => {
-                    const cb = document.getElementById(id);
-                    if (!cb) return;
-                    cb.checked = true;
-                    const option = cb.closest('.feature-option');
-                    if (option) {
-                        const price = parseInt(option.dataset.price);
-                        selectedFeatures[id] = price;
-                        option.classList.add('selected');
+                item.innerHTML = `
+                    <div class="checkbox-icon">
+                        <div class="checkbox-icon-inner"></div>
+                    </div>
+                    <div class="flex-grow">
+                        <h4 class="text-sm font-semibold text-gray-800">${addon.name}</h4>
+                        <p class="text-xs text-gray-600 mt-1">${addon.description}</p>
+                    </div>
+                    <div class="addon-price text-sm font-medium ml-4 flex-shrink-0">
+                        +${formatCurrency(addon.price)}
+                    </div>
+                `;
+                addonListContainer.appendChild(item);
+
+                item.addEventListener('click', () => {
+                    if (!baseSelection) {
+                         document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
+                         const pkg = document.getElementById('packages');
+                         if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                         return;
                     }
+
+                    item.classList.toggle('active');
+                    if (item.classList.contains('active')) {
+                        selectedFeatures[addon.id] = addon.price;
+                    } else {
+                        delete selectedFeatures[addon.id];
+                    }
+                    updatePrice();
                 });
-            }
-
-            updatePrice();
-            // Scroll to calculator for clarity
-            const calc = document.getElementById('final-summary');
-            if (calc) calc.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            // Analytics event (lightweight)
-            try { window.stairioAnalytics && window.stairioAnalytics('choose_package', { base: baseSelection, features: featuresCsv }); } catch {}
+            });
         }
-
-        // Handle feature selection (excluding essential features)
-        function getRect(el){ const r = el.getBoundingClientRect(); return { x:r.left, y:r.top, w:r.width, h:r.height }; }
-    function fly(elFrom, elTo, onDone){
-            if (!elFrom || !elTo) { onDone && onDone(); return; }
-            const s = getRect(elFrom);
-            const t = getRect(elTo);
-            const clone = elFrom.cloneNode(true);
-            clone.classList.add('fly-clone');
-            document.body.appendChild(clone);
-            Object.assign(clone.style, { left: s.x+'px', top: s.y+'px', width: s.w+'px', height: s.h+'px', transform:'translate(0,0) scale(1)', opacity:'1', transition:'transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s ease' });
-            const dx = t.x - s.x; const dy = t.y - s.y; const scale = Math.max(0.5, Math.min(0.9, t.w / s.w));
-            requestAnimationFrame(()=>{
-        clone.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-        clone.style.opacity = '0';
-            });
-            setTimeout(()=>{ clone.remove(); onDone && onDone(); }, 620);
-        }
-
-        document.querySelectorAll('.feature-option:not(.essential)').forEach(option => {
-            const checkbox = option.querySelector('input[type="checkbox"]');
-            const price = parseInt(option.dataset.price);
-            const featureId = checkbox.id;
-            
-            // Make entire option clickable
-            option.addEventListener('click', (e) => {
-                // If no base selected, prompt to choose a plan first
-                if (!baseSelection) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // pulse package cards and scroll into view
-                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
-                    const pkg = document.getElementById('packages');
-                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
-                    return;
-                }
-                if (e.target.type !== 'checkbox') {
-                    checkbox.checked = !checkbox.checked;
-                }
-                
-                if (checkbox.checked) {
-                    selectedFeatures[featureId] = price;
-                    option.classList.add('selected','outgoing');
-                    option.setAttribute('aria-hidden','true');
-                    // animate to selected list
-                    updatePrice();
-                    const selectedList = document.getElementById('selected-list');
-                    const lastItem = selectedList ? selectedList.querySelector('.selected-item:last-child') : null;
-                    fly(option, lastItem || document.getElementById('final-summary'), ()=>{ option.classList.add('hidden'); });
-                } else {
-                    // animate back from selected list item to option
-                    const selectedList = document.getElementById('selected-list');
-                    const item = selectedList ? selectedList.querySelector(`.selected-item[data-id="${featureId}"]`) : null;
-                    option.classList.remove('hidden'); // make measurable
-                    if (item) fly(item, option, ()=>{});
-                    delete selectedFeatures[featureId];
-                    option.classList.remove('selected','outgoing');
-                    option.removeAttribute('aria-hidden');
-                    updatePrice();
-                }
-            });
-            
-            // Handle direct checkbox clicks
-            checkbox.addEventListener('change', (e) => {
-                e.stopPropagation();
-                if (!baseSelection) {
-                    e.preventDefault();
-                    // Reset checkbox to unchecked if toggled via keyboard
-                    checkbox.checked = false;
-                    document.querySelectorAll('.package-card').forEach(c=>{ c.classList.add('pulse'); setTimeout(()=>c.classList.remove('pulse'), 1200); });
-                    const pkg = document.getElementById('packages');
-                    if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
-                    return;
-                }
-                
-                if (checkbox.checked) {
-                    selectedFeatures[featureId] = price;
-                    option.classList.add('selected','outgoing');
-                    option.setAttribute('aria-hidden','true');
-                    updatePrice();
-                    const selectedList = document.getElementById('selected-list');
-                    const lastItem = selectedList ? selectedList.querySelector('.selected-item:last-child') : null;
-                    fly(option, lastItem || document.getElementById('final-summary'), ()=>{ option.classList.add('hidden'); });
-                } else {
-                    const selectedList = document.getElementById('selected-list');
-                    const item = selectedList ? selectedList.querySelector(`.selected-item[data-id="${featureId}"]`) : null;
-                    option.classList.remove('hidden');
-                    if (item) fly(item, option, ()=>{});
-                    delete selectedFeatures[featureId];
-                    option.classList.remove('selected','outgoing');
-                    option.removeAttribute('aria-hidden');
-                    updatePrice();
-                }
-            });
-        });
-
-        // Delegate remove (x) from selected list to animate back and uncheck
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('.remove-x');
-            if (!btn) return;
-            const item = btn.closest('.selected-item');
-            if (!item) return;
-            const id = item.dataset.id;
-            const option = document.getElementById(id)?.closest('.feature-option');
-            if (option) option.classList.remove('hidden');
-            fly(item, option || document.getElementById('final-summary'), ()=>{});
-            // uncheck after flight
-            const cb = document.getElementById(id);
-            if (cb) {
-                cb.checked = false;
-                const price = parseInt((cb.closest('.feature-option') || {}).dataset?.price || '0');
-                delete selectedFeatures[id];
-                const opt = cb.closest('.feature-option');
-                opt?.classList.remove('selected','outgoing');
-                opt?.removeAttribute('aria-hidden');
-                updatePrice();
-            }
-        });
 
         // Wire package buttons
-    document.querySelectorAll('.choose-package').forEach(btn => {
+        document.querySelectorAll('.choose-package').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.preventDefault();
-        const features = btn.getAttribute('data-features') || '';
-        const name = (btn.getAttribute('data-name') || '').toLowerCase();
-        const baseKey = name === 'starter' ? 'starter' : name === 'plus' ? 'plus' : name === 'pro' ? 'pro' : null;
-        applyPackage(features, baseKey);
-            });
-        });
-
-        // Prevent clicks on essential features
-        document.querySelectorAll('.feature-option.essential').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
+                const baseKey = btn.closest('.package-card').dataset.base;
+                if (baseKey && BASES[baseKey]) {
+                    baseSelection = baseKey;
+                }
+                // Clear addon selections when a new base is chosen
+                selectedFeatures = {};
+                document.querySelectorAll('.glass-addon-item.active').forEach(item => item.classList.remove('active'));
+                
+                updatePrice();
+                const calc = document.getElementById('final-summary');
+                if (calc) calc.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
     // Initialize price display
     updatePrice();
-
-        // Restore from localStorage
-        try {
-            const saved = JSON.parse(localStorage.getItem('stairio_selected') || '{}');
-            if (saved && typeof saved === 'object') {
-                if (saved.base && BASES[saved.base]) baseSelection = saved.base;
-                // reflect base selection visually on restore
-                document.querySelectorAll('.package-card').forEach(card=>card.classList.remove('selected'));
-                if (baseSelection) {
-                    const card = document.querySelector(`.package-card[data-base="${baseSelection}"]`);
-                    card && card.classList.add('selected');
-                }
-                const addons = saved.addons || {};
-                const ids = Object.keys(addons);
-                if (ids.length) {
-                    // mark checkboxes according to saved
-                    ids.forEach(id => {
-                        const cb = document.getElementById(id);
-                        if (cb) {
-                            cb.checked = true;
-                            const option = cb.closest('.feature-option');
-                            if (option) {
-                                option.classList.add('selected');
-                                selectedFeatures[id] = parseInt(option.dataset.price);
-                            }
-                        }
-                    });
-                }
-                updatePrice();
-            }
-        } catch {}
-
-        // URL-based presets: ?pkg=plus or ?addons=blog,ecommerce
-        (function() {
-            const params = new URLSearchParams(location.search);
-            const pkg = (params.get('pkg') || '').toLowerCase();
-            const addons = params.get('addons');
-            if (addons) {
-                applyPackage(addons, null);
-            } else if (pkg) {
-                if (pkg === 'starter') applyPackage('', 'starter');
-                if (pkg === 'plus') applyPackage('contact-forms,team-profiles,gallery', 'plus');
-                if (pkg === 'pro') applyPackage('blog,ecommerce,analytics,whatsapp,newsletter', 'pro');
-            }
-        })();
-
-        // Compute and show dynamic package prices
-        function computePackagePrice(ids, base=16000) {
-            const addOn = (ids || []).reduce((sum, id) => sum + (featurePrices[id] || 0), 0);
-            return base + addOn;
-        }
-        function updatePackageLabels() {
-            const starter = computePackagePrice([], BASES.starter.price);
-            const plus = computePackagePrice(['contact-forms','team-profiles','gallery'], BASES.plus.price - (featurePrices['contact-forms']+featurePrices['team-profiles']+featurePrices['gallery']));
-            const pro = computePackagePrice(['blog','ecommerce','analytics','whatsapp','newsletter'], BASES.pro.price - (featurePrices['blog']+featurePrices['ecommerce']+featurePrices['analytics']+featurePrices['whatsapp']+featurePrices['newsletter']));
-            // Update monthly values (bold)
-            const mS = document.getElementById('pkg-m-starter');
-            const mP = document.getElementById('pkg-m-plus');
-            const mR = document.getElementById('pkg-m-pro');
-            if (mS) mS.textContent = `₹${Math.round(starter/12).toLocaleString()}`;
-            if (mP) mP.textContent = `₹${Math.round(plus/12).toLocaleString()}`;
-            if (mR) mR.textContent = `₹${Math.round(pro/12).toLocaleString()}`;
-            // Update yearly one-time (small)
-            const yS = document.getElementById('pkg-y-starter');
-            const yP = document.getElementById('pkg-y-plus');
-            const yR = document.getElementById('pkg-y-pro');
-            if (yS) yS.textContent = `₹${starter.toLocaleString()} one‑time`;
-            if (yP) yP.textContent = `₹${plus.toLocaleString()} one‑time`;
-            if (yR) yR.textContent = `₹${pro.toLocaleString()} one‑time`;
-        }
-        updatePackageLabels();
-
-        function updatePkgSubs({starter, plus, pro}){
-            // keep base values available for other consumers if needed
-            const subS = document.getElementById('pkg-sub-starter');
-            const subP = document.getElementById('pkg-sub-plus');
-            const subR = document.getElementById('pkg-sub-pro');
-            if (subS) subS.dataset.base = starter;
-            if (subP) subP.dataset.base = plus;
-            if (subR) subR.dataset.base = pro;
-        }
-
-        function updateBillingMode(mode){
-            const subs = [
-                { el: document.getElementById('pkg-sub-starter') },
-                { el: document.getElementById('pkg-sub-plus') },
-                { el: document.getElementById('pkg-sub-pro') }
-            ];
-            subs.forEach(({el})=>{
-                if (!el) return;
-                const base = parseInt(el.dataset.base || '0', 10);
-                const id = el.id || '';
-                const targetM = document.getElementById(id.replace('pkg-sub','pkg-m'));
-                const targetY = document.getElementById(id.replace('pkg-sub','pkg-y'));
-                if (mode === 'monthly') {
-                    const monthly = Math.max(1, Math.round(base / 12));
-                    if (targetM) targetM.textContent = `₹${monthly.toLocaleString()}`;
-                    if (targetY) targetY.textContent = `₹${base.toLocaleString()} one‑time`;
-                } else {
-                    if (targetM) targetM.textContent = `₹${Math.round(base/12).toLocaleString()}`;
-                    if (targetY) targetY.textContent = `₹${base.toLocaleString()} one‑time`;
-                }
-            });
-            // Reflect in calculator order button's data-monthly too
-            const orderBtn = document.getElementById('order-btn');
-            if (orderBtn) {
-                orderBtn.setAttribute('data-billing', mode);
-                // expose monthly estimate via tooltip when monthly selected
-                const monthlyTxt = orderBtn.getAttribute('data-monthly') || '';
-                if (mode === 'monthly' && monthlyTxt) {
-                    orderBtn.setAttribute('title', `Monthly estimate: ${monthlyTxt}`);
-                } else {
-                    orderBtn.removeAttribute('title');
-                }
-            }
-        }
-
-    // (Removed counters animation: social proof section deleted)
-
-        
 
         // FAQ toggle
         document.querySelectorAll('.faq-item').forEach(item => {
@@ -3212,10 +2784,154 @@
             salesRange.addEventListener('input', updateEarn);
             updateEarn();
         }
+
+        // --- 3D Hero Background ---
+        const heroSection = document.querySelector('.hero');
+        if (heroSection && typeof THREE !== 'undefined') {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, heroSection.clientWidth / heroSection.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.querySelector('#hero-canvas'),
+                alpha: true
+            });
+            renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            camera.position.z = 5;
+
+            // Mouse tracking
+            const mouse = new THREE.Vector2();
+            heroSection.addEventListener('mousemove', (event) => {
+                const rect = heroSection.getBoundingClientRect();
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+            });
+
+            // Galaxy Generation
+            const galaxyParameters = {
+                count: 50000,
+                size: 0.02,
+                radius: 5,
+                branches: 3,
+                spin: 1,
+                randomness: 0.5,
+                randomnessPower: 3,
+                insideColor: '#ff6030',
+                outsideColor: '#1b3984'
+            };
+
+            let galaxyGeometry = null;
+            let galaxyMaterial = null;
+            let galaxyPoints = null;
+
+            const generateGalaxy = () => {
+                if(galaxyPoints !== null) {
+                    galaxyGeometry.dispose();
+                    galaxyMaterial.dispose();
+                    scene.remove(galaxyPoints);
+                }
+
+                galaxyGeometry = new THREE.BufferGeometry();
+                const positions = new Float32Array(galaxyParameters.count * 3);
+                const colors = new Float32Array(galaxyParameters.count * 3);
+                const colorInside = new THREE.Color(galaxyParameters.insideColor);
+                const colorOutside = new THREE.Color(galaxyParameters.outsideColor);
+
+                for (let i = 0; i < galaxyParameters.count; i++) {
+                    const i3 = i * 3;
+                    const radius = Math.random() * galaxyParameters.radius;
+                    const spinAngle = radius * galaxyParameters.spin;
+                    const branchAngle = (i % galaxyParameters.branches) / galaxyParameters.branches * Math.PI * 2;
+
+                    const randomX = Math.pow(Math.random(), galaxyParameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * galaxyParameters.randomness * radius;
+                    const randomY = Math.pow(Math.random(), galaxyParameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * galaxyParameters.randomness * radius;
+                    const randomZ = Math.pow(Math.random(), galaxyParameters.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * galaxyParameters.randomness * radius;
+
+                    positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
+                    positions[i3 + 1] = randomY;
+                    positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+                    
+                    const mixedColor = colorInside.clone();
+                    mixedColor.lerp(colorOutside, radius / galaxyParameters.radius);
+                    
+                    colors[i3] = mixedColor.r;
+                    colors[i3 + 1] = mixedColor.g;
+                    colors[i3 + 2] = mixedColor.b;
+                }
+                galaxyGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+                galaxyGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+                galaxyMaterial = new THREE.PointsMaterial({
+                    size: galaxyParameters.size,
+                    sizeAttenuation: true,
+                    depthWrite: false,
+                    blending: THREE.AdditiveBlending,
+                    vertexColors: true
+                });
+
+                galaxyPoints = new THREE.Points(galaxyGeometry, galaxyMaterial);
+                galaxyPoints.rotation.x = Math.PI * 0.1; // Initial tilt
+                scene.add(galaxyPoints);
+            };
+            generateGalaxy();
+
+            // Cursor Light
+            const pointLight = new THREE.PointLight(0xffffff, 2, 10);
+            scene.add(pointLight);
+
+            // Animation loop
+            const clock = new THREE.Clock();
+            const animate = () => {
+                const elapsedTime = clock.getElapsedTime();
+                galaxyPoints.rotation.y = elapsedTime * 0.1;
+
+                // Update light position
+                pointLight.position.x = mouse.x * 5;
+                pointLight.position.y = mouse.y * 5;
+                
+                // Animate camera to follow mouse
+                camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.05;
+                camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+
+                renderer.render(scene, camera);
+                window.requestAnimationFrame(animate);
+            };
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                renderer.setSize(heroSection.clientWidth, heroSection.clientHeight);
+                camera.aspect = heroSection.clientWidth / heroSection.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            });
+        }
+        
+        // --- Splash Cursor for Features Section ---
+        const featuresSection = document.getElementById('features');
+        if (featuresSection) {
+            const cursor = document.createElement('div');
+            cursor.className = 'splash-cursor';
+            document.body.appendChild(cursor);
+            let timeout;
+
+            featuresSection.addEventListener('mousemove', (e) => {
+                const zoomFactor = 0.8;
+                cursor.style.left = e.pageX + 'px';
+                cursor.style.top = e.pageY + 'px';
+                cursor.classList.add('active');
+                
+                clearTimeout(timeout);
+                timeout = setTimeout(() => {
+                    cursor.classList.remove('active');
+                }, 200);
+            });
+            
+            featuresSection.addEventListener('mouseleave', () => {
+                 cursor.classList.remove('active');
+            });
+        }
+
     </script>
-    <!-- Splash Cursor effect -->
-    <!-- Splash cursor only on features section -->
-    <script src="assets/splash-cursor-local.js"></script>
 </body>
 </html>
-                    
