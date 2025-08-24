@@ -2483,7 +2483,9 @@
                 <p>Tell us a bit, and we’ll get back within 24 hours.</p>
             </div>
             <div class="contact-grid">
-                <form class="card" action="mailto:hello@stairio.com" method="post" enctype="text/plain" aria-label="Contact form">
+                <form class="card" action="https://api.web3forms.com/submit" method="POST" aria-label="Contact form">
+                    <input type="hidden" name="access_key" value="dd652619-37c5-427f-a7b7-c64178be3f66">
+                    <input type="hidden" name="redirect" value="https://mywebsite.com/thanks.html">
                     <div class="field">
                         <label for="name">Your name</label>
                         <input id="name" name="name" type="text" required placeholder="e.g., Ananya Sharma">
@@ -2513,7 +2515,7 @@
                         <label for="message">Project details</label>
                         <textarea id="message" name="message" placeholder="Business, pages needed, references…"></textarea>
                     </div>
-                    <button class="btn btn-primary" type="submit">Send inquiry</button>
+                    <button class="btn btn-primary" type="submit" id="contact-submit-btn">Send inquiry</button>
                 </form>
                 <div class="card">
                     <h3 style="font-size:21px; margin-bottom:12px;">What happens next?</h3>
@@ -3259,6 +3261,25 @@ updatePrice();
                 });
             });
         }
+
+        // Add event listener to contact form submit button
+        document.getElementById('contact-submit-btn').addEventListener('click', function(e) {
+            // Only prevent submission if no package is selected
+            // Web3Forms will handle the actual submission when a package is selected
+            if (!baseSelection) {
+                e.preventDefault();
+                // Scroll to packages section
+                const pkg = document.getElementById('packages');
+                if (pkg) pkg.scrollIntoView({ behavior:'smooth', block:'start' });
+                return false;
+            }
+            // If baseSelection exists, let the form submit normally to Web3Forms
+            // Do not prevent default behavior - allow form to submit to Web3Forms
+            // When baseSelection exists, we want the form to submit to Web3Forms
+            // so we don't call e.preventDefault() or return false
+            // Explicitly return to ensure no other code interferes with form submission
+            return true;
+        });
 
     </script>
 </body>
