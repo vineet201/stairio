@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Rooms & Suites - Hotel Ganpati</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        /* CSS Reset & Global Styles (Copied from index.html) */
+        :root {
+            --primary-color: #8B4513; /* Saddle Brown */
+            --secondary-color: #FFF8E1; /* Light Cream */
+            --accent-color: #FFC107; /* Amber Gold */
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--text-dark);
+            background-color: #FEFEFE;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #777;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Header & Navigation (Copied from index.html) */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
+
+        .header.scrolled, .header.static-header { /* Added .static-header for this page */
+             background: var(--primary-color);
+             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 400;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .book-now-btn {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        
+        .book-now-btn:hover {
+            background-color: var(--text-light);
+        }
+
+        /* NEW: Page Header for Rooms Page */
+        .page-header {
+            padding-top: 150px;
+            padding-bottom: 80px;
+            background: url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600') no-repeat center center/cover;
+            position: relative;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(48, 25, 0, 0.6); /* Darker brown overlay */
+        }
+
+        .page-header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header-content h1 {
+            font-size: 4rem;
+            color: var(--text-light);
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .page-header-content p {
+            font-size: 1.3rem;
+            max-width: 600px;
+            margin: 10px auto 0;
+            font-weight: 300;
+        }
+
+        /* Booking Form Section (Copied & Adjusted) */
+        .booking-form-wrapper {
+            background-color: var(--secondary-color);
+            padding: 60px 0;
+        }
+
+        .booking-form {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+        }
+
+        .flatpickr-input {
+            cursor: pointer;
+            background-color: #fff;
+        }
+        
+        .budget-group .range-value {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 5px;
+        }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            outline: none;
+            margin-top: 10px;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .booking-form .search-btn-container {
+            align-self: end;
+        }
+
+        .booking-form .search-btn {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .booking-form .search-btn:hover {
+            background-color: #6c360f;
+        }
+
+        /* Rooms Section (Expanded for this page) */
+        .rooms-grid-full { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .room-card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; }
+        .room-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .room-card img { width: 100%; height: 250px; object-fit: cover; }
+        .room-card-content { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
+        .room-card h3 { font-size: 1.5rem; margin-bottom: 10px; }
+        .room-card .room-description { color: #555; margin-bottom: 15px; font-size: 0.95rem; flex-grow: 1;}
+        .room-features { display: flex; flex-wrap: wrap; gap: 15px; color: #777; margin-bottom: 15px; font-size: 0.9rem; }
+        .room-features span { display: flex; align-items: center; }
+        .room-features i { color: var(--accent-color); margin-right: 8px; width: 18px; text-align: center; }
+        .room-price-wrapper { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+        .room-price { font-size: 1.6rem; font-weight: bold; color: var(--primary-color); }
+        .room-price span { font-size: 0.9rem; font-weight: 400; color: #777; }
+        .room-price-wrapper .cta-btn { background-color: var(--primary-color); color: #fff; border: 2px solid var(--primary-color); padding: 10px 25px; border-radius: 50px; text-decoration: none; transition: all 0.3s ease; }
+        .room-price-wrapper .cta-btn:hover { background-color: var(--accent-color); color: var(--primary-color); border-color: var(--accent-color); }
+
+
+        /* Footer (Copied from index.html) */
+        .footer { background-color: var(--primary-color); color: #ccc; padding: 60px 0 20px 0; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-col h3 { font-size: 1.2rem; color: #fff; margin-bottom: 20px; }
+        .footer-col p, .footer-col a { color: #ccc; text-decoration: none; margin-bottom: 10px; display: block; }
+        .footer-col a:hover { color: var(--accent-color); }
+        .social-links a { display: inline-block; margin-right: 15px; font-size: 1.5rem; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #a7521a; }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .booking-form { grid-template-columns: 1fr 1fr; }
+            .booking-form .search-btn-container { grid-column: 1 / -1; }
+            .rooms-grid-full { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .page-header-content h1 { font-size: 3rem; }
+            .page-header-content p { font-size: 1.2rem; }
+            .section-title h2 { font-size: 2.2rem; }
+            .booking-form { grid-template-columns: 1fr; }
+            .rooms-grid-full { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header static-header"> <a href="index.html" class="logo">Hotel Ganpati</a>
+        <nav class="nav-links">
+            <a href="index.html#about">About</a>
+            <a href="rooms.html">Rooms</a>
+            <a href="index.html#amenities">Amenities</a>
+            <a href="index.html#location">Location</a>
+            <a href="index.html#testimonials">Testimonials</a>
+        </nav>
+        <a href="#booking-form" class="book-now-btn">Book Now</a>
+    </header>
+
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1>Our Rooms & Suites</h1>
+            <p>Find your personal sanctuary in our collection of beautifully appointed rooms.</p>
+        </div>
+    </section>
+
+    <main>
+        <section id="booking-form" class="booking-form-wrapper">
+            <div class="container">
+                <form class="booking-form">
+                    <div class="form-group">
+                        <label for="checkin-checkout">Check-in — Check-out</label>
+                        <input type="text" id="checkin-checkout" placeholder="Select your dates">
+                    </div>
+                    <div class="form-group">
+                        <label for="rooms-count">Rooms</label>
+                        <select id="rooms-count" name="rooms">
+                            <option value="1">1 Room</option>
+                            <option value="2">2 Rooms</option>
+                            <option value="3">3 Rooms</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests-count">Guests</label>
+                        <select id="guests-count" name="guests">
+                            <option value="1">1 Adult</option>
+                            <option value="2" selected>2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                        </select>
+                    </div>
+                    <div class="form-group budget-group">
+                        <label for="budget">Your Budget / night</label>
+                        <input type="range" id="budget" name="budget" min="5000" max="50000" value="15000" step="1000">
+                        <div class="range-value">₹15,000</div>
+                    </div>
+                    <div class="search-btn-container">
+                        <a href="#" class="search-btn">Check Availability</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="all-rooms">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Choose Your Perfect Stay</h2>
+                    <p>Each room is a private haven, designed with your utmost comfort in mind. Explore our offerings below.</p>
+                </div>
+                <div class="rooms-grid-full">
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Deluxe Room">
+                        <div class="room-card-content">
+                            <h3>Deluxe Garden View</h3>
+                            <p class="room-description">Wake up to serene views of our lush gardens. This elegant room combines modern comfort with classic style.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> King Bed</span>
+                                <span><i class="fas fa-users"></i> Max 2 Guests</span>
+                                <span><i class="fas fa-expand"></i> 350 sq.ft</span>
+                                <span><i class="fas fa-seedling"></i> Garden View</span>
+                            </div>
+                            <div class="room-price-wrapper">
+                                <div class="room-price">₹8,000 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Superior City View Room">
+                        <div class="room-card-content">
+                            <h3>Superior City View</h3>
+                             <p class="room-description">Enjoy panoramic views of the vibrant city skyline from the comfort of your chic, contemporary room.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> Queen Bed</span>
+                                <span><i class="fas fa-users"></i> Max 2 Guests</span>
+                                <span><i class="fas fa-expand"></i> 320 sq.ft</span>
+                                <span><i class="fas fa-city"></i> City View</span>
+                            </div>
+                            <div class="room-price-wrapper">
+                                <div class="room-price">₹9,500 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Luxury Suite">
+                        <div class="room-card-content">
+                            <h3>Luxury Suite</h3>
+                             <p class="room-description">Indulge in spacious luxury. Our suites feature a separate living area, premium amenities, and stunning pool views.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> Super King Bed</span>
+                                <span><i class="fas fa-users"></i> Max 3 Guests</span>
+                                <span><i class="fas fa-expand"></i> 600 sq.ft</span>
+                                <span><i class="fas fa-water"></i> Pool View</span>
+                            </div>
+                           <div class="room-price-wrapper">
+                                <div class="room-price">₹15,000 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                         <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Family Connecting Room">
+                        <div class="room-card-content">
+                            <h3>Family Connecting Room</h3>
+                             <p class="room-description">Perfect for families, these interconnected rooms offer both space and privacy, ensuring a comfortable stay for everyone.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> 1 King, 2 Twin</span>
+                                <span><i class="fas fa-users"></i> Max 4 Guests</span>
+                                <span><i class="fas fa-expand"></i> 700 sq.ft</span>
+                                <span><i class="fas fa-door-open"></i> Interconnected</span>
+                            </div>
+                           <div class="room-price-wrapper">
+                                <div class="room-price">₹18,000 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Honeymoon Suite">
+                        <div class="room-card-content">
+                            <h3>Honeymoon Suite</h3>
+                             <p class="room-description">Celebrate your romance in a suite designed for intimacy, featuring a private balcony and a luxurious in-room jacuzzi.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> King Bed</span>
+                                <span><i class="fas fa-users"></i> Max 2 Guests</span>
+                                <span><i class="fas fa-expand"></i> 650 sq.ft</span>
+                                <span><i class="fas fa-hot-tub"></i> Jacuzzi</span>
+                            </div>
+                           <div class="room-price-wrapper">
+                                <div class="room-price">₹22,000 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="room-card">
+                        <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=800" alt="Private Villa">
+                        <div class="room-card-content">
+                            <h3>Presidential Villa</h3>
+                            <p class="room-description">The ultimate in opulence. Our two-bedroom villa offers complete privacy, a personal butler, and a stunning private pool.</p>
+                            <div class="room-features">
+                                <span><i class="fas fa-bed"></i> 2 Bedrooms</span>
+                                <span><i class="fas fa-users"></i> Max 4 Guests</span>
+                                <span><i class="fas fa-expand"></i> 1200 sq.ft</span>
+                                <span><i class="fas fa-swimmer"></i> Private Pool</span>
+                            </div>
+                            <div class="room-price-wrapper">
+                                <div class="room-price">₹35,000 <span>/ night</span></div>
+                                <a href="#" class="cta-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Hotel Ganpati</h3>
+                    <p>Your divine retreat for luxury, comfort, and unforgettable memories.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <a href="index.html#about">About Us</a>
+                    <a href="rooms.html">Our Rooms</a>
+                    <a href="index.html#amenities">Amenities</a>
+                    <a href="index.html#location">Find Us</a>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <p>123 Ganesh Lane, Patna, Bihar</p>
+                    <p>Email: contact@hotelganpati.com</p>
+                    <p>Phone: +91 987 654 3210</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Hotel Ganpati. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        // NOTE: The carousel script from index.html is not needed here.
+
+        // Booking Form: Calendar Initialization
+        flatpickr("#checkin-checkout", {
+            mode: "range",
+            dateFormat: "M d, Y",
+            minDate: "today"
+        });
+
+        // Booking Form: Budget Slider
+        const budgetSlider = document.getElementById('budget');
+        const budgetValue = document.querySelector('.range-value');
+        
+        budgetSlider.addEventListener('input', (event) => {
+            budgetValue.textContent = `₹${parseInt(event.target.value).toLocaleString('en-IN')}`;
+        });
+
+    </script>
+</body>
+</html>
