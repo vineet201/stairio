@@ -872,6 +872,53 @@
     .field label { display:block; font-size:14px; color: #86868b; margin-bottom: 6px; }
     .field input, .field textarea, .field select { width: 100%; padding: 12px 14px; border-radius: 10px; border:1px solid #d2d2d7; background: #fff; color: #1d1d1f; }
     .field textarea { min-height: 120px; }
+    
+    /* Styles for selected plan and addons display */
+    .selected-plan-display {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #d2d2d7;
+        background: #f8f8f8;
+        color: #1d1d1f;
+        font-weight: 500;
+    }
+    
+    .selected-plan-display .plan-name {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .selected-plan-display .plan-price {
+        font-size: 14px;
+        color: #8B5CF6;
+        font-weight: 600;
+    }
+    
+    .selected-addons-display {
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid #d2d2d7;
+        background: #f8f8f8;
+        min-height: 40px;
+    }
+    
+    .addon-item {
+        display: inline-block;
+        background: #e9d5ff;
+        color: #7e22ce;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        margin-right: 6px;
+        margin-bottom: 6px;
+    }
+    
+    .no-addons-message {
+        color: #86868b;
+        font-size: 14px;
+        font-style: italic;
+    }
+    
     @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
 
     /* Sticky CTA (mobile) */
@@ -2450,12 +2497,17 @@
                         <input id="phone" name="phone" type="tel" placeholder="e.g., +91 98xxxxxx12">
                     </div>
                     <div class="field">
-                        <label for="budget">Approx budget</label>
-                        <select id="budget" name="budget">
-                            <option value="16000">₹16,000 base</option>
-                            <option value="20000">₹20,000</option>
-                            <option value="25000">₹25,000+</option>
-                        </select>
+                        <label>Your Selected Plan</label>
+                        <div id="selected-plan-display" class="selected-plan-display">
+                            <div class="plan-name">No plan selected</div>
+                            <div class="plan-price">₹0</div>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>Your Selected Add-ons</label>
+                        <div id="selected-addons-display" class="selected-addons-display">
+                            <div class="no-addons-message">No add-ons selected</div>
+                        </div>
                     </div>
                     <div class="field">
                         <label for="message">Project details</label>
@@ -2989,8 +3041,59 @@
             });
         });
 
-    // Initialize price display
-    updatePrice();
+// Function to update the selected plan and addons display in the contact form
+function updateContactFormDisplay() {
+    // Update selected plan display
+    const planDisplay = document.getElementById('selected-plan-display');
+    if (planDisplay) {
+        if (baseSelection) {
+            const planName = document.createElement('div');
+            planName.className = 'plan-name';
+            planName.textContent = BASES[baseSelection].name;
+            
+            const planPrice = document.createElement('div');
+            planPrice.className = 'plan-price';
+            planPrice.textContent = formatCurrency(BASES[baseSelection].price);
+            
+            planDisplay.innerHTML = '';
+            planDisplay.appendChild(planName);
+            planDisplay.appendChild(planPrice);
+        } else {
+            planDisplay.innerHTML = '<div class="plan-name">No plan selected</div><div class="plan-price">₹0</div>';
+        }
+    }
+    
+    // Update selected addons display
+    const addonsDisplay = document.getElementById('selected-addons-display');
+    if (addonsDisplay) {
+        const selectedAddonIds = Object.keys(selectedFeatures);
+        if (selectedAddonIds.length > 0) {
+            addonsDisplay.innerHTML = '';
+            selectedAddonIds.forEach(addonId => {
+                const addon = ADDONS_DATA.find(a => a.id === addonId);
+                if (addon) {
+                    const addonElement = document.createElement('span');
+                    addonElement.className = 'addon-item';
+                    addonElement.textContent = `${addon.name} (+${formatCurrency(addon.price)})`;
+                    addonsDisplay.appendChild(addonElement);
+                }
+            });
+        } else {
+            addonsDisplay.innerHTML = '<div class="no-addons-message">No add-ons selected</div>';
+        }
+    }
+}
+
+// Call updateContactFormDisplay whenever the plan or addons change
+// We need to modify the existing updatePrice function to also call updateContactFormDisplay
+const originalUpdatePrice = updatePrice;
+updatePrice = function() {
+    originalUpdatePrice();
+    updateContactFormDisplay();
+};
+
+// Initialize price display
+updatePrice();
 
         // FAQ toggle
         document.querySelectorAll('.faq-item').forEach(item => {

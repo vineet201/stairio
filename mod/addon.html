@@ -101,6 +101,39 @@
         .price-updated {
             animation: price-pop 0.3s ease-out;
         }
+
+        .addon-item {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .addon-item.fade-out {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .selected-addon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-radius: 15px;
+        }
+
+        .unselect-btn {
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            padding: 0.5rem;
+            color: #ef4444; /* red-500 */
+            transition: color 0.2s ease;
+        }
+
+        .unselect-btn:hover {
+            color: #b91c1c; /* red-700 */
+        }
+    </style>
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4 sm:p-6 lg:p-8">
@@ -109,6 +142,14 @@
         <div class="text-center mb-12">
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-700">Advanced Add‑ons</h1>
             <p class="text-lg text-gray-500 mt-2">Optional — choose as needed</p>
+        </div>
+
+        <!-- Selected Add-ons -->
+        <div id="selected-addon-section" class="mb-12" style="display: none;">
+            <h2 class="text-2xl font-bold text-gray-700 mb-6">Selected Add-ons</h2>
+            <div id="selected-addon-list" class="flex flex-col gap-4">
+                <!-- Selected addons will be injected here -->
+            </div>
         </div>
 
         <!-- Add-ons List -->
@@ -127,87 +168,127 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const addons = [
-                { name: 'Advanced Contact Forms', description: 'Multi-step forms, file uploads, custom fields', price: 2000 },
-                { name: 'Team & Profile Pages', description: 'Showcase your team with beautiful profiles', price: 3000 },
-                { name: 'Media Gallery', description: 'Photo galleries, video integration, portfolio', price: 4000 },
-                { name: 'Blog Platform', description: 'Full blogging system with categories and search', price: 5000 },
-                { name: 'E-commerce Ready', description: 'Product catalog, shopping cart, payment gateway', price: 6000 },
-                { name: 'WhatsApp Integration', description: 'Direct chat buttons, automated responses', price: 3000 },
-                { name: 'Advanced Analytics', description: 'Visitor tracking, conversion goals, reports', price: 4000 },
-                { name: 'Newsletter System', description: 'Email capture, automated campaigns', price: 2500 }
+            const initialAddons = [
+                { id: 1, name: 'Advanced Contact Forms', description: 'Multi-step forms, file uploads, custom fields', price: 2000 },
+                { id: 2, name: 'Team & Profile Pages', description: 'Showcase your team with beautiful profiles', price: 3000 },
+                { id: 3, name: 'Media Gallery', description: 'Photo galleries, video integration, portfolio', price: 4000 },
+                { id: 4, name: 'Blog Platform', description: 'Full blogging system with categories and search', price: 5000 },
+                { id: 5, name: 'E-commerce Ready', description: 'Product catalog, shopping cart, payment gateway', price: 6000 },
+                { id: 6, name: 'WhatsApp Integration', description: 'Direct chat buttons, automated responses', price: 3000 },
+                { id: 7, name: 'Advanced Analytics', description: 'Visitor tracking, conversion goals, reports', price: 4000 },
+                { id: 8, name: 'Newsletter System', description: 'Email capture, automated campaigns', price: 2500 }
             ];
 
-            const addonList = document.getElementById('addon-list');
-            const totalPriceEl = document.getElementById('total-price');
-            let currentTotal = 0;
+            let availableAddons = [...initialAddons];
+            let selectedAddons = [];
 
-            // Function to format price
+            const addonList = document.getElementById('addon-list');
+            const selectedAddonList = document.getElementById('selected-addon-list');
+            const selectedAddonSection = document.getElementById('selected-addon-section');
+            const totalPriceEl = document.getElementById('total-price');
+
             const formatCurrency = (amount) => {
                 return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', minimumFractionDigits: 0 }).format(amount);
             };
 
-            // Create and append addon list items
-            addons.forEach(addon => {
+            function renderAddons() {
+                addonList.innerHTML = '';
+                selectedAddonList.innerHTML = '';
+
+                if (selectedAddons.length > 0) {
+                    selectedAddonSection.style.display = 'block';
+                } else {
+                    selectedAddonSection.style.display = 'none';
+                }
+
+                availableAddons.forEach(addon => {
+                    const item = createAddonElement(addon, false);
+                    addonList.appendChild(item);
+                });
+
+                selectedAddons.forEach(addon => {
+                    const item = createAddonElement(addon, true);
+                    selectedAddonList.appendChild(item);
+                });
+
+                updateTotal();
+            }
+
+            function createAddonElement(addon, isSelected) {
                 const item = document.createElement('div');
                 item.className = 'neumorphism addon-item';
-                item.dataset.price = addon.price;
+                item.dataset.id = addon.id;
 
-                // Checkbox icon
-                const checkbox = document.createElement('div');
-                checkbox.className = 'checkbox-icon neumorphism-inset';
-                checkbox.innerHTML = `<div class="checkbox-icon-inner"></div>`;
+                if (isSelected) {
+                    item.classList.add('selected-addon-item');
+                    item.innerHTML = `
+                        <div class="flex-grow">
+                            <h3 class="text-lg font-semibold text-gray-800">${addon.name}</h3>
+                        </div>
+                        <span class="addon-price text-xl font-medium text-gray-700 mr-4">${formatCurrency(addon.price)}</span>
+                        <button class="unselect-btn">&times;</button>
+                    `;
+                    item.querySelector('.unselect-btn').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        unselectAddon(addon.id);
+                    });
+                } else {
+                    item.innerHTML = `
+                        <div class="checkbox-icon neumorphism-inset">
+                            <div class="checkbox-icon-inner"></div>
+                        </div>
+                        <div class="flex-grow ml-4">
+                            <h3 class="text-lg font-semibold text-gray-800">${addon.name}</h3>
+                            <p class="addon-description text-sm text-gray-600 mt-1">${addon.description}</p>
+                        </div>
+                        <p class="addon-price text-xl font-medium ml-4 flex-shrink-0">+${formatCurrency(addon.price)}</p>
+                    `;
+                    item.addEventListener('click', () => {
+                        selectAddon(addon.id);
+                    });
+                }
+                return item;
+            }
 
-                // Details (Name + Description)
-                const detailsDiv = document.createElement('div');
-                detailsDiv.className = 'flex-grow ml-4';
+            function selectAddon(addonId) {
+                const addon = availableAddons.find(a => a.id === addonId);
+                if (!addon) return;
+
+                const item = addonList.querySelector(`[data-id='${addonId}']`);
+                item.classList.add('fade-out');
+
+                setTimeout(() => {
+                    selectedAddons.push(addon);
+                    availableAddons = availableAddons.filter(a => a.id !== addonId);
+                    renderAddons();
+                }, 300);
+            }
+
+            function unselectAddon(addonId) {
+                const addon = selectedAddons.find(a => a.id === addonId);
+                if (!addon) return;
                 
-                const nameEl = document.createElement('h3');
-                nameEl.className = 'text-lg font-semibold text-gray-800';
-                nameEl.textContent = addon.name;
+                const item = selectedAddonList.querySelector(`[data-id='${addonId}']`);
+                item.classList.add('fade-out');
 
-                const descEl = document.createElement('p');
-                descEl.className = 'addon-description text-sm text-gray-600 mt-1';
-                descEl.textContent = addon.description;
+                setTimeout(() => {
+                    availableAddons.push(addon);
+                    selectedAddons = selectedAddons.filter(a => a.id !== addonId);
+                    availableAddons.sort((a, b) => a.id - b.id); // Keep original order
+                    renderAddons();
+                }, 300);
+            }
 
-                detailsDiv.appendChild(nameEl);
-                detailsDiv.appendChild(descEl);
-
-                // Price
-                const priceEl = document.createElement('p');
-                priceEl.className = 'addon-price text-xl font-medium ml-4 flex-shrink-0';
-                priceEl.textContent = `+${formatCurrency(addon.price)}`;
-
-                item.appendChild(checkbox);
-                item.appendChild(detailsDiv);
-                item.appendChild(priceEl);
-                addonList.appendChild(item);
-
-                // Add click event listener
-                item.addEventListener('click', () => {
-                    item.classList.toggle('active');
-                    updateTotal();
-                });
-            });
-            
-            // Function to update the total price
             function updateTotal() {
-                currentTotal = 0;
-                const activeItems = document.querySelectorAll('.addon-item.active');
-                activeItems.forEach(item => {
-                    currentTotal += parseFloat(item.dataset.price);
-                });
+                const currentTotal = selectedAddons.reduce((sum, addon) => sum + addon.price, 0);
                 totalPriceEl.textContent = formatCurrency(currentTotal);
-                
-                // Trigger animation
                 totalPriceEl.classList.add('price-updated');
                 totalPriceEl.addEventListener('animationend', () => {
                     totalPriceEl.classList.remove('price-updated');
                 }, { once: true });
             }
 
-            // Initial total update
-            updateTotal();
+            renderAddons();
         });
     </script>
 
