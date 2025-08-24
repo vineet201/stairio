@@ -1220,6 +1220,32 @@
     .feature-option.outgoing { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
     .feature-option.hidden { display: none !important; }
 
+    .option-header { position: relative; }
+    .remove-addon-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        appearance: none;
+        border: none;
+        background: rgba(0,0,0,0.05);
+        color: #6e6e73;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 1;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .remove-addon-btn:hover {
+        background: rgba(0,0,0,0.1);
+        color: #111;
+    }
+
     /* Selected list remove button */
     .selected-item { position: relative; }
     .selected-item .remove-x { appearance:none; border:none; background:transparent; color:#6e6e73; font-weight:700; font-size:16px; line-height:1; cursor:pointer; margin-left: 10px; }
