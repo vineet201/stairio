@@ -1,19 +1,362 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Terms · Stairio</title>
-  <style>body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:760px;margin:40px auto;padding:0 16px;line-height:1.7;color:#1d1d1f}</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions – Stairio</title>
+    <style>
+        /* --- Google Font --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        /* --- Global Styles & Resets --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #e0e0e0;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460, #533483);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden; /* Hide scrollbars from the body */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* --- Animated Gradient Background --- */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Particle Canvas --- */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* --- Main Content Container --- */
+        .terms-container {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            max-width: 800px;
+            height: 85vh;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            overflow-y: auto;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- Custom Scrollbar --- */
+        .terms-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .terms-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        .terms-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+        .terms-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Typography & Content Styling --- */
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .term-section {
+            margin-bottom: 25px;
+        }
+
+        .term-section h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #f0f0f0;
+            margin-bottom: 10px;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .term-section h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 5px;
+            height: 22px;
+            background-color: #e94560;
+            border-radius: 3px;
+        }
+
+        .term-section ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .term-section li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .term-section li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #e94560;
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .terms-container {
+                padding: 25px;
+                height: 90vh;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            .term-section h2 {
+                font-size: 1.1rem;
+            }
+            .term-section li {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Terms and Conditions</h1>
-  <p>These are sample terms. Replace with your actual terms before publishing.</p>
-  <h2>Services</h2>
-  <p>We provide website design and development services as described on our site.</p>
-  <h2>Payments</h2>
-  <p>Payments are due as agreed in your project proposal or invoice.</p>
-  <h2>Ownership</h2>
-  <p>Upon full payment, you own the delivered website and assets unless otherwise noted.</p>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="terms-container">
+        <h1>Terms & Conditions – Stairio</h1>
+        
+        <div class="term-section">
+            <h2>1. Scope of Work</h2>
+            <ul>
+                <li>The package includes the features listed under Package Features and Add-ons (if selected). Any additional requirements beyond the mentioned scope will be subject to a separate quotation.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>2. Domain & Hosting</h2>
+            <ul>
+                <li>Domain registration is valid for 1st year only. Renewal charges will apply from the 2nd year onward.</li>
+                <li>Secure cloud hosting is included for 2 years. Renewal charges apply from the 3rd year.</li>
+                <li>SSL Certificate is provided for 3 years. Renewal charges apply after expiry.</li>
+                <li>Domain Privacy Protection is an optional add-on service.</li>
+            </ul>
+        </div>
+        
+        <div class="term-section">
+            <h2>3. Website Development</h2>
+            <ul>
+                <li>The package includes up to 8 web pages. Any additional pages will be charged separately.</li>
+                <li>Client must provide all necessary content (text, images, videos) in a timely manner.</li>
+                <li>Responsive design ensures compatibility with modern devices and browsers.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>4. Professional Emails</h2>
+            <ul>
+                <li>Includes up to 3 professional email accounts. Additional accounts will be chargeable.</li>
+                <li>Email storage and quota limits will follow hosting provider’s policy.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>5. Support & Maintenance</h2>
+            <ul>
+                <li>Package includes 3 months of free support after website launch (minor changes, bug fixes, technical assistance).</li>
+                <li>Post-support, annual maintenance charges (AMC) will apply if required.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>6. Payments</h2>
+            <ul>
+                <li>Advance payment is mandatory to initiate work.</li>
+                <li>Remaining balance is payable before final project delivery.</li>
+                <li>Any extra add-ons will be billed separately and must be cleared before integration.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>7. Client Responsibilities</h2>
+            <ul>
+                <li>Client must provide accurate information and timely approvals.</li>
+                <li>Delays in providing content or approvals may extend project timelines.</li>
+                <li>SEO setup included is basic only; advanced SEO is a separate service.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>8. Ownership & Rights</h2>
+            <ul>
+                <li>Website design, code, and content (provided by client) will belong to the client after full payment.</li>
+                <li>Stairio reserves the right to showcase the project in its portfolio unless otherwise agreed in writing.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>9. Renewal & Continuation</h2>
+            <ul>
+                <li>Domain, Hosting, SSL, and Email renewals will be billed separately after their respective validity periods.</li>
+                <li>Failure to renew may lead to suspension of services until payment is made.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>10. Cancellation & Refunds</h2>
+            <ul>
+                <li>Advance payment is non-refundable once the project has started.</li>
+                <li>If the client cancels midway, charges will apply for the work completed.</li>
+            </ul>
+        </div>
+
+        <div class="term-section">
+            <h2>11. Limitation of Liability</h2>
+            <ul>
+                <li>Stairio is not responsible for downtime, hacking, or issues caused by third-party services, client’s misuse, or delayed renewals.</li>
+                <li>While security measures are implemented, absolute security cannot be guaranteed.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray;
+
+        // Particle class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+
+            // Method to draw individual particle
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            // Method to update particle position
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Create particle array
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - .2;
+                let directionY = (Math.random() * .4) - .2;
+                let color = 'rgba(225, 225, 225, 0.5)';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Function to connect particles with lines
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                                 ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(225, 225, 225, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // Resize event
+        window.addEventListener('resize', () => {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
 </body>
 </html>
